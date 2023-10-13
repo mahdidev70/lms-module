@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Lms;
+namespace TechStudio\Lms\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Lms\SkillRequest;

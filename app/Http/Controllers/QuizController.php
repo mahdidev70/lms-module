@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Lms;
+namespace TechStudio\Lms\app\Http\Controllers;
 
 use stdClass;
 use App\Models\Article;

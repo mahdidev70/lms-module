@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Lms;
+namespace TechStudio\Lms\app\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Student;
