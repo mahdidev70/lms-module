@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Resources\Lms;
+
+use App\Models\Course;
+use App\Helper\PageContent;
+use App\Models\UserLessonProgress;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
+
+class CourseSidebarResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'courseTitle' => $this->title,
+            'slug' => $this->slug,
+            'courseProgress' => $this->getTotalProgress($this->id),
+            'chapters' => $this->chapters->map(fn ($chapter) => [
+                'title' => $chapter->title,
+                'slug' => $chapter->slug,
+                'lessons' => $chapter->lessons->map(fn ($lesson) => [
+                    'title' => $lesson->title,
+                    'slug' => $lesson->slug,
+                    'dominantType' => $lesson->dominant_type,
+                    'minutesToRead' => ($lesson->dominant_type == 'text') ? $this->getTextTime($lesson) : null,
+                    'duration' => ($lesson->dominant_type == 'video') ? $this->getVideoTime($lesson) : null,
+                    'numberOfQuestions' => ($lesson->dominant_type == 'exam') ? $this->getQuestionCount($lesson) : null,
+                    'isCompleted' => ($this->isCompleted($lesson) == true) ? number_format(1*100) : 0,
+                ]),
+            ]),
+        ];
+    }
+
+
+    function getTextTime($lesson): int
+    {
+        $calculate = new PageContent($lesson->content);
+        return $calculate->getMinutesToRead();
+    }
+
+    function getVideoTime($lesson): int
+    {
+        $calculate = new PageContent($lesson->content);
+        return $calculate->getVideosDuration();
+    }
+
+    function getQuestionCount($lesson): int
+    {
+        $calculate = new PageContent($lesson->content);
+        return $calculate->getQuestionsCount();
+    }
+
+    function isCompleted($lesson)
+    {
+        $isCompleted = UserLessonProgress::where([
+            ['lesson_id', $lesson->id], ['user_id', Auth::user()->id], ['progress', 1]
+        ])->first();
+        return (bool) $isCompleted;
+    }
+
+    function getTotalProgress($courseId) 
+    {
+        $result = Course::find($courseId)->with('chapters.lessons')->get();
+        $lessons = $result->pluck('chapters.*.lessons.*')->flatten()->toArray();
+        $lessonsIds = $result->pluck('chapters.*.lessons.*.id')->flatten()->toArray();
+
+        $userLessonProgress = UserLessonProgress::where([
+            ['user_id', Auth::user()->id], ['progress', '>', 0]
+        ])->whereIn(
+            'lesson_id',
+            $lessonsIds
+        )->pluck('progress');
+
+        $lessonProgress = 0 ;
+        foreach($userLessonProgress as $lessonScore){
+            $lessonProgress += $lessonScore;
+        }
+        return number_format( $lessonProgress / count($lessons) * 100 );
+    }
+}
