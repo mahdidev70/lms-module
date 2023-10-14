@@ -12,6 +12,8 @@ class Course extends Model
 {
     use HasFactory;
 
+    protected $table = 'lms_courses';
+
     protected $guarded = ['id'];
 
     public function chapters()
