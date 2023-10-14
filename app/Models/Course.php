@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace TechStudio\Blog\app\Models;
 
 use App\Models\Chapter;
 use Illuminate\Database\Eloquent\Model;
