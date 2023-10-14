@@ -9,6 +9,8 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $table = 'lms_students';
+
     protected $guarded = ['id'];
 
     public function course()
