@@ -1,6 +1,6 @@
 <?php
 
-namespace TechStudio\Blog\app\Models;
+namespace TechStudio\Lms\app\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

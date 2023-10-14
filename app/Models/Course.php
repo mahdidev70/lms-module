@@ -1,6 +1,6 @@
 <?php
 
-namespace TechStudio\Blog\app\Models;
+namespace TechStudio\Lms\app\Models;
 
 use App\Models\Chapter;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +49,7 @@ class Course extends Model
 
     public function skills(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class,'course_skill');
+        return $this->belongsToMany(Skill::class,'lms_course_skill');
     }
 
     public function rooms()

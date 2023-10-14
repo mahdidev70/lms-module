@@ -1,6 +1,6 @@
 <?php
 
-namespace TechStudio\Blog\app\Models;
+namespace TechStudio\Lms\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,16 +10,18 @@ class Skill extends Model
 {
     use HasFactory;
 
+    protected $table = 'lms_skills';
+
     protected $guarded = ['id'];
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class,'course_skill');
+        return $this->belongsToMany(Course::class,'lms_course_skill');
     }
 
     public function skills(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class, 'course_skill')->withTimestamps();
+        return $this->belongsToMany(Skill::class, 'lms_course_skill')->withTimestamps();
     }
 
     
