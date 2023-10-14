@@ -2,7 +2,7 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
-use App\Models\Chapter;
+use TechStudio\Lms\app\Models\Chapter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;

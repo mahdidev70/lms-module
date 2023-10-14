@@ -2,8 +2,7 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
-use App\Models\Course;
-use App\Models\Student;
+use TechStudio\Lms\app\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

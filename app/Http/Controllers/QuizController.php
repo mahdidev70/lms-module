@@ -2,9 +2,8 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
+use TechStudio\Lms\app\Models\UserLessonProgress;
 use stdClass;
-use App\Models\Article;
-use App\Models\Chapter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -15,7 +14,6 @@ use App\Http\Resources\Lms\QuizListResource;
 use App\Http\Resources\Lms\QuizPageResource;
 use App\Http\Resources\Lms\QuizResultResource;
 use App\Models\Lesson;
-use App\Models\UserLessonProgress;
 use App\Repositories\Interfaces\LessonRepositoryInterface;
 use App\Repositories\Interfaces\CourseRepositoryInterface;
 use Carbon\Carbon;

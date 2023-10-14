@@ -3,9 +3,10 @@
 namespace TechStudio\Lms\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use TechStudio\Lms\app\Models\Course;
+use TechStudio\Lms\app\Models\Skill;
+
 use stdClass;
-use App\Models\Course;
-use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Requests\Lms\CourseCreateUpdateRequest;
 use App\Http\Resources\Lms\CourseResource;
@@ -15,7 +16,6 @@ use App\Http\Resources\Lms\CourseRoomResource;
 use App\Http\Resources\Lms\InstructorResource;
 use App\Http\Resources\Lms\CoursePreviewResource;
 use App\Http\Resources\Lms\FiltersCourseResource;
-use App\Models\Skill;
 use App\Repositories\Interfaces\CourseRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Auth;
 class CourseController extends Controller
 {
 
-    // private CourseRepositoryInterface $repository;
-    // private CategoryRepositoryInterface $categoryRepository;
+    private CourseRepositoryInterface $repository;
+    private CategoryRepositoryInterface $categoryRepository;
 
 
     // public function __construct(
@@ -143,24 +143,24 @@ class CourseController extends Controller
     //     ];
     // }
 
-    // public function getCommonList()
-    // {
-    //     $counts = [
-    //         'all' => Course::whereNot('status', 'deleted')->count(),
-    //         'published' => Course::where('status', 'published')->count(),
-    //         'draft' => Course::where('status', 'draft')->count(),
-    //         'hidden' => Course::where('status', 'hidden')->count(),
-    //     ];
+    public function getCommonList()
+    {
+        $counts = [
+            'all' => Course::whereNot('status', 'deleted')->count(),
+            'published' => Course::where('status', 'published')->count(),
+            'draft' => Course::where('status', 'draft')->count(),
+            'hidden' => Course::where('status', 'hidden')->count(),
+        ];
 
-    //     return $counts;
-    // }
+        return $counts;
+    }
 
-    // public function getCourse($id)
-    // {
-    //     $course = Course::where('id', $id)->firstOrFail();
+    public function getCourse($id)
+    {
+        $course = Course::where('id', $id)->firstOrFail();
 
-    //     return response()->json(new CourseResource($course));
+        return response()->json(new CourseResource($course));
        
-    // }
+    }
 
 }

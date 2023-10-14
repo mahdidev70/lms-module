@@ -2,9 +2,9 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
+use TechStudio\lms\app\Models\Skill;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Lms\SkillRequest;
-use App\Models\Skill;
 use App\Repositories\Interfaces\CourseRepositoryInterface;
 use App\Repositories\Interfaces\SkillRepositoryInterface;
 use Illuminate\Http\Request;
