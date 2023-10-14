@@ -9,7 +9,7 @@ class UserLessonProgress extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_lesson_progress';
+    protected $table = 'lms_user_lesson_progress';
 
     protected $guarded = ['id'];
 
