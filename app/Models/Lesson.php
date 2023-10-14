@@ -11,6 +11,8 @@ class Lesson extends Model
 {
     use HasFactory;
 
+    protected $table = 'lms_lessons';
+
     protected $guarded = ['id'];
 
     protected $casts = [
