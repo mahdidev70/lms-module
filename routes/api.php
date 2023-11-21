@@ -35,9 +35,9 @@ Route::prefix('academy')->group(function () {
 
     // ============ CLIENT SIDE ===============
     
+    // Route::get('/home', [HomeController::class, 'index']);
     // Route::get('/course/list', [CourseController::class, 'getAllCourseData']);
     // Route::get('/course/filters', [CourseController::class, 'filters']);
-    // Route::get('/home', [HomeController::class, 'index']);
     
     // Route::middleware('login_optional')->prefix('course')->group(function() {
         
@@ -102,7 +102,33 @@ Route::prefix('academy')->group(function () {
     
     //         Route::get('/chapter/list/{id}', [ChapterController::class, 'getChapterLessonList']);
     
-    //         Route::get('/course/{id}', [CourseController::class, 'getCourse']);
+            // Route::get('/course/{id}', [CourseController::class, 'getCourse']);
+
+    // =============================== NEW ROUTES ===========================================
+
+            // Route::get('lesson/{id}', [LessonController::class, 'getLesson']);
+
+            // Route::delete('chapter/{slug}', [ChapterController::class, 'deleteChapter']);
+
+            // Route::delete('lesson/{slug}', [LessonController::class, 'deleteLesson']);
+
+            // Route::get('lesson/article/reference', [LessonController::class, 'getArticleRefrence']);
+
+            // Route::put('set_status', [CourseController::class, 'editStatus']);
+
+            // Route::put('comment/status', [CommentController::class, 'updateCommentsStatus']);
+
+            // Route::put('category/status', [CategoriesController::class, 'updateCategoryStatus']);
+
+            // Route::get('view_dashboard', [CourseController::class, 'viewDashboard']);
+
+            // Route::get('certificate/list', [StudentController::class, 'certificateByStudentList']);
+
+            // Route::get('certificate/common', [StudentController::class, 'certificateCommon']);
+
+            // Route::get('student/common', [StudentController::class, 'studentCommonList']);
+
+            // Route::get('comment/excel/export', [CommentController::class, 'exportExcel']);
     
     //     });
     });
