@@ -10,6 +10,7 @@ use App\Http\Requests\Lms\ChapterCreateUpdateRequest;
 use App\Http\Resources\Lms\ChapterPageResource;
 use App\Http\Resources\Lms\ChapterResource;
 use App\Repositories\Interfaces\ChapterRepositoryInterface;
+use App\Http\Resources\Lms\ChapterLessonResource;
 
 class ChapterController extends Controller
 {
@@ -27,21 +28,21 @@ class ChapterController extends Controller
 
     public function editCreateCahpter(ChapterCreateUpdateRequest $chapterCreateUpdateRequest)
     {
-
         $chapter = $this->repository->createUpdate($chapterCreateUpdateRequest);
-
-        new ChapterPageResource($chapter);
-
-        return $chapter->id;
+        return new ChapterPageResource($chapter);
     }
 
     public function getChapterLessonList($id)
     {
-
         $chapter = Chapter::with('lessons')->where('course_id', $id)->paginate(10);
+        return ChapterPageResource::collection($chapter);
+    }
 
-        return $chapter;
-
+    public function deleteChapter($slug)
+    {
+        $chapter = Chapter::where('slug', $slug)->firstOrFail();
+        $chapter = $chapter->delete();
+        return response("OK", 200);
     }
 
 }
