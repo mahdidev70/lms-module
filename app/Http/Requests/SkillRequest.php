@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Lms;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SkillRequest extends FormRequest
 {
@@ -22,7 +23,10 @@ class SkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|unique:skills,title',
+            'id' => ['required', 'integer'],
+            'status' => ['required','in:active,hidden,deleted'],
+            'title' => ['required', 'string', Rule::unique('categories', 'title')->ignore($this->id, 'id')],
+            'slug' => [Rule::unique('categories', 'slug')->ignore($this->id, 'id')],
             'description' => 'string',
         ];
     }
