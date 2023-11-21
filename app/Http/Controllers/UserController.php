@@ -59,21 +59,25 @@ class UserController extends Controller
 
     public function instructors(Request $request)
     {
-
-        $search = $request->get('search');
-        
-        $instructors = $this->courseRepository->getInstructors();
-
-        $instructorsCollection = InstructorResource::collection($instructors);
-
-        $displayNames = $instructorsCollection->pluck('displayName');
-
-        return $instructorsCollection;
-
+        $instructors = $this->courseRepository->getInstructors($request);
+        return new InstructorsResource($instructors);
     }
 
-    public function getCommonList()
+    public function getInstructorCommonList()
     {
-        //TODO    
+        $instructors = $this->courseRepository->getAllInstructors();
+
+        $count = [
+            'all' => $instructors->count(),
+            'active' => $instructors->where('status', 'active')->count(),
+            'notActive' => $instructors->where('status', '!=', 'active')->count(),
+        ];
+
+        $status = ['active', 'notActive'];
+
+        return [
+            'counts' => $count,
+            'status' => $status,
+        ];
     }
 }
