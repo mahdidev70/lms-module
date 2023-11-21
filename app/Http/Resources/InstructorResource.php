@@ -14,12 +14,17 @@ class InstructorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $this->load('courses.comments'); 
+
         return [
             'id' => $this->id,
             'type' => $this->getUserType(),
             'displayName' => $this->getDisplayName(),
             'avatarUrl' => $this->avatar_url,
-            'description' => $this->description
+            'description' => $this->description,
+            'status' => $this->status,
+            'commentCount' => $this->courses->flatMap->comments->count(),
+            'courseCount' => $this->courses->count(),
         ];
     }
 }
