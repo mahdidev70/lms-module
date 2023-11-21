@@ -46,11 +46,25 @@ class QuizController extends Controller
         }
 
         $quiz = $this->lessonRepository->getQuizById($quizId);
-        $tureAnswers = collect(json_decode($quiz->information)->trueAnswers);
-        $diff = $tureAnswers->diffAssoc($request->trueAnswers);
-        $falseAnswers = $diff->all();
+        $tureAnswers = collect(json_decode($quiz->information));
+        $flatTrueAnswers = new stdClass();
+        foreach($tureAnswers as $answers){
+            foreach($answers as $key => $value)
+            $flatTrueAnswers->$key = $value;
+        }
 
-        $answerNumber = count((array)json_decode($quiz->information)->trueAnswers);
+        $tureAnswers = collect($flatTrueAnswers);
+        $userAnswers = new stdClass();
+        $request->trueAnswers;
+
+        foreach($request->trueAnswers as $answers){
+            foreach($answers as $key => $value)
+            $userAnswers->$key = $value;
+        }
+
+        $diff = $tureAnswers->diffAssoc(collect($userAnswers));
+        $falseAnswers = $diff->all();
+        $answerNumber = count((array)json_decode($quiz->information));
         $score = ($answerNumber - count((array) $falseAnswers)) * 100 / $answerNumber;
 
         $status = 'fail';
