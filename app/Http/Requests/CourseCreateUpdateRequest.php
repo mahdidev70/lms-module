@@ -25,7 +25,7 @@ class CourseCreateUpdateRequest extends FormRequest
             //required fields to create a course: 
             'title' => 'required|string',
             'description' => 'required|string',
-            'category' => 'integer',
+            // 'category' => 'integer',
             'instructor' => 'required|array',
             // Optional fields to create a course:
             'bannerUrl' => 'string',
@@ -33,8 +33,8 @@ class CourseCreateUpdateRequest extends FormRequest
             'languages' => 'array',
             'level' => 'in:beginner,intermediate,advance',
             'supportItem' => 'array',
-            'learningPoint*.title' => 'string',
-            'learningPoint*.description' => 'string',
+            'learningPoints*.title' => 'string',
+            'learningPoints*.description' => 'string',
             'features' => 'array',
             'faq' => 'array'
         ];
