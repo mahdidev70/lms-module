@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Lms;
+namespace TechStudio\Lms\app\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use TechStudio\Lms\app\Http\Resources\CoursePreviewResource;
 
 class CategoryCoursesResource extends JsonResource
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Resources\Lms;
+namespace TechStudio\Lms\app\Http\Resources;
 
-use App\Models\Lesson;
-use App\Models\Chapter;
-use App\Models\Student;
 use Illuminate\Http\Request;
-use App\Models\QuizParticipant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
+use TechStudio\Lms\app\Models\Chapter;
+use TechStudio\Lms\app\Models\Lesson;
+use TechStudio\Lms\app\Models\QuizParticipant;
+use TechStudio\Lms\app\Models\Student;
 
 class QuizPageResource extends JsonResource
 {

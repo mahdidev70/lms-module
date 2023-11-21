@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Lms;
+namespace TechStudio\Lms\app\Http\Resources;
 
 use App\Helper\PageContent;
 use Illuminate\Http\Request;

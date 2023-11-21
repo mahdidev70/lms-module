@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Lms;
+namespace TechStudio\Lms\app\Http\Resources;
 
-use App\Models\Course;
-use App\Helper\PageContent;
-use App\Models\UserLessonProgress;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use TechStudio\Core\app\Helper\PageContent;
+use TechStudio\Lms\app\Models\Course;
+use TechStudio\Lms\app\Models\UserLessonProgress;
 
 class CourseSidebarResource extends JsonResource
 {

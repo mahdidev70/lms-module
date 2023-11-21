@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Lms;
+namespace TechStudio\Lms\app\Http\Resources;
 
-use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
+use TechStudio\Lms\app\Http\Resources\SkillResource;
+use TechStudio\Lms\app\Models\Student;
 
 class CourseResource extends JsonResource
 {

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Resources\Lms;
+namespace TechStudio\Lms\app\Http\Resources;
 
-use App\Helper\PageContent;
 use TechStudio\Lms\app\Models\Chapter;
 use TechStudio\Lms\app\Models\UserLessonProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
+use TechStudio\Lms\app\Http\Resources\CourseSidebarResource;
+use TechStudio\Lms\app\Http\Resources\LessonResource;
 
 class ChapterPageResource extends JsonResource
 {
