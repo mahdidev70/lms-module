@@ -38,9 +38,7 @@ class SkillController extends Controller
 
     public function editCreateSkill(SkillRequest $skillRequest)
     {
-
         $skill = $this->repository->createUpdate($skillRequest);
-
         return $skill->id;
     }
 
