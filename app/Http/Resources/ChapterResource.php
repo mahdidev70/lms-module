@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources\Lms;
 
-use TechStudio\Lms\app\Models\Chapter;
+use App\Helper\PageContent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
-use TechStudio\Core\app\Helper\PageContent;
+use TechStudio\Lms\app\Models\Chapter;
 use TechStudio\Lms\app\Models\UserLessonProgress;
 
 class ChapterResource extends JsonResource
@@ -22,6 +22,7 @@ class ChapterResource extends JsonResource
         $userId = Auth::user()->id ?? 1;
         $remaining = $this->remainingOfCourse($this->id,$userId);
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
             'remainingVideoDuration' => $remaining['remainVideoTime'],
@@ -61,27 +62,27 @@ class ChapterResource extends JsonResource
                         $lesson['id'],
                         $userLessonProgress->toArray()
                     )) {
-                        array_push($remainingText, $lesson['content']);
+                        array_push($remainingText, $lesson);
                     }
-                    array_push($allText, $lesson['content']);
+                    array_push($allText, $lesson);
                     break;
                 case 'video':
                     if (!in_array(
                         $lesson['id'],
                         $userLessonProgress->toArray()
                     )) {
-                        array_push($remainingVideo, $lesson['content']);
+                        array_push($remainingVideo, $lesson);
                     }
-                    array_push($allVideo, $lesson['content']);
+                    array_push($allVideo, $lesson);
                     break;
                 case 'exam':
                     if (!in_array(
                         $lesson['id'],
                         $userLessonProgress->toArray()
                     )) {
-                        array_push($remainingExam, $lesson['content']);
+                        array_push($remainingExam, $lesson);
                     }
-                    array_push($allExam, $lesson['content']);
+                    array_push($allExam, $lesson);
                     break;
                 default:
                     Log::error('lesson' . $lesson['id'] . 'dosent have true type');
@@ -97,33 +98,39 @@ class ChapterResource extends JsonResource
         $allExamQuestions = 0;
 
         foreach ($remainingText as $text) {
-            $calculate = new PageContent($text);
-            $remainTextTime += $calculate->getMinutesToRead();
+            // $calculate = new PageContent($text);
+            // $remainTextTime += $calculate->getMinutesToRead();
+            $remainTextTime += $text->duration;
         }
 
         foreach ($remainingVideo as $video) {
-            $calculate = new PageContent($video);
-            $remainVideoTime += $calculate->getVideosDuration();
+            // $calculate = new PageContent($video);
+            // $remainVideoTime += $calculate->getVideosDuration();
+            $remainVideoTime += $video->duration;
         }
 
         foreach ($remainingExam as $exam) {
-            $calculate = new PageContent($exam);
-            $remainingExamQuestions += $calculate->getQuestionsCount();
+            // $calculate = new PageContent($exam);
+            // $remainingExamQuestions += $calculate->getQuestionsCount();
+            $remainingExamQuestions += $exam->duration;
         }
 
         foreach ($allText as $text) {
-            $calculate = new PageContent($text);
-            $allTextTime += $calculate->getMinutesToRead();
+            // $calculate = new PageContent($text);
+            // $allTextTime += $calculate->getMinutesToRead();
+            $allTextTime += $text->duration;
         }
 
         foreach ($allVideo as $video) {
-            $calculate = new PageContent($video);
-            $allVideoTime += $calculate->getVideosDuration();
+            // $calculate = new PageContent($video);
+            // $allVideoTime += $calculate->getVideosDuration();
+            $allVideoTime += $video->duration;
         }
 
         foreach ($allExam as $exam) {
-            $calculate = new PageContent($exam);
-            $allExamQuestions += $calculate->getQuestionsCount();
+            // $calculate = new PageContent($exam);
+            // $allExamQuestions += $calculate->getQuestionsCount();
+            $allExamQuestions += $exam->duration;
         }
 
         return compact(
