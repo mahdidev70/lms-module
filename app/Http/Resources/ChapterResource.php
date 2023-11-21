@@ -2,13 +2,13 @@
 
 namespace App\Http\Resources\Lms;
 
-use App\Helper\PageContent;
-use App\Models\Chapter;
+use TechStudio\Lms\app\Models\Chapter;
 use Illuminate\Http\Request;
-use App\Models\UserLessonProgress;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
+use TechStudio\Core\app\Helper\PageContent;
+use TechStudio\Lms\app\Models\UserLessonProgress;
 
 class ChapterResource extends JsonResource
 {
