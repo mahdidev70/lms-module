@@ -33,22 +33,27 @@ class LessonResource extends JsonResource
         $userProgress = UserLessonProgress::where('user_id', Auth::user()->id)
             ->where('lesson_id', $this->id)->latest()->first();
             $userStatus = (isset($userProgress)) ? $userProgress->progress : 0;
+
+        $information = json_decode($this->information);
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'dominantType' => $this->dominant_type,
             'currentUserStatus' => $userStatus,
             'currentUserStartTime' => $startTime,
             'timeLimitMinutes' => 60,
             'content' => $this->content,
+            'trueAnswers' => $information,
             'userQuizStatus' => $quizStatus,
             'score' => $score,
-            'timeLimitMinutes' => 60,
             'course'    => new CoursePreviewResource($this->chapter->course),
             'chapter' => new ChapterResource($this->chapter),
             'informations' => $this->informations,
-            'textDuration' => ($this->dominant_type == 'text') ? $this->getTextTime($this) : null,
-            'videoDuration' => ($this->dominant_type == 'video') ? $this->getVideoTime($this) : null,
-            'examDuration' => ($this->dominant_type == 'exam') ? $this->getQuestionCount($this) : null,
+            'textDuration' => ($this->dominant_type == 'text') ? $this->duration : null,
+            'videoDuration' => ($this->dominant_type == 'video') ? $this->duration : null,
+            'examDuration' => ($this->dominant_type == 'exam') ? $this->duration : null,
+            'dominantType' => $this->dominant_type,
         ];
     }
 
