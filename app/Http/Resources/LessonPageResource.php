@@ -65,6 +65,7 @@ class LessonPageResource extends JsonResource
             'title' => $this->title,
             'id' => $this->id,
             'slug' => $this->slug,
+            'dominantType' => $this->dominant_type,
             'currentUserStatus' => $userStatus,
             'currentUserStartTime' => $startTime,
             'examAllowed' => $examAllowed,
@@ -75,9 +76,9 @@ class LessonPageResource extends JsonResource
             'course' => new CoursePreviewResource($this->chapter->course),
             'chapter' => new ChapterResource($this->chapter),
             'informations' => $this->informations,
-            'textDuration' => ($this->dominant_type == 'text') ? $this->getTextTime($this) : null,
-            'videoDuration' => ($this->dominant_type == 'video') ? $this->getVideoTime($this) : null,
-            'examDuration' => ($this->dominant_type == 'exam') ? $this->getQuestionCount($this) : null,
+            'textDuration' => ($this->dominant_type == 'text') ? $this->duration : null,
+            'videoDuration' => ($this->dominant_type == 'video') ? $this->duration : null,
+            'examDuration' => ($this->dominant_type == 'exam') ? $this->duration : null,
             'next' => isset($next->slug) ? [
                 'slug' => $next->slug,
                 'id' => $next->id
