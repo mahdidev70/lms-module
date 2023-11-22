@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace TechStduio\Lms\app\Repositories;
 
-use App\Helper\SlugGenerator;
-use App\Models\Skill;
-use App\Repositories\Interfaces\SkillRepositoryInterface;
-
+use TechStudio\Core\app\Helper\SlugGenerator;
+use TechStudio\Lms\app\Models\Skill;
+use TechStudio\Lms\app\Repositories\Interfaces\SkillRepositoryInterface;
 
 class SkillRepository implements SkillRepositoryInterface
 {
@@ -16,7 +15,8 @@ class SkillRepository implements SkillRepositoryInterface
             ['id' => $data['id']],
             [
                 'title' => $data['title'],
-                'slug' => SlugGenerator::transform($data['title']),
+                'slug' => $data['slug'] ? $data['slug'] : SlugGenerator::transform($data['title']),
+                'status' => $data['status'],
                 'description' => $data['description'],
             ]
         );
