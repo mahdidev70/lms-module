@@ -1,8 +1,6 @@
 <?php
 
-
-namespace App\Repositories\Interfaces;
-
+namespace TechStudio\Lms\app\Repositories\Interfaces;
 
 interface CourseRepositoryInterface
 {
@@ -10,7 +8,7 @@ interface CourseRepositoryInterface
     public function getById($id);
     public function all($request);
     public function getAllInstructors();
-    public function getInstructors();
+    public function getInstructors($request);
     public function getTopCourses();
     public function getAllSkills();
     public function createUpdate($data);

@@ -1,8 +1,6 @@
 <?php
 
-
-namespace App\Repositories\Interfaces;
-
+namespace TechStudio\Lms\app\Repositories\Interfaces;
 
 interface UserRepositoryInterface
 {

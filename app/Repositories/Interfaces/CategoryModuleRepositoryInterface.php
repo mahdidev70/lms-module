@@ -1,10 +1,8 @@
 <?php
 
+namespace TechStudio\Lms\app\Repositories\Interfaces;
 
-namespace App\Repositories\Interfaces;
-
-
-interface CategoryRepositoryInterface
+interface CategoryModuleRepositoryInterface
 {
     public function getCategoriesWithCourses();
     public function getCategories();

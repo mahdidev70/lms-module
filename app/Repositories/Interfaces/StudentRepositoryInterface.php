@@ -1,8 +1,6 @@
 <?php
 
-
-namespace App\Repositories\Interfaces;
-
+namespace TechStudio\Lms\app\Repositories\Interfaces;
 
 interface StudentRepositoryInterface
 {
@@ -13,4 +11,6 @@ interface StudentRepositoryInterface
     public function getUserDoneCourses($userId);
     public function getUserRecentlyVisited();
     public function getNecessaryCourses();
+    public function getStudentList($request);
+    public function certificatesByStudent($request);
 }
