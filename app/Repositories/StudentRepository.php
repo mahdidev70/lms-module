@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace TechStduio\Lms\app\Repositories;
 
-use App\Models\View;
-use App\Models\Course;
-use App\Models\Student;
+
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Interfaces\StudentRepositoryInterface;
-
+use TechStudio\Lms\app\Models\Course;
+use TechStudio\Lms\app\Models\Student;
+use TechStudio\Lms\app\Models\View;
+use TechStudio\Lms\app\Repositories\Interfaces\StudentRepositoryInterface;
 
 class StudentRepository implements StudentRepositoryInterface
 {
@@ -44,11 +44,50 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getUserRecentlyVisited()
     {
-        return $courses = View::where('user_id', Auth::user()->id)->with('course.instructor')
+        return View::where('user_id', Auth::user()->id)->with('course.instructor')
             ->take(4)->get()->pluck('course');
     }
 
-    public function getNecessaryCourses(){
+    public function getNecessaryCourses()
+    {
         return Course::where('necessary',1)->get();
+    }
+
+    public function getStudentList($request) 
+    {
+        $query = Student::with('course', 'userProfile')->join('user_profiles', 'students.user_id', '=', 'user_profiles.id')
+        ->groupBy('students.user_id')->selectRaw('count(*) as total, students.user_id');
+
+        if ($request->filled('search')) {
+
+            $txt = $request->get('search');
+
+            $query->where(function ($q) use ($txt) {
+                $q->where('user_profiles.first_name', 'like', '%'.$txt.'%')
+                    ->orWhere('user_profiles.last_name', 'like', '%'.$txt.'%');
+            });
+        }
+
+        $students = $query->paginate(10);
+        return $students;
+    }
+
+    public function certificatesByStudent($request) 
+    {
+        $query = Student::whereNotNull('certificate_file')->join('user_profiles', 'students.user_id', '=', 'user_profiles.id')
+        ->with('course', 'userProfile');
+
+        if ($request->filled('search')) {
+
+            $txt = $request->get('search');
+
+            $query->where(function ($q) use ($txt) {
+                $q->where('user_profiles.first_name', 'like', '%'.$txt.'%')
+                    ->orWhere('user_profiles.last_name', 'like', '%'.$txt.'%');
+            });
+        }
+
+        $students = $query->paginate(10);
+        return $students;
     }
 }
