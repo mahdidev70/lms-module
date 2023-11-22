@@ -16,12 +16,12 @@ class Skill extends Model
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class,'lms_course_skill');
+        return $this->belongsToMany(Course::class,'course_skill');
     }
 
     public function skills(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class, 'lms_course_skill')->withTimestamps();
+        return $this->belongsToMany(Skill::class, 'course_skill')->withTimestamps();
     }
 
     
