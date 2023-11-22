@@ -3,19 +3,18 @@
 namespace TechStudio\Lms\app\Http\Controllers;
 
 use stdClass;
-
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Lms\HomePageResource;
-use App\Repositories\Interfaces\CommentRepositoryInterface;
-use App\Repositories\Interfaces\CategoryRepositoryInterface;
+use TechStudio\Lms\app\Http\Resources\HomePageResource;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CommentRepositoryInterface;
 
 class HomeController extends Controller
 {
-    private CategoryRepositoryInterface $categoryRepository;
+    private CategoryModuleRepositoryInterface $categoryRepository;
     private CommentRepositoryInterface $commentRepository;
 
     public function __construct(
-        CategoryRepositoryInterface $categoryRepository,
+        CategoryModuleRepositoryInterface $categoryRepository,
         CommentRepositoryInterface $commentRepository,
     ) {
         $this->categoryRepository = $categoryRepository;

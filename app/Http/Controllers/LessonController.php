@@ -2,15 +2,15 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
-use TechStudio\Lms\app\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Lms\LessonCreateUpdateRequest;
-use App\Http\Resources\Lms\LessonPageResource;
-use App\Http\Resources\Lms\LessonResource;
-use App\Repositories\Interfaces\LessonRepositoryInterface;
 use TechStudio\Blog\app\Models\Article;
+use TechStudio\Lms\app\Http\Request\LessonCreateUpdateRequest;
+use TechStudio\Lms\app\Http\Resources\LessonPageResource;
+use TechStudio\Lms\app\Http\Resources\LessonResource;
+use TechStudio\Lms\app\Models\Lesson;
+use TechStudio\Lms\app\Repositories\Interfaces\LessonRepositoryInterface;
 
 class LessonController extends Controller
 {

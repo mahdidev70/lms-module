@@ -6,11 +6,13 @@ use TechStudio\Lms\app\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Lms\StudentRequest;
-use App\Http\Requests\Lms\BookmarkRequest;
-use App\Http\Resources\Lms\CourseResource;
-use App\Repositories\Interfaces\CourseRepositoryInterface;
-use App\Repositories\Interfaces\StudentRepositoryInterface;
+use TechStudio\Lms\app\Http\Request\BookmarkRequest;
+use TechStudio\Lms\app\Http\Request\StudentRequest;
+use TechStudio\Lms\app\Http\Resources\CertificatesResource;
+use TechStudio\Lms\app\Http\Resources\CourseResource;
+use TechStudio\Lms\app\Http\Resources\StudentsResource;
+use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\StudentRepositoryInterface;
 
 class StudentController extends Controller
 {

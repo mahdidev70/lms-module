@@ -3,20 +3,17 @@
 namespace TechStudio\Lms\app\Http\Controllers;
 
 use stdClass;
-
-use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Lms\UserHomeResource;
-use App\Http\Resources\Lms\InstructorResource;
-use App\Http\Resources\Lms\InstructorsResource;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Interfaces\CourseRepositoryInterface;
-use App\Repositories\Interfaces\CommentRepositoryInterface;
-use App\Repositories\Interfaces\StudentRepositoryInterface;
-use App\Repositories\Interfaces\CategoryRepositoryInterface;
+use TechStudio\Lms\app\Http\Resources\InstructorsResource;
+use TechStudio\Lms\app\Http\Resources\UserHomeResource;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CommentRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\StudentRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserController extends Controller
 {
@@ -24,14 +21,14 @@ class UserController extends Controller
     private CourseRepositoryInterface $courseRepository;
     private StudentRepositoryInterface $studentRepository;
     private CommentRepositoryInterface $commentRepository;
-    private CategoryRepositoryInterface $categoryRepository;
+    private CategoryModuleRepositoryInterface $categoryRepository;
 
     public function __construct(
         CourseRepositoryInterface $courseRepository,
         UserRepositoryInterface $userRepository,
         CommentRepositoryInterface $commentRepository,
         StudentRepositoryInterface $studentRepository,
-        CategoryRepositoryInterface $categoryRepository,
+        CategoryModuleRepositoryInterface $categoryRepository,
     ) {
         $this->courseRepository = $courseRepository;
         $this->userRepository = $userRepository;

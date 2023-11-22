@@ -6,11 +6,9 @@ use TechStudio\Lms\app\Models\Chapter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Lms\ChapterCreateUpdateRequest;
-use App\Http\Resources\Lms\ChapterPageResource;
-use App\Http\Resources\Lms\ChapterResource;
-use App\Repositories\Interfaces\ChapterRepositoryInterface;
-use App\Http\Resources\Lms\ChapterLessonResource;
+use TechStudio\Lms\app\Http\Request\ChapterCreateUpdateRequest;
+use TechStudio\Lms\app\Http\Resources\ChapterPageResource;
+use TechStudio\Lms\app\Repositories\Interfaces\ChapterRepositoryInterface;
 
 class ChapterController extends Controller
 {

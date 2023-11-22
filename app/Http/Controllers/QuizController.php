@@ -8,15 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Lms\QuizParticipateRequest;
-use App\Http\Resources\Lms\LessonPageResource;
-use App\Http\Resources\Lms\QuizListResource;
-use App\Http\Resources\Lms\QuizPageResource;
-use App\Http\Resources\Lms\QuizResultResource;
-use App\Models\Lesson;
-use App\Repositories\Interfaces\LessonRepositoryInterface;
-use App\Repositories\Interfaces\CourseRepositoryInterface;
 use Carbon\Carbon;
+use TechStudio\Lms\app\Http\Request\QuizParticipateRequest;
+use TechStudio\Lms\app\Http\Resources\QuizPageResource;
+use TechStudio\Lms\app\Http\Resources\QuizResultResource;
+use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\LessonRepositoryInterface;
 
 class QuizController extends Controller
 {

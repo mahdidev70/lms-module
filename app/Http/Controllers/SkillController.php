@@ -4,10 +4,9 @@ namespace TechStudio\Lms\app\Http\Controllers;
 
 use TechStudio\lms\app\Models\Skill;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Lms\SkillRequest;
-use App\Repositories\Interfaces\CourseRepositoryInterface;
-use App\Repositories\Interfaces\SkillRepositoryInterface;
 use Illuminate\Http\Request;
+use TechStudio\Lms\app\Http\Request\SkillRequest;
+use TechStudio\Lms\app\Repositories\Interfaces\SkillRepositoryInterface;
 
 class SkillController extends Controller
 {
