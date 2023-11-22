@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace TechStduio\Lms\app\Repositories;
 
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\Comment;
-use App\Repositories\Interfaces\CommentRepositoryInterface;
-
+use TechStudio\Core\app\Models\Comment;
+use TechStudio\Lms\app\Models\Course;
+use TechStudio\Lms\app\Repositories\Interfaces\CommentRepositoryInterface;
 
 class CommentRepository implements CommentRepositoryInterface
 {
@@ -23,9 +21,6 @@ class CommentRepository implements CommentRepositoryInterface
     public function getCourseComments($request)
     {
         $course = new Course();
-        return Comment::where([
-            'commentable_type' => get_class($course),
-
-        ]);
+        return Comment::where(['commentable_type' => get_class($course),]);
     }
 }
