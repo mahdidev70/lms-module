@@ -9,31 +9,31 @@ use stdClass;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-use Illuminate\Support\Facades\Validator as FacadesValidator;
-use App\Http\Requests\Lms\CourseCreateUpdateRequest;
-use App\Http\Resources\Lms\CourseResource;
-use App\Http\Resources\Lms\CoursesResource;
-use App\Http\Resources\Lms\CategoryResource;
-use App\Http\Resources\Lms\CourseRoomResource;
-use App\Http\Resources\Lms\InstructorResource;
-use App\Http\Resources\Lms\CoursePreviewResource;
-use App\Http\Resources\Lms\FiltersCourseResource;
-use App\Repositories\Interfaces\CourseRepositoryInterface;
-use App\Repositories\Interfaces\CategoryRepositoryInterface;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use TechStudio\Core\app\Models\Category;
 use TechStudio\Core\app\Models\UserProfile;
+use TechStudio\Lms\app\Http\Request\CourseCreateUpdateRequest;
+use TechStudio\Lms\app\Http\Resources\CategoryResource;
+use TechStudio\Lms\app\Http\Resources\CoursePreviewResource;
+use TechStudio\Lms\app\Http\Resources\CourseResource;
+use TechStudio\Lms\app\Http\Resources\CourseRoomResource;
+use TechStudio\Lms\app\Http\Resources\CoursesResource;
+use TechStudio\Lms\app\Http\Resources\FiltersCourseResource;
+use TechStudio\Lms\app\Http\Resources\InstructorResource;
 use TechStudio\Lms\app\Models\Student;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 
 class CourseController extends Controller
 {
     private CourseRepositoryInterface $repository;
-    private CategoryRepositoryInterface $categoryRepository;
+    private CategoryModuleRepositoryInterface $categoryRepository;
 
     public function __construct(
         CourseRepositoryInterface $repository,
-        CategoryRepositoryInterface $categoryRepository
+        CategoryModuleRepositoryInterface $categoryRepository
     ) {
         $this->repository = $repository;
         $this->categoryRepository = $categoryRepository;
@@ -215,7 +215,7 @@ class CourseController extends Controller
     public function getCourse($id)
     {
         $course = Course::where('id', $id)->firstOrFail();
-        return response()->json(new CourseResource($course));
+        return response()->json(new ResourcesCourseResource($course));
     }
 
     public function editStatus(Request $request, Course $course) 
