@@ -2,11 +2,13 @@
 
 namespace TechStudio\Lms\app\Models;
 
-use App\Models\Chapter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use TechStudio\Core\app\Models\Category;
+use TechStudio\Core\app\Models\Comment;
+use Illuminate\Database\Eloquent\Builder;
 
 class Course extends Model
 {
@@ -15,6 +17,17 @@ class Course extends Model
     protected $table = 'lms_courses';
 
     protected $guarded = ['id'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        if (!request()->is(['api/academy/panel/*'])) {
+            static::addGlobalScope('publishedCourse', function (Builder $builder) {
+                $builder->where('status', 'published');
+            });
+        }
+    }
 
     public function chapters()
     {
@@ -49,7 +62,7 @@ class Course extends Model
 
     public function skills(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class,'lms_course_skill');
+        return $this->belongsToMany(Skill::class,'course_skill');
     }
 
     public function rooms()
