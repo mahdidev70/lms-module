@@ -4,7 +4,6 @@ namespace TechStudio\Lms\app\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Course;
 
 class Chapter extends Model
 {
