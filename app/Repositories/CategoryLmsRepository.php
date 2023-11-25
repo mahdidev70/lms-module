@@ -4,9 +4,9 @@ namespace TechStudio\Lms\app\Repositories;
 
 use TechStudio\Core\app\Models\Category;
 use TechStudio\Lms\app\Models\Course;
-use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryLmsRepositoryInterface;
 
-class CategoryRepository implements CategoryModuleRepositoryInterface
+class CategoryLmsRepository implements CategoryLmsRepositoryInterface
 {
     public function getCategoriesWithCourses()
     {

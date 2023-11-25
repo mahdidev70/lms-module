@@ -2,7 +2,7 @@
 
 namespace TechStudio\Lms\app\Repositories\Interfaces;
 
-interface CategoryModuleRepositoryInterface
+interface CategoryLmsRepositoryInterface
 {
     public function getCategoriesWithCourses();
     public function getCategories();

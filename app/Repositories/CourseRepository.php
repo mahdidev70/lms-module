@@ -1,6 +1,6 @@
 <?php
 
-namespace TechStduio\Lms\app\Repositories;
+namespace TechStudio\Lms\app\Repositories;
 
 use App\Http\Resources\Lms\InstructorResource;
 use Illuminate\Support\Facades\DB;
