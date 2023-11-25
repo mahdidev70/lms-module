@@ -1,5 +1,7 @@
 <?php
 
+namespace TechStudio\Lms\database\Migrations;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +21,7 @@ return new class extends Migration
             $table->integer('order')->nullable();
             $table->enum('dominant_type', ['text', 'video', 'exam']);
             $table->json('content');
+            $table->string('duration')->nullable();
             $table->json('information')->nullable();
             $table->timestamps();
         });
