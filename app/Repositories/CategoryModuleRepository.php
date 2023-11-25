@@ -1,28 +1,23 @@
 <?php
 
-namespace App\Repositories;
+namespace TechStudio\Lms\app\Repositories;
 
-use App\Models\Category;
-use App\Models\Course;
-use App\Models\Lesson;
-use App\Repositories\Interfaces\CategoryRepositoryInterface;
+use TechStudio\Core\app\Models\Category;
+use TechStudio\Lms\app\Models\Course;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
 
-
-class CategoryRepository implements CategoryRepositoryInterface
+class CategoryRepository implements CategoryModuleRepositoryInterface
 {
-
     public function getCategoriesWithCourses()
     {
         $course = new Course();
-        return $categories = Category::where('table_type', get_class($course))
-            ->with('courses')->get();
+        return Category::where('table_type', get_class($course))->with('courses')->get();
     }
 
     public function getCategories()
     {
         $course = new Course();
-        return $categories = Category::where('table_type', get_class($course))
-            ->get();
+        return Category::where('table_type', get_class($course))->get();
     }
 
     public function getAllSkills(){

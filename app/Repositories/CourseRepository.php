@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Repositories;
+namespace TechStduio\Lms\app\Repositories;
 
-use App\Helper\ArrayPaginate;
-use App\Helper\SlugGenerator;
 use App\Http\Resources\Lms\InstructorResource;
-use App\Models\Alias;
-use App\Models\Course;
-use App\Models\Chapter;
-use App\Models\Category;
-use App\Models\Skill;
-use App\Models\UserProfile;
-use App\Models\View;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\Interfaces\CourseRepositoryInterface;
 use Carbon\Carbon;
+use TechStudio\Core\app\Helper\SlugGenerator;
+use TechStudio\Core\app\Models\UserProfile;
+use TechStudio\Lms\app\Models\Course;
+use TechStudio\Lms\app\Models\Skill;
+use TechStudio\Lms\app\Models\View;
+use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 
 class CourseRepository implements CourseRepositoryInterface
 {
@@ -53,9 +49,6 @@ class CourseRepository implements CourseRepositoryInterface
                 if ($request->instructorType == 'User') {
                     $user = new UserProfile();
                     $type = get_class($user);
-                } else {
-                    $alias = new Alias();
-                    $type = get_class($alias);
                 }
                 $query->where('instructor_id', $request->instructorId)->where('instructor_type', $type);
             }
@@ -70,30 +63,42 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getAllInstructors()
     {
-        return $instructor = Course::get()->unique('instructor_type', 'instructor_id')->pluck('instructor');
+        return Course::get()->unique('instructor_type', 'instructor_id')->pluck('instructor');
     }
 
-    public function getInstructors()
+    public function getInstructors($request)
     {
-
         $userProfile = new UserProfile();
-        $alias = new Alias();
-        $userProfileIds = Course::select('instructor_id')->distinct()
-            ->where('instructor_type', get_class($userProfile))
-            ->pluck('instructor_id');
-
-        $aliasIds = Course::select('instructor_id')->distinct()
-            ->where('instructor_type', get_class($alias))
-            ->pluck('instructor_id');
-
-        $userProfiles = UserProfile::whereIn('id', $userProfileIds)->get();
-        $aliases = Alias::whereIn('id', $aliasIds)
-            ->withCount('courses')
-            ->with('courses:id')
-            ->get();
-
-        $instructors = $aliases->merge($userProfiles);
         
+        $userProfileIds = Course::select('instructor_id')->distinct()
+        ->where('instructor_type', get_class($userProfile))
+        ->pluck('instructor_id');
+        
+        $query = UserProfile::whereIn('id', $userProfileIds);
+
+        if ($request->filled('search')) {
+            $txt = $request->get('search');
+
+            $query->where(function ($q) use ($txt) {
+                $q
+                    ->orWhere('first_name', 'like', '% '.$txt.'%')
+                    ->orWhere('last_name', 'like', '% '.$txt.'%');
+            });
+        }
+    
+        if ($request->has('sort')) {
+            if ($request->sort == 'commentCount') {
+                $instructors = $query->withCount(['courses as comment_count' => function ($query) {
+                    $query->select('instructor_id')->join('comments', 'comments.commentable_id', '=', 'courses.id')
+                    ->where('courses.instructor_id', '=', 'user_profiles.id');
+                }])->orderBy('comment_count', 'desc')->paginate(10);
+            } elseif ($request->sort == 'courseCount') {
+                $instructors = $query->withCount('courses')->orderBy('courses_count', 'desc')->paginate(10);
+            }
+        } else {
+            $instructors = $query->paginate(10);
+        }
+    
         return $instructors;
     }
 
@@ -138,21 +143,21 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function createUpdate($data)
     {
-        $learningPoints = json_encode($data['learningPoint']);
+        $learningPoints = json_encode($data['learningPoints']);
         $features = json_encode($data['features']);
         $languages = json_encode($data['languages']);
-        $supportItem = json_encode($data['supportItem']);
+        $supportItems = json_encode($data['supportItems']);
         $faq = json_encode($data['faq']);
-    
+        
         $instructorType = '';
         $instructorId = $data['instructor']['id'];
+
+        $userModel = new UserProfile();
     
         if ($data['instructor']['type'] == 'User') {
-            $instructorType = 'App\Models\UserProfile';
-        } elseif ($data['instructor']['type'] == 'Alias') {
-            $instructorType = 'App\Models\Alias';
+            $instructorType = get_class($userModel);
         }
-    
+
         $courseData = [
             'title' => $data['title'],
             'slug' => SlugGenerator::transform($data['title']),
@@ -166,7 +171,7 @@ class CourseRepository implements CourseRepositoryInterface
             'instructor_type' => $instructorType,
             'instructor_id' => $instructorId,
             'learning_points' => $learningPoints,
-            'support_items' => $supportItem,
+            'support_items' => $supportItems,
             'FAQ' => $faq,
         ];
     
@@ -176,7 +181,7 @@ class CourseRepository implements CourseRepositoryInterface
             $course->skills()->sync([$data['skillId']]);
         }
 
-        // $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
+        $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
     
         // if (!empty($data['skillIds']) && is_array($data['skillIds']) && count($data['skillIds']) > 0) {
         //     $skills = collect($data['skillIds'])->map(function ($skillId) {

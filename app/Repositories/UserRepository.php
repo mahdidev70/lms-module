@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace TechStudio\Lms\app\Repositories;
 
-use App\Models\UserProfile;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-
+use TechStudio\Core\app\Models\UserProfile;
+use TechStudio\Lms\app\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace TechStduio\Lms\app\Repositories;
+namespace TechStudio\Lms\app\Repositories;
 
 use TechStudio\Core\app\Models\Comment;
 use TechStudio\Lms\app\Models\Course;

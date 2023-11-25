@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace TechStudio\Lms\app\Repositories;
 
-use App\Helper\SlugGenerator;
-use App\Models\Lesson;
-use App\Models\QuizParticipant;
-use App\Repositories\Interfaces\LessonRepositoryInterface;
 use Dflydev\DotAccessData\Data;
+use TechStudio\Core\app\Helper\SlugGenerator;
+use TechStudio\Lms\app\Models\Lesson;
+use TechStudio\Lms\app\Models\QuizParticipant;
+use TechStudio\Lms\app\Repositories\Interfaces\LessonRepositoryInterface;
 
 class LessonRepository implements LessonRepositoryInterface
 {
