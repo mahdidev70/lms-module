@@ -215,7 +215,7 @@ class CourseController extends Controller
     public function getCourse($id)
     {
         $course = Course::where('id', $id)->firstOrFail();
-        return response()->json(new ResourcesCourseResource($course));
+        return response()->json(new CourseResource($course));
     }
 
     public function editStatus(Request $request, Course $course) 
@@ -228,7 +228,7 @@ class CourseController extends Controller
             $courses = $course->whereIn('id', $ids)->get();
 
             foreach ($courses as $course) {
-                $data = FacadesValidator::make($course->toArray(), [
+                $data = Validator::make($course->toArray(), [
                     'title' => 'required',
                     'slug' => 'required',
                     'instructor_type' => 'required',
