@@ -11,7 +11,7 @@ class QuizParticipant extends Model
 
     protected $table = 'lms_quiz_participants';
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
     
     protected $casts = [
         'selected_choices' => 'array',
