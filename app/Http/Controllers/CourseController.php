@@ -23,17 +23,17 @@ use TechStudio\Lms\app\Http\Resources\CoursesResource;
 use TechStudio\Lms\app\Http\Resources\FiltersCourseResource;
 use TechStudio\Lms\app\Http\Resources\InstructorResource;
 use TechStudio\Lms\app\Models\Student;
-use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryLmsRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 
 class CourseController extends Controller
 {
     private CourseRepositoryInterface $repository;
-    private CategoryModuleRepositoryInterface $categoryRepository;
+    private CategoryLmsRepositoryInterface $categoryRepository;
 
     public function __construct(
         CourseRepositoryInterface $repository,
-        CategoryModuleRepositoryInterface $categoryRepository
+        CategoryLmsRepositoryInterface $categoryRepository
     ) {
         $this->repository = $repository;
         $this->categoryRepository = $categoryRepository;
@@ -74,7 +74,7 @@ class CourseController extends Controller
 
     public function courseList(Request $request)
     {
-        $query =Course::with('students');
+        $query = Course::with('students');
 
         if ($request->filled('search')) {
             $txt = $request->get('search');
