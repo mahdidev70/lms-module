@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use TechStudio\Lms\app\Http\Resources\InstructorsResource;
 use TechStudio\Lms\app\Http\Resources\UserHomeResource;
-use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryLmsRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\CommentRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\StudentRepositoryInterface;
@@ -21,14 +21,14 @@ class UserController extends Controller
     private CourseRepositoryInterface $courseRepository;
     private StudentRepositoryInterface $studentRepository;
     private CommentRepositoryInterface $commentRepository;
-    private CategoryModuleRepositoryInterface $categoryRepository;
+    private CategoryLmsRepositoryInterface $categoryRepository;
 
     public function __construct(
         CourseRepositoryInterface $courseRepository,
         UserRepositoryInterface $userRepository,
         CommentRepositoryInterface $commentRepository,
         StudentRepositoryInterface $studentRepository,
-        CategoryModuleRepositoryInterface $categoryRepository,
+        CategoryLmsRepositoryInterface $categoryRepository,
     ) {
         $this->courseRepository = $courseRepository;
         $this->userRepository = $userRepository;
