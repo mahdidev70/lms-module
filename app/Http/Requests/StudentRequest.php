@@ -22,9 +22,9 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'courseId' => 'required|integer|exists:courses,id',
+            'courseId' => 'required|integer|exists:lms_courses,id',
             'rate' => 'required|integer|between:1,10',
-            'commetn' => 'string',
+            'comment' => 'string',
         ];
     }
 }
