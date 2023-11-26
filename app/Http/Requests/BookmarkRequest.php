@@ -1,7 +1,6 @@
 <?php
 
-namespace TechStudio\Lms\app\Http\Requests        return $skillRequest;
-;
+namespace TechStudio\Lms\app\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +22,7 @@ class BookmarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'courseId' => 'required|integer|exists:courses,id',
+            'courseId' => 'required|integer|exists:lms_courses,id',
             'bookmark' => 'required|boolean',
         ];
     }
