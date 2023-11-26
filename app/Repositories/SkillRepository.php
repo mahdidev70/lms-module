@@ -8,6 +8,22 @@ use TechStudio\Lms\app\Repositories\Interfaces\SkillRepositoryInterface;
 
 class SkillRepository implements SkillRepositoryInterface
 {
+    public function list($data) 
+    {
+        $query = Skill::withCount('courses');
+        
+        if ($data->filled('search')) {
+            $txt = $data->get('search');
+        
+            $query->where(function ($q) use ($txt) {
+                $q->where('title', 'like', '%' . $txt . '%');
+            });
+        }
+
+        $skill = $query->paginate(10);
+
+        return $skill;
+    }
 
     public function createUpdate($data)
     {
@@ -24,4 +40,14 @@ class SkillRepository implements SkillRepositoryInterface
         return $skill;
     }
 
+    public function getCommonSkill() 
+    {
+        $counts = [
+            'all' => Skill::all()->count(),
+            'active' => Skill::where('status', 1)->count(),
+            'hidden' => Skill::where('status', 0)->count(),
+        ];
+
+        return $counts;
+    }
 }

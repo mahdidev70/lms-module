@@ -5,12 +5,11 @@ namespace TechStudio\Lms\app\Http\Controllers;
 use TechStudio\lms\app\Models\Skill;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use TechStudio\Lms\app\Http\Request\SkillRequest;
+use TechStudio\Lms\app\Http\Requests\SkillRequest;
 use TechStudio\Lms\app\Repositories\Interfaces\SkillRepositoryInterface;
 
 class SkillController extends Controller
 {
-
     private SkillRepositoryInterface $repository;
 
     public function __construct(SkillRepositoryInterface $repository)
@@ -20,19 +19,21 @@ class SkillController extends Controller
 
     public function getSkillList(Request $request)
     {
-        $query = Skill::withCount('courses');
+        // $query = Skill::withCount('courses');
         
-        if ($request->filled('search')) {
-            $txt = $request->get('search');
+        // if ($request->filled('search')) {
+        //     $txt = $request->get('search');
         
-            $query->where(function ($q) use ($txt) {
-                $q->where('title', 'like', '%' . $txt . '%');
-            });
-        }
+        //     $query->where(function ($q) use ($txt) {
+        //         $q->where('title', 'like', '%' . $txt . '%');
+        //     });
+        // }
 
-        $skill = $query->paginate(10);
+        // $skill = $query->paginate(10);
 
-        return $skill;
+        // return $skill;
+        $skillList = $this->repository->list($request);
+        return $skillList;
     }
 
     public function editCreateSkill(SkillRequest $skillRequest)
@@ -43,12 +44,7 @@ class SkillController extends Controller
 
     public function getCommonList() 
     {
-        $counts = [
-            'all' => Skill::all()->count(),
-            'active' => Skill::where('status', 1)->count(),
-            'hidden' => Skill::where('status', 0)->count(),
-        ];
-
-        return $counts;
+        $skill = $this->repository->getCommonSkill();
+        return $skill;
     }
 }
