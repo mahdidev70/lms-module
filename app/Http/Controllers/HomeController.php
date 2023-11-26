@@ -5,16 +5,16 @@ namespace TechStudio\Lms\app\Http\Controllers;
 use stdClass;
 use App\Http\Controllers\Controller;
 use TechStudio\Lms\app\Http\Resources\HomePageResource;
-use TechStudio\Lms\app\Repositories\Interfaces\CategoryModuleRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryLmsRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\CommentRepositoryInterface;
 
 class HomeController extends Controller
 {
-    private CategoryModuleRepositoryInterface $categoryRepository;
+    private CategoryLmsRepositoryInterface $categoryRepository;
     private CommentRepositoryInterface $commentRepository;
 
     public function __construct(
-        CategoryModuleRepositoryInterface $categoryRepository,
+        CategoryLmsRepositoryInterface $categoryRepository,
         CommentRepositoryInterface $commentRepository,
     ) {
         $this->categoryRepository = $categoryRepository;
