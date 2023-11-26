@@ -55,16 +55,16 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentList($request) 
     {
-        $query = Student::with('course', 'userProfile')->join('user_profiles', 'students.user_id', '=', 'user_profiles.id')
-        ->groupBy('students.user_id')->selectRaw('count(*) as total, students.user_id');
+        $query = Student::with('course', 'userProfile')->join('core_user_profiles', 'lms_students.user_id', '=', 'core_user_profiles.id')
+        ->groupBy('lms_students.user_id')->selectRaw('count(*) as total, lms_students.user_id');
 
         if ($request->filled('search')) {
 
             $txt = $request->get('search');
 
             $query->where(function ($q) use ($txt) {
-                $q->where('user_profiles.first_name', 'like', '%'.$txt.'%')
-                    ->orWhere('user_profiles.last_name', 'like', '%'.$txt.'%');
+                $q->where('core_user_profiles.first_name', 'like', '%'.$txt.'%')
+                    ->orWhere('core_user_profiles.last_name', 'like', '%'.$txt.'%');
             });
         }
 
@@ -74,7 +74,7 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function certificatesByStudent($request) 
     {
-        $query = Student::whereNotNull('certificate_file')->join('user_profiles', 'students.user_id', '=', 'user_profiles.id')
+        $query = Student::whereNotNull('certificate_file')->join('core_user_profiles', 'lms_students.user_id', '=', 'core_user_profiles.id')
         ->with('course', 'userProfile');
 
         if ($request->filled('search')) {
@@ -82,8 +82,8 @@ class StudentRepository implements StudentRepositoryInterface
             $txt = $request->get('search');
 
             $query->where(function ($q) use ($txt) {
-                $q->where('user_profiles.first_name', 'like', '%'.$txt.'%')
-                    ->orWhere('user_profiles.last_name', 'like', '%'.$txt.'%');
+                $q->where('core_user_profiles.first_name', 'like', '%'.$txt.'%')
+                    ->orWhere('core_user_profiles.last_name', 'like', '%'.$txt.'%');
             });
         }
 
