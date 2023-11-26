@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use TechStudio\Blog\app\Models\Article;
-use TechStudio\Lms\app\Http\Request\LessonCreateUpdateRequest;
+use TechStudio\Lms\app\Http\Requests\LessonCreateUpdateRequest;
 use TechStudio\Lms\app\Http\Resources\LessonPageResource;
 use TechStudio\Lms\app\Http\Resources\LessonResource;
 use TechStudio\Lms\app\Models\Lesson;
@@ -21,7 +21,7 @@ class LessonController extends Controller
         $this->repository = $repository;
     }
 
-    public function show($lessonSlug)
+    public function show($local, $lessonSlug)
     {
         $lesson = $this->repository->getBySlug($lessonSlug);
         return response()->json(new LessonPageResource($lesson));
@@ -34,13 +34,13 @@ class LessonController extends Controller
         return $lesson->id;
     }
 
-    public function getLesson($id)
+    public function getLesson($local, $id)
     {
         $lesson = Lesson::where('id', $id)->firstOrFail();
         return response()->json(new LessonResource($lesson));
     }
 
-    public function deleteLesson($slug) 
+    public function deleteLesson($local, $slug) 
     {
         $lesson = Lesson::where('slug', $slug)->firstOrFail();
         $lesson = $lesson->delete();
