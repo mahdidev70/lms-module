@@ -1,6 +1,7 @@
 <?php
 
-namespace TechStudio\Lms\app\Http\Request;
+namespace TechStudio\Lms\app\Http\Requests        return $skillRequest;
+;
 
 use Illuminate\Foundation\Http\FormRequest;
 

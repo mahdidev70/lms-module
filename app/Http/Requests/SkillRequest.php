@@ -1,6 +1,6 @@
 <?php
 
-namespace TechStudio\Lms\app\Http\Request;
+namespace TechStudio\Lms\app\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -25,7 +25,7 @@ class SkillRequest extends FormRequest
         return [
             'id' => ['required', 'integer'],
             'status' => ['required','in:active,hidden,deleted'],
-            'title' => ['required', 'string', Rule::unique('categories', 'title')->ignore($this->id, 'id')],
+            'title' => ['required', 'string', Rule::unique('lms_skills', 'title')->ignore($this->id, 'id')],
             'slug' => [Rule::unique('categories', 'slug')->ignore($this->id, 'id')],
             'description' => 'string',
         ];
