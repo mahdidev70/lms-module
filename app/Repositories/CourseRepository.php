@@ -178,21 +178,10 @@ class CourseRepository implements CourseRepositoryInterface
         $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
     
         if (!empty($data['skillId'])) {
-            $course->skills()->sync([$data['skillId']]);
+            $course->skills()->sync($data['skillId']);
         }
 
         $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
-    
-        // if (!empty($data['skillIds']) && is_array($data['skillIds']) && count($data['skillIds']) > 0) {
-        //     $skills = collect($data['skillIds'])->map(function ($skillId) {
-        //         return Skill::findOrFail($skillId);
-        //     });
-            
-        //     $course->skills()->sync($skills->pluck('id')->toArray());
-
-        // } else {
-        //     $course->skills()->detach();
-        // }
     
         return $course;
     }
