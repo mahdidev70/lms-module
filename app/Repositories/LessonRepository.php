@@ -36,11 +36,8 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function createUpdate($data)
     {
-
-        $content = json_encode($data['content']);
-
-        $information = json_encode($data['answers']);
-
+        $information = json_encode($data['trueAnswers']);
+        
         $lesson = Lesson::updateOrCreate(
             ['id' => $data['id']],
             [
@@ -48,7 +45,7 @@ class LessonRepository implements LessonRepositoryInterface
                 'slug' => SlugGenerator::transform($data['title']),
                 'chapter_id' => $data['chapterId'],
                 'dominant_type' => $data['dominantType'],
-                'content' => $content,
+                'content' => $data['content'],
                 'information' => $information,
                 'order' => $data['order'],
             ]

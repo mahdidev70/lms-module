@@ -25,7 +25,7 @@ class CourseCreateUpdateRequest extends FormRequest
             //required fields to create a course: 
             'title' => 'required|string',
             'description' => 'required|string',
-            // 'category' => 'integer',
+            'categoryId' => 'integer',
             'instructor' => 'required|array',
             // Optional fields to create a course:
             'bannerUrl' => 'string',

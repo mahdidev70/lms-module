@@ -28,7 +28,7 @@ class QuizController extends Controller
         $this->courseRepository = $courseRepository;
     }
 
-    public function participate(QuizParticipateRequest $request, $quizId)
+    public function participate($local, QuizParticipateRequest $request, $quizId)
     {
         $lastResult = $this->lessonRepository->getLastQuizResult($quizId, Auth::user()->id);
 
