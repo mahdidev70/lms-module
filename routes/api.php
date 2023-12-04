@@ -27,110 +27,105 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-if (!Config::get('flags.academy')) {
-    return;
-}
-
 Route::prefix('academy')->group(function () {
 
     // ============ CLIENT SIDE ===============
     
-    // Route::get('/home', [HomeController::class, 'index']);
-    // Route::get('/course/list', [CourseController::class, 'getAllCourseData']);
-    // Route::get('/course/filters', [CourseController::class, 'filters']);
+    // Route::get('/home', [HomeController::class, 'index']); //Done
+    // Route::get('/course/list', [CourseController::class, 'getAllCourseData']); //Done
+    // Route::get('/course/filters', [CourseController::class, 'filters']); //Done
     
-    // Route::middleware('login_optional')->prefix('course')->group(function() {
-        
-    //     Route::get('/{courseSlug}', [CourseController::class, 'getCourseData']);
-    //     Route::get('/room/list/{courseSlug}', [CourseController::class, 'getCourseRoom']);
-        
-    // });
+    Route::middleware('auth:sanctum')->group(function() {
 
-    Route::middleware('login_required')->group(function() {
+        // Route::get('/{courseSlug}', [CourseController::class, 'getCourseData']); //Done
 
-        // Route::get('/chapter/{chapterSlug}', [ChapterController::class,'show']);
-        // Route::get('/lesson/{lessonSlug}', [LessonController::class, 'show']);
+        // Route::get('/room/list/{courseSlug}', [CourseController::class, 'getCourseRoom']);
 
-        // Route::get('/user/panel', [UserController::class, 'index']);
+        // Route::get('/chapter/{chapterSlug}', [ChapterController::class,'show']); //Done
+
+        // Route::get('/lesson/{lessonSlug}', [LessonController::class, 'show']); //Done
+
+        // Route::get('/user/panel', [UserController::class, 'index']); //Done
     
-    //     Route::post('/quiz/participate/{quizId}', [QuizController::class, 'participate']);
+        // Route::post('/quiz/participate/{quizId}', [QuizController::class, 'participate']);
     
-    //     Route::post('/course/rate',  [StudentController::class, 'storeCertificate']);
-    //     Route::post('/course/bookmark',  [StudentController::class, 'storeBookmark']);
+        // Route::post('/course/rate',  [StudentController::class, 'storeCertificate']); //Done
+
+        // Route::post('/course/bookmark',  [StudentController::class, 'storeBookmark']); //Done
     
-    //     Route::get('/course/quiz/list/{courseSlug}', [QuizController::class, 'quizList']);
+        // Route::get('/course/quiz/list/{courseSlug}', [QuizController::class, 'quizList']); //Done
     
     //     // ============== PANEL ================
     
-    //     Route::prefix('panel')->group(function () {
+        Route::prefix('panel')->group(function () {
             
-    //         Route::get('/instructor/list', [UserController::class, 'instructors']);
+            // Route::get('/instructor/list', [UserController::class, 'instructors']); //Done
     
-    //         Route::get('/course/list', [CourseController::class, 'courseList']);
+            // Route::get('/course/list', [CourseController::class, 'courseList']); //Done
     
-    //         Route::put('course_editor/data', [CourseController::class, 'editCreateCourse']);
+            // Route::put('course_editor/data', [CourseController::class, 'editCreateCourse']); //Done
     
-    //         Route::put('/chapter_editor/data', [ChapterController::class, 'editCreateCahpter']);
+            // Route::put('/chapter_editor/data', [ChapterController::class, 'editCreateCahpter']); //Done
     
-    //         Route::put('lesson_editor/data', [LessonController::class, 'editCreateLesson']);
+            // Route::put('lesson_editor/data', [LessonController::class, 'editCreateLesson']); //Done
     
-    //         Route::get('/comment/list', [CommentController::class, 'getCourseCommnetsList']);
+            // Route::get('/comment/list', [CommentController::class, 'getCourseCommnetsList']); //Done
     
-    //         Route::put('/comment_editor/data', [CommentController::class, 'editCreateCommentCourse']);
+            // Route::put('/comment_editor/data', [CommentController::class, 'editCreateCommentCourse']); //Done
     
-    //         Route::get('/skill/list', [SkillController::class, 'getSkillList']);
+            // Route::get('/skill/list', [SkillController::class, 'getSkillList']); //Done
     
-    //         Route::put('/skill_editor/data', [SkillController::class, 'editCreateSkill']);
+            // Route::put('/skill_editor/data', [SkillController::class, 'editCreateSkill']); //Done
     
-    //         Route::get('/category/list', [CategoriesController::class, 'getCourseCategoryList']);
+            // Route::get('/category/list', [CategoriesController::class, 'getCourseCategoryList']); //Done
     
-    //         Route::put('/category_editor/data', [CategoriesController::class, 'editCreateCategoryCourse']);
+            // Route::put('/category_editor/data', [CategoriesController::class, 'editCreateCategoryCourse']); //Done
     
-    //         Route::get('/course_editor/common', [CourseController::class, 'getCommonCreateUpdate']);
+            // Route::get('/course_editor/common', [CourseController::class, 'getCommonCreateUpdate']); //Done
     
-    //         Route::get('/course/list/common', [CourseController::class, 'getCommonList']);
+            // Route::get('/course/list/common', [CourseController::class, 'getCommonList']); //Done
     
-    //         Route::get('/students/list', [StudentController::class, 'getStudentList']);
+            // Route::get('/students/list', [StudentController::class, 'StudentList']);
             
-    //         Route::get('/instructor/list/common', [UserController::class, 'getCommonList']);
+            // Route::get('/instructor/list/common', [UserController::class, 'getInstructorCommonList']); //Done
             
-    //         Route::get('/comment/list/common', [CommentController::class, 'getCourseCommonList']);
+            // Route::get('/comment/list/common', [CommentController::class, 'getCourseCommonList']); //Done
     
-    //         Route::get('/skill/list/common', [SkillController::class, 'getCommonList']);
+            // Route::get('/skill/list/common', [SkillController::class, 'getCommonList']); //Done
     
-    //         Route::get('/category/list/common', [CategoriesController::class, 'getCourseCategoyCommon']);
+            // Route::get('/category/list/common', [CategoriesController::class, 'getCourseCategoyCommon']);
     
-    //         Route::get('/chapter/list/{id}', [ChapterController::class, 'getChapterLessonList']);
+            // Route::get('/chapter/list/{id}', [ChapterController::class, 'getChapterLessonList']); //Done
     
-            // Route::get('/course/{id}', [CourseController::class, 'getCourse']);
+            // Route::get('/course/{id}', [CourseController::class, 'getCourse']); //Done
 
     // =============================== NEW ROUTES ===========================================
 
-            // Route::get('lesson/{id}', [LessonController::class, 'getLesson']);
+            // Route::get('lesson/{id}', [LessonController::class, 'getLesson']); //Done
 
-            // Route::delete('chapter/{slug}', [ChapterController::class, 'deleteChapter']);
+            // Route::delete('chapter/{slug}', [ChapterController::class, 'deleteChapter']); //Done
 
-            // Route::delete('lesson/{slug}', [LessonController::class, 'deleteLesson']);
+            // Route::delete('lesson/{slug}', [LessonController::class, 'deleteLesson']); //Done
 
             // Route::get('lesson/article/reference', [LessonController::class, 'getArticleRefrence']);
 
-            // Route::put('set_status', [CourseController::class, 'editStatus']);
+            // Route::put('set_status', [CourseController::class, 'editStatus']); //Bug
 
-            // Route::put('comment/status', [CommentController::class, 'updateCommentsStatus']);
+            // Route::put('comment/status', [CommentController::class, 'updateCommentsStatus']); //Done
 
-            // Route::put('category/status', [CategoriesController::class, 'updateCategoryStatus']);
+            // Route::put('category/status', [CategoriesController::class, 'updateCategoryStatus']); //Done
 
             // Route::get('view_dashboard', [CourseController::class, 'viewDashboard']);
 
-            // Route::get('certificate/list', [StudentController::class, 'certificateByStudentList']);
+            // Route::get('certificate/list', [StudentController::class, 'certificateByStudentList']); //Done
 
-            // Route::get('certificate/common', [StudentController::class, 'certificateCommon']);
+            // Route::get('certificate/common', [StudentController::class, 'certificateCommon']); //Done
 
-            // Route::get('student/common', [StudentController::class, 'studentCommonList']);
+            // Route::get('student/common', [StudentController::class, 'studentCommonList']); //Done
 
             // Route::get('comment/excel/export', [CommentController::class, 'exportExcel']);
     
-    //     });
+        });
     });
     
 });
