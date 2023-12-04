@@ -105,8 +105,8 @@ class CourseRepository implements CourseRepositoryInterface
     public function getTopCourses()
     {
         $result = DB::select('SELECT c.id, sum(s.rate) / COUNT(s.id) as "score"  
-        FROM courses c
-        join students s 
+        FROM lms_courses c
+        join lms_students s 
         on s.course_id = c.id
         GROUP BY c.id 
         ORDER BY score DESC Limit 4');
