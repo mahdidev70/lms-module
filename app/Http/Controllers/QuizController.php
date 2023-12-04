@@ -86,14 +86,9 @@ class QuizController extends Controller
         return response()->json(new QuizResultResource($quizResult));
     }
 
-    public function quizList($courseSlug)
+    public function quizList($local, $courseSlug)
     {
         $course = $this->courseRepository->getBySlug($courseSlug);
-
-        // $chapters_id = Chapter::where('course_id', $course->id)->pluck('id');
-
-        // $quiz = Lesson::whereIn('chapter_id', $chapters_id)->where('dominant_type', 'exam')->get();
-
         return response()->json(new QuizPageResource($course));
     }
 }
