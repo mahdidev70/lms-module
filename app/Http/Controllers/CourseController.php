@@ -14,7 +14,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use TechStudio\Core\app\Models\Category;
 use TechStudio\Core\app\Models\UserProfile;
-use TechStudio\Lms\app\Http\Request\CourseCreateUpdateRequest;
+use TechStudio\Lms\app\Http\Requests\CourseCreateUpdateRequest;
 use TechStudio\Lms\app\Http\Resources\CategoryResource;
 use TechStudio\Lms\app\Http\Resources\CoursePreviewResource;
 use TechStudio\Lms\app\Http\Resources\CourseResource;
@@ -39,7 +39,7 @@ class CourseController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
-    function getCourseData($courseSlug)
+    function getCourseData($local, $courseSlug)
     {
         $course = $this->repository->getBySlug($courseSlug);
         $this->repository->incrementField($course->id,'view_count');
@@ -68,7 +68,7 @@ class CourseController extends Controller
         $data->categories = $this->categoryRepository->getCategories();
         $data->skills = $this->repository->getAllSkills();
         $data->instructors = $this->repository->getAllInstructors();
-
+        // return $data;
         return response()->json(new FiltersCourseResource($data));
     }
 
@@ -212,20 +212,20 @@ class CourseController extends Controller
         ];
     }
 
-    public function getCourse($id)
+    public function getCourse($local, $id)
     {
         $course = Course::where('id', $id)->firstOrFail();
         return response()->json(new CourseResource($course));
     }
 
-    public function editStatus(Request $request, Course $course) 
+    public function editStatus(Request $request) 
     {
         $ids = $request['ids'];
 
         if ($request['status'] == 'published') {
 
             $date = Carbon::now()->toDateTimeString();
-            $courses = $course->whereIn('id', $ids)->get();
+            $courses = Course::whereIn('id', $ids)->get();
 
             foreach ($courses as $course) {
                 $data = Validator::make($course->toArray(), [
