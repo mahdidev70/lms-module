@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use TechStudio\Lms\app\Http\Request\QuizParticipateRequest;
+use TechStudio\Lms\app\Http\Requests\QuizParticipateRequest;
 use TechStudio\Lms\app\Http\Resources\QuizPageResource;
 use TechStudio\Lms\app\Http\Resources\QuizResultResource;
 use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
