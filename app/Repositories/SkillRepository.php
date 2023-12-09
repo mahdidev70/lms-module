@@ -20,6 +20,17 @@ class SkillRepository implements SkillRepositoryInterface
             });
         }
 
+        $sortOrder= 'desc';
+        if (isset($data->sortOrder) && ($data->sortOrder ==  'asc' || $data->sortOrder ==  'desc')) {
+            $sortOrder = $data->sortOrder;
+        }
+
+        if ($data->has('sortKey')) {
+            if ($data->sortKey == 'courseCount') {
+                $query->withCount('courses')->orderBy('courses_count', $sortOrder);
+            }
+        }
+
         $skill = $query->paginate(10);
 
         return $skill;
