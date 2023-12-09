@@ -129,5 +129,4 @@ Route::prefix('academy')->group(function () {
     
         });
     });
-    
 });
