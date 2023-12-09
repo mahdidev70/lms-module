@@ -30,7 +30,6 @@ class HomeController extends Controller
         $data->outPutSqureDownBannerUrl = 'third url';
         $data->outPutRectangleBannerUrl = 'fourth url';
         $data->comments = $this->commentRepository->getStarComments();
-
         return response()->json(new HomePageResource($data));
     }
 
