@@ -75,7 +75,6 @@ class CourseController extends Controller
     public function courseList(Request $request)
     {
         $query = Course::with('students');
-
         if ($request->filled('search')) {
             $txt = $request->get('search');
 
