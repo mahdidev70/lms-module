@@ -19,19 +19,6 @@ class SkillController extends Controller
 
     public function getSkillList(Request $request)
     {
-        // $query = Skill::withCount('courses');
-        
-        // if ($request->filled('search')) {
-        //     $txt = $request->get('search');
-        
-        //     $query->where(function ($q) use ($txt) {
-        //         $q->where('title', 'like', '%' . $txt . '%');
-        //     });
-        // }
-
-        // $skill = $query->paginate(10);
-
-        // return $skill;
         $skillList = $this->repository->list($request);
         return $skillList;
     }
