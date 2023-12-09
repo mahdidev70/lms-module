@@ -105,23 +105,28 @@ class CourseController extends Controller
         }
 
         //sort data
-        if ($request->has('sort')) {
+        $sortOrder= 'desc';
+        if (isset($request->sortOrder) && ($request->sortOrder ==  'asc' || $request->sortOrder ==  'desc')) {
+            $sortOrder = $request->sortOrder;
+        }
+        
+        if ($request->has('sortKey')) {
 
-            if ($request->sort == 'publicationDate') {
-                $query->orderBy('publication_date', 'desc');
-            } elseif ($request->sort == 'studentCount') {
-                $query->withCount('students')->orderBy('students_count', 'desc');
-            } elseif ($request->sort == 'graduateStudentCount') {
+            if ($request->sortKey == 'publicationDate') {
+                $query->orderBy('publication_date', $sortOrder);
+            } elseif ($request->sortKey == 'studentCount') {
+                $query->withCount('students')->orderBy('students_count', $sortOrder);
+            } elseif ($request->sortKey == 'graduateStudentCount') {
                 $query->withCount(['students' => function ($q) {
                     $q->where('in_roll', 'done');
-                }])->orderBy('students_count', 'desc')->orderBy('publication_date', 'desc');
-            } elseif ($request->sort == 'rate') {
+                }])->orderBy('students_count', $sortOrder)->orderBy('publication_date', $sortOrder);
+            } elseif ($request->sortKey == 'rate') {
                 $query->withCount(['students' => function ($q) {
                     $q->whereNotNull('rate');
-                }])->orderBy('students_count', 'desc');
+                }])->orderBy('students_count', $sortOrder);
             }
-
         }
+
 
         $courses = $query->paginate(10);
 
