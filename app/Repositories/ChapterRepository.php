@@ -15,7 +15,6 @@ class ChapterRepository implements ChapterRepositoryInterface
     public function getBySlug($slug)
     {
         $chapter = Chapter::where('slug', $slug)->with('course')->firstOrFail();
-
         $user = Auth::user();
 
         $student = Student::updateOrCreate(
@@ -24,6 +23,7 @@ class ChapterRepository implements ChapterRepositoryInterface
                 'user_id' => $user->id,
                 'course_id' => $chapter->course_id,
                 'in_roll' => 'progress',
+                'comment' => ''
             ]
         );
 
