@@ -18,7 +18,10 @@ class ChapterRepository implements ChapterRepositoryInterface
         $user = Auth::user();
 
         $student = Student::updateOrCreate(
-            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                'course_id' => $chapter->course_id,
+            ],
             [
                 'user_id' => $user->id,
                 'course_id' => $chapter->course_id,
