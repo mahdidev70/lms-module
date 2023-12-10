@@ -108,7 +108,7 @@ class CourseController extends Controller
         if (isset($request->sortOrder) && ($request->sortOrder ==  'asc' || $request->sortOrder ==  'desc')) {
             $sortOrder = $request->sortOrder;
         }
-        
+
         if ($request->has('sortKey')) {
 
             if ($request->sortKey == 'publicationDate') {
@@ -134,7 +134,7 @@ class CourseController extends Controller
             'current_page' => $courses->currentPage(),
             'per_page' => $courses->perPage(),
             'last_page' => $courses->lastPage(),
-    
+
             'data' => $courses->map(function ($course) {
                 return [
                     'id' => $course->id,
@@ -149,11 +149,11 @@ class CourseController extends Controller
                     'rate' => $course->students()->where('rate', '!=', null)->avg('rate'),
                 ];
             }),
-        ];        
+        ];
         return $data;
     }
 
-    public function editCreateCourse(CourseCreateUpdateRequest $courseCreateUpdateRequest) 
+    public function editCreateCourse(CourseCreateUpdateRequest $courseCreateUpdateRequest)
     {
 
         $course = $this->repository->createUpdate($courseCreateUpdateRequest);
@@ -222,7 +222,7 @@ class CourseController extends Controller
         return response()->json(new CourseResource($course));
     }
 
-    public function editStatus(Request $request) 
+    public function editStatus(Request $request)
     {
         $ids = $request['ids'];
 
@@ -263,7 +263,7 @@ class CourseController extends Controller
         ];
     }
 
-    public function viewDashboard() 
+    public function viewDashboard()
     {
         $courses = Course::with('students')->get();
         $students = new Student();

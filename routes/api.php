@@ -30,16 +30,16 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('academy')->group(function () {
 
     // ============ CLIENT SIDE ===============
-    
+
     Route::get('/home', [HomeController::class, 'index']); //Done
 
     Route::get('/course/list', [CourseController::class, 'getAllCourseData']); //Done
-    
+
     Route::get('/course/filters', [CourseController::class, 'filters']); //Done
-    
+
     Route::middleware('auth:sanctum')->group(function() {
 
-        Route::get('/{courseSlug}', [CourseController::class, 'getCourseData']); //Done
+        Route::get('/course/{courseSlug}', [CourseController::class, 'getCourseData']); //Done
 
         Route::get('/room/list/{courseSlug}', [CourseController::class, 'getCourseRoom']);
 
@@ -48,57 +48,57 @@ Route::prefix('academy')->group(function () {
         Route::get('/lesson/{lessonSlug}', [LessonController::class, 'show']); //Done
 
         Route::get('/user/panel', [UserController::class, 'index']); //Done
-    
+
         Route::post('/quiz/participate/{quizId}', [QuizController::class, 'participate']); //Done
-    
+
         Route::post('/course/rate',  [StudentController::class, 'storeCertificate']); //Done
 
         Route::post('/course/bookmark',  [StudentController::class, 'storeBookmark']); //Done
-    
+
         Route::get('/course/quiz/list/{courseSlug}', [QuizController::class, 'quizList']); //Done
-    
+
         // ============== PANEL ================
-    
+
         Route::prefix('panel')->group(function () {
-            
+
             Route::get('/instructor/list', [UserController::class, 'instructors']); //Done
-    
+
             Route::get('/course/list', [CourseController::class, 'courseList']); //Done
-    
+
             Route::put('course_editor/data', [CourseController::class, 'editCreateCourse']); //Done
-    
+
             Route::put('/chapter_editor/data', [ChapterController::class, 'editCreateCahpter']); //Done
-    
+
             Route::put('lesson_editor/data', [LessonController::class, 'editCreateLesson']); //Done
-    
+
             Route::get('/comment/list', [CommentController::class, 'getCourseCommnetsList']); //Done
-    
+
             Route::put('/comment_editor/data', [CommentController::class, 'editCreateCommentCourse']); //Done
-    
+
             Route::get('/skill/list', [SkillController::class, 'getSkillList']); //Done
-    
+
             Route::put('/skill_editor/data', [SkillController::class, 'editCreateSkill']); //Done
-    
+
             Route::get('/category/list', [CategoriesController::class, 'getCourseCategoryList']); //Done
-    
+
             Route::put('/category_editor/data', [CategoriesController::class, 'editCreateCategoryCourse']); //Done
-    
+
             Route::get('/course_editor/common', [CourseController::class, 'getCommonCreateUpdate']); //Done
-    
+
             Route::get('/course/list/common', [CourseController::class, 'getCommonList']); //Done
-    
+
             Route::get('/students/list', [StudentController::class, 'StudentList']); //Done =sellerBug=
-            
+
             Route::get('/instructor/list/common', [UserController::class, 'getInstructorCommonList']); //Done
-            
+
             Route::get('/comment/list/common', [CommentController::class, 'getCourseCommonList']); //Done
-    
+
             Route::get('/skill/list/common', [SkillController::class, 'getCommonList']); //Done
-    
+
             Route::get('/category/list/common', [CategoriesController::class, 'getCourseCategoyCommon']); //Done =sellerBug=
-    
+
             Route::get('/chapter/list/{id}', [ChapterController::class, 'getChapterLessonList']); //Done
-    
+
             Route::get('/course/{id}', [CourseController::class, 'getCourse']); //Done
 
     // =============================== NEW ROUTES ===========================================
@@ -126,7 +126,7 @@ Route::prefix('academy')->group(function () {
             Route::get('student/common', [StudentController::class, 'studentCommonList']); //Done
 
             Route::get('comment/excel/export', [CommentController::class, 'exportExcel']);
-    
+
         });
     });
 });

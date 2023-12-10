@@ -40,7 +40,7 @@ class LessonController extends Controller
         return response()->json(new LessonResource($lesson));
     }
 
-    public function deleteLesson($local, $slug) 
+    public function deleteLesson($local, $slug)
     {
         $lesson = Lesson::where('slug', $slug)->firstOrFail();
         $lesson = $lesson->delete();
@@ -51,9 +51,9 @@ class LessonController extends Controller
     {
         $lesson = Lesson::where('id', $request->id)->firstOrFail();
         $content = $lesson->content;
-    
+
         $articleIds = [];
-    
+
         foreach ($content as $item) {
             if (is_array($item) && isset($item['type']) && $item['type'] === 'reference') {
                 $articleIds = $item['content'];

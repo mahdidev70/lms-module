@@ -37,7 +37,7 @@ class LessonRepository implements LessonRepositoryInterface
     public function createUpdate($data)
     {
         $information = json_encode($data['trueAnswers']);
-        
+
         $lesson = Lesson::updateOrCreate(
             ['id' => $data['id']],
             [
