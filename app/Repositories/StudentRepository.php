@@ -4,6 +4,7 @@ namespace TechStudio\Lms\app\Repositories;
 
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use TechStudio\Lms\app\Models\Course;
 use TechStudio\Lms\app\Models\Student;
 use TechStudio\Lms\app\Models\View;
@@ -55,13 +56,32 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentList($request) 
     {
-        $query = Student::with('course', 'userProfile')->join('core_user_profiles', 'lms_students.user_id', '=', 'core_user_profiles.id')
-        ->groupBy('lms_students.user_id')->selectRaw('count(*) as total, lms_students.user_id');
+        $query = Student::with('course', 'userProfile')
+            ->groupBy('lms_students.user_id')
+            ->selectRaw('count(*) as total, lms_students.user_id')
+            ;
+
+        $sortOrder= 'desc';
+        if (isset($request->sortOrder) && ($request->sortOrder ==  'asc' || $request->sortOrder ==  'desc')) {
+            $sortOrder = $request->sortOrder;
+        }
+
+        if ($request->has('sortKey')) {
+            if ($request->sortKey == 'requireCourseCount') {
+                $query->withCount(['course as necessary_sum' => function ($query) {
+                    $query->select(DB::raw('sum(necessary)'));
+                }])->orderBy('nessecery_sum', $sortOrder);
+            }elseif ($request->sortKey == 'bookmarkCourseCount') {
+                $query->orderBy('bookmark', $sortOrder);
+            }elseif ($request->sortKey == 'complitedCourseCount') {
+                $query->where('in_roll', 'done')->orderBy('in_roll', $sortOrder);
+            }elseif ($request->sortKey == 'notComplitedCourseCount') {
+                $query->where('in_roll', 'done')->orderBy('in_roll', $sortOrder);
+            }
+        }
 
         if ($request->filled('search')) {
-
             $txt = $request->get('search');
-
             $query->where(function ($q) use ($txt) {
                 $q->where('core_user_profiles.first_name', 'like', '%'.$txt.'%')
                     ->orWhere('core_user_profiles.last_name', 'like', '%'.$txt.'%');
@@ -78,9 +98,7 @@ class StudentRepository implements StudentRepositoryInterface
         ->with('course', 'userProfile');
 
         if ($request->filled('search')) {
-
             $txt = $request->get('search');
-
             $query->where(function ($q) use ($txt) {
                 $q->where('core_user_profiles.first_name', 'like', '%'.$txt.'%')
                     ->orWhere('core_user_profiles.last_name', 'like', '%'.$txt.'%');
