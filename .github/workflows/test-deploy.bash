@@ -9,4 +9,4 @@ docker run --rm --network diginext-new-backend_default --env-file .env --entrypo
 docker-compose stop fpm
 docker-compose rm -f fpm
 docker-compose up -d --build
-docker-compose stop nginx && docker-compose up -d    # Update nginx upstream URLs
+docker-compose stop nginx && docker-compose up -d   # Update nginx upstream URLs
