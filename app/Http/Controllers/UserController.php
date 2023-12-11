@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         $id = Auth::user()->id;
         $data = new stdClass();
-        $data->user = $this->userRepository->getById($id);
+        $data->user = $this->userRepository->getById(Auth::user());
         $data->progress = $this->studentRepository->getUserProgressCourses($id);
         $data->done = $this->studentRepository->getUserDoneCourses($id);
         $data->necessary = $this->studentRepository->getNecessaryCourses();
