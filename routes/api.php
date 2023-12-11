@@ -102,7 +102,6 @@ Route::prefix('academy')->group(function () {
             Route::get('/course/{id}', [CourseController::class, 'getCourse']); //Done
 
     // =============================== NEW ROUTES ===========================================
-
             Route::get('lesson/{id}', [LessonController::class, 'getLesson']); //Done
 
             Route::delete('chapter/{slug}', [ChapterController::class, 'deleteChapter']); //Done
