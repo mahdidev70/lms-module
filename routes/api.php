@@ -37,9 +37,9 @@ Route::prefix('academy')->group(function () {
 
     Route::get('/course/filters', [CourseController::class, 'filters']); //Done
 
-    Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/course/{courseSlug}', [CourseController::class, 'getCourseData']); //Done
 
-        Route::get('/course/{courseSlug}', [CourseController::class, 'getCourseData']); //Done
+    Route::middleware('auth:sanctum')->group(function() {
 
         Route::get('/room/list/{courseSlug}', [CourseController::class, 'getCourseRoom']);
 
