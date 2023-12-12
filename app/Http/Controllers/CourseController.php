@@ -157,7 +157,7 @@ class CourseController extends Controller
     {
 
         $course = $this->repository->createUpdate($courseCreateUpdateRequest);
-        new CoursePreviewResource($course);
+       // new CoursePreviewResource($course);
 
         return response()->json([
             'message' => 'تغییرات با موفقیت ثبت شد.',
