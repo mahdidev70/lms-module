@@ -20,48 +20,19 @@ class SkillController extends Controller
 
     public function getSkillList(Request $request)
     {
-        $query = Skill::withCount('courses');
-        
-        if ($request->filled('search')) {
-            $txt = $request->get('search');
-        
-            $query->where(function ($q) use ($txt) {
-                $q->where('title', 'like', '%' . $txt . '%');
-            });
-        }
-
-        $sortOrder= 'desc';
-        if (isset($request->sortOrder) && ($request->sortOrder ==  'asc' || $request->sortOrder ==  'desc')) {
-            $sortOrder = $request->sortOrder;
-        }
-
-        if ($request->has('sortKey')) {
-            if ($request->sortKey == 'courseCount') {
-                $query->withCount('courses')->orderBy('courses_count', $sortOrder);
-            }
-        }
-
-        $skill = $query->paginate(10);
-
-        return $skill;
+        $skillList = $this->repository->list($request);
+        return $skillList;
     }
 
     public function editCreateSkill(SkillRequest $skillRequest)
     {
-
         $skill = $this->repository->createUpdate($skillRequest);
-
-        return new SkillResource($skill);
+        return $skill->id;
     }
 
     public function getCommonList() 
     {
-        return [
-            'counts' => [
-                'all' => Skill::all()->count(),
-                'active' => Skill::where('status', 1)->count(),
-                'hidden' => Skill::where('status', 0)->count(),
-            ]
-        ];
+        $skill = $this->repository->getCommonSkill();
+        return $skill;
     }
 }

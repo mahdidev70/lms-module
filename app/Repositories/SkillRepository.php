@@ -53,12 +53,12 @@ class SkillRepository implements SkillRepositoryInterface
 
     public function getCommonSkill() 
     {
-        $counts = [
-            'all' => Skill::all()->count(),
-            'active' => Skill::where('status', 1)->count(),
-            'hidden' => Skill::where('status', 0)->count(),
+        return [
+            'counts' => [
+                'all' => Skill::all()->count(),
+                'active' => Skill::where('status', 1)->count(),
+                'hidden' => Skill::where('status', 0)->count(),
+            ]
         ];
-
-        return $counts;
     }
 }
