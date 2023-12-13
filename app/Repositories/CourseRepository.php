@@ -63,18 +63,13 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getAllInstructors()
     {
-        return Course::get()->unique('instructor_type', 'instructor_id')->pluck('instructor');
-    }
+        $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
+        return UserProfile::whereIn('id', $instructors)->get();    }
 
     public function getInstructors($request)
     {
-        $userProfile = new UserProfile();
-        
-        $userProfileIds = Course::select('instructor_id')->distinct()
-        ->where('instructor_type', get_class($userProfile))
-        ->pluck('instructor_id');
-        
-        $query = UserProfile::whereIn('id', $userProfileIds);
+        $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
+        $query = UserProfile::whereIn('id', $instructors);
 
         if ($request->filled('search')) {
             $txt = $request->get('search');
@@ -85,7 +80,7 @@ class CourseRepository implements CourseRepositoryInterface
                     ->orWhere('last_name', 'like', '% '.$txt.'%');
             });
         }
-    
+        
         if ($request->has('sort')) {
             if ($request->sort == 'commentCount') {
                 $instructors = $query->withCount(['courses as comment_count' => function ($query) {
