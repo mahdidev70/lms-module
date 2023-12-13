@@ -222,14 +222,19 @@ class CourseController extends Controller
         return response()->json(new CourseResource($course));
     }
 
-    public function editStatus(Request $request , Course $course)
+    public function editStatus(Request $request)
     {
         $ids = $request['ids'];
 
         if ($request['status'] == 'published') {
 
             $date = Carbon::now()->toDateTimeString();
-            $courses = Course::whereIn('id', $ids)->get();
+            Course::whereIn('id', $ids)
+                ->update([
+                    'status'=>$request['status'],
+                    'publication_date' => $date,
+                ]);
+            /*$courses = Course::whereIn('id', $ids)->get();
 
             foreach ($courses as $course) {
                 $data = Validator::make($course->toArray(), [
@@ -252,10 +257,12 @@ class CourseController extends Controller
                     'status' => 'published',
                     'publication_date' => $date,
                 ]);
-            }
+            }*/
 
         }else {
-            $course->whereIn('id', $ids)->update(['status' => $request['status']]);
+            Course::whereIn('id', $ids)
+                ->update(['status'=>$request['status']]);
+          //  $course->whereIn('id', $ids)->update(['status' => $request['status']]);
         }
 
         return [
