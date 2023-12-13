@@ -261,7 +261,6 @@ class CourseController extends Controller
         }else {
             Course::whereIn('id', $ids)
                 ->update(['status'=>$request['status']]);
-            return Course::whereIn('id', [1])->get();
           //  $course->whereIn('id', $ids)->update(['status' => $request['status']]);
         }
 
@@ -293,20 +292,20 @@ class CourseController extends Controller
         return $data;
     }
 
-    public function getUserCourse() 
+    public function getUserCourse()
     {
         $courseModel = new Course();
         $user = Auth::user();
         $studnetId = Student::where('user_id', $user->id)->get();
 
         $necessaryCourse = $courseModel->where('necessary', 1)->get();
-        
+
         $courseDoneId = $studnetId->where('in_roll', 'done')->pluck('course_id');
         $courseDone = Course::whereIn('id', $courseDoneId)->get();
-        
+
         $courseProgressId = $studnetId->where('in_roll', 'progress')->pluck('course_id');
         $courseProgress = Course::whereIn('id', $courseProgressId)->get();
-        
+
         $courseBookmarkId = $studnetId->where('bookmark', 1)->pluck('course_id');
         $courseBookmark = Course::whereIn('id', $courseBookmarkId)->get();
 
