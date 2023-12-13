@@ -54,7 +54,7 @@ class StudentRepository implements StudentRepositoryInterface
         return Course::where('necessary',1)->get();
     }
 
-    public function getStudentList($request) 
+    public function getStudentList($request)
     {
         $query = Student::with('course', 'userProfile')
             ->groupBy('lms_students.user_id')
@@ -92,7 +92,7 @@ class StudentRepository implements StudentRepositoryInterface
         return $students;
     }
 
-    public function certificatesByStudent($request) 
+    public function certificatesByStudent($request)
     {
         $query = Student::whereNotNull('certificate_file')->join('core_user_profiles', 'lms_students.user_id', '=', 'core_user_profiles.id')
         ->with('course', 'userProfile');

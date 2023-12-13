@@ -50,8 +50,8 @@ class LessonController extends Controller
     public function getArticleRefrence(Request $request)
     {
         $lesson = Lesson::where('id', $request->id)->firstOrFail();
-        $content = $lesson->content;
 
+        $content = $lesson->content;
         $articleIds = [];
 
         foreach ($content as $item) {

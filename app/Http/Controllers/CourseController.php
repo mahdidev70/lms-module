@@ -222,7 +222,7 @@ class CourseController extends Controller
         return response()->json(new CourseResource($course));
     }
 
-    public function editStatus(Request $request)
+    public function editStatus(Request $request , Course $course)
     {
         $ids = $request['ids'];
 
