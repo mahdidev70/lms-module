@@ -225,7 +225,6 @@ class CourseController extends Controller
     public function editStatus(Request $request)
     {
         $ids = $request['ids'];
-
         if ($request['status'] == 'published') {
 
             $date = Carbon::now()->toDateTimeString();
@@ -262,6 +261,7 @@ class CourseController extends Controller
         }else {
             Course::whereIn('id', $ids)
                 ->update(['status'=>$request['status']]);
+            return Course::whereIn('id', [1])->get();
           //  $course->whereIn('id', $ids)->update(['status' => $request['status']]);
         }
 

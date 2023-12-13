@@ -49,7 +49,7 @@ class Course extends Model
         return $this->belongsTo(Category::class, 'category_id')
             ->where('table_type', get_class($this));
     }
-    
+
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
