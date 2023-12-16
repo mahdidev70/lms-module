@@ -21,6 +21,6 @@ class Student extends Model
 
     public function userProfile()
     {
-        return $this->belongsTo(UserProfile::class, 'user_id');
+        return $this->belongsTo(UserProfile::class, 'user_id','user_id');
     }
 }
