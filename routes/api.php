@@ -122,7 +122,7 @@ Route::prefix('academy')->group(function () {
 
             Route::get('certificate/common', [StudentController::class, 'certificateCommon']); //Done
 
-            Route::get('student/common', [StudentController::class, 'studentCommonList']); //Done
+            Route::get('students/list/common', [StudentController::class, 'studentCommonList']); //Done
 
             Route::get('comment/excel/export', [CommentController::class, 'exportExcel']);
 
