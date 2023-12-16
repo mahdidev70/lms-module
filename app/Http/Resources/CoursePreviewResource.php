@@ -17,10 +17,10 @@ class CoursePreviewResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $studentCount = $this->students ?$this->students()->count() : 0;
-        $rateCount = $this->students ? $this->students()->where('rate','>=',0)->count() : 0;
-        $rateSum = $this->students ? $this->students()->where('rate','>=',0)->sum('rate') : 0;
-        $commentCount = $this->comments ? $this->comments()->count():0;
+        $studentCount = sizeof($this->students) >0 ?$this->students()->count() : 0;
+        $rateCount = sizeof($this->students) >0 ? $this->students()->where('rate','>=',0)->count() : 0;
+        $rateSum = sizeof($this->students) >0 ? $this->students()->where('rate','>=',0)->sum('rate') : 0;
+        $commentCount = sizeof($this->comments) >0 ? $this->comments()->count():0;
         return [
             'id' => $this->id,
             'title' => $this->title,
