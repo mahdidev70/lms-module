@@ -7,4 +7,5 @@ interface SkillRepositoryInterface
     public function createUpdate($data);
     public function getCommonSkill();
     public function list($data);
+    public function changeStatus($data);
 }

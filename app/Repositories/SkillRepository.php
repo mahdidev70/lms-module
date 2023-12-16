@@ -66,4 +66,20 @@ class SkillRepository implements SkillRepositoryInterface
             'status' => $status, 
         ];
     }
+
+    public function changeStatus($data) 
+    {
+        $validatedData = $data->validate([
+            'status' => 'required|in:active,hidden,deleted',
+            'ids' => 'required|array',
+        ]);
+
+        $ids = collect($validatedData['ids']);
+
+        Skill::whereIn('id', $ids)->update(['status' => $validatedData['status']]);
+
+        return [
+            'updateSkill' => $ids,
+        ];
+    }
 }

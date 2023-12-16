@@ -35,4 +35,10 @@ class SkillController extends Controller
         $skill = $this->repository->getCommonSkill();
         return $skill;
     }
+
+    public function changeSkillStatus (Request $request) 
+    {
+        $skills = $this->repository->changeStatus($request);
+        return $skills;
+    }
 }

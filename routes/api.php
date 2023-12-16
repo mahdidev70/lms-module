@@ -126,6 +126,8 @@ Route::prefix('academy')->group(function () {
 
             Route::get('comment/excel/export', [CommentController::class, 'exportExcel']);
 
+            Route::put('skill/status', [SkillController::class, 'changeSkillStatus']);
+
         });
     });
 });
