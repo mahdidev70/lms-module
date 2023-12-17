@@ -11,5 +11,14 @@
             "name": "Mahdi Samian"
         }
     ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TechStudio\\Lms\\app\\Providers\\LmsRepositoryServiceProvider",
+                "TechStudio\\Lms\\app\\Providers\\LmsRouteServiceProvider",
+                "TechStudio\\Lms\\app\\Providers\\LmsServiceProvider"
+            ]
+        }
+    },
     "require": {}
 }
