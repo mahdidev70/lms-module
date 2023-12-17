@@ -89,13 +89,13 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function certificatesByStudent($request)
     {
-        $query = Student::whereNotNull('certificate_file')->join('core_user_profiles', 'lms_students.user_id', '=', 'core_user_profiles.user_id')
+        $query = Student::whereNotNull('certificate_file')->join(app(UserProfile::class)->getTable(), app(Student::class)->getTable() .'.user_id', '=', app(UserProfile::class)->getTable().'.user_id')
         ->with('course', 'userProfile');
         if ($request->filled('search')) {
             $txt = $request->get('search');
             $query->where(function ($q) use ($txt) {
-                $q->where('core_user_profiles.first_name', 'like', '%'.$txt.'%')
-                    ->orWhere('core_user_profiles.last_name', 'like', '%'.$txt.'%');
+                $q->where(app(UserProfile::class)->getTable().'.first_name', 'like', '%'.$txt.'%')
+                    ->orWhere(app(UserProfile::class)->getTable().'.last_name', 'like', '%'.$txt.'%');
             });
         }
 
