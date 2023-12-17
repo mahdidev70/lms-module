@@ -1,0 +1,15 @@
+{
+    "name": "tech-studio/lms-module",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "TechStudio\\Lms\\": "/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mahdi Samian"
+        }
+    ],
+    "require": {}
+}
