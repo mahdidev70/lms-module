@@ -5,6 +5,7 @@ namespace TechStudio\Lms\app\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use TechStudio\Core\app\Models\UserProfile;
 use TechStudio\Lms\app\Models\Course;
 use TechStudio\Lms\app\Models\Student;
 use TechStudio\Lms\app\Models\View;
@@ -56,35 +57,29 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentList($request)
     {
-        $query = Student::with('course', 'userProfile')
-            ->groupBy('lms_students.user_id')
-            ->selectRaw('count(*) as total, lms_students.user_id')
-            ;
+        $query = UserProfile::query();
 
-        $sortOrder= 'desc';
-        if (isset($request->sortOrder) && ($request->sortOrder ==  'asc' || $request->sortOrder ==  'desc')) {
-            $sortOrder = $request->sortOrder;
-        }
-
-        if ($request->has('sortKey')) {
-            if ($request->sortKey == 'requireCourseCount') {
-                $query->withCount(['course as necessary_sum' => function ($query) {
-                    $query->select(DB::raw('sum(necessary)'));
-                }])->orderBy('nessecery_sum', $sortOrder);
-            }elseif ($request->sortKey == 'bookmarkCourseCount') {
-                $query->orderBy('bookmark', $sortOrder);
-            }elseif ($request->sortKey == 'complitedCourseCount') {
-                $query->where('in_roll', 'done')->orderBy('in_roll', $sortOrder);
-            }elseif ($request->sortKey == 'notComplitedCourseCount') {
-                $query->where('in_roll', 'done')->orderBy('in_roll', $sortOrder);
-            }
-        }
+        $query->leftJoin(
+        app(Student::class)->getTable(),
+        app(UserProfile::class)->getTable() . '.id', '=',app(Student::class)->getTable() . '.user_id') ->select([
+            app(Student::class)->getTable() . '.id',
+            app(Student::class)->getTable() . '.user_id',
+            app(UserProfile::class)->getTable() . '.first_name',
+            app(UserProfile::class)->getTable() . '.last_name',
+            app(UserProfile::class)->getTable() . '.avatar_url',
+            DB::raw('sum(CASE WHEN '
+                . app(Student::class)->getTable() . ".in_roll = 'progress' THEN 1 ELSE 0 END) as progressCount"),
+            DB::raw('sum(CASE WHEN '
+                . app(Student::class)->getTable() . ".in_roll = 'done' THEN 1 ELSE 0 END) as doneCount"),
+            DB::raw('COALESCE(sum( '
+                . app(Student::class)->getTable() . '.bookmark ), 0) as bookmarkCount')
+        ])->groupBy(app(UserProfile::class)->getTable() . '.id')->orderBy('id', 'DESC')->get();
 
         if ($request->filled('search')) {
             $txt = $request->get('search');
             $query->where(function ($q) use ($txt) {
-                $q->where('core_user_profiles.first_name', 'like', '%'.$txt.'%')
-                    ->orWhere('core_user_profiles.last_name', 'like', '%'.$txt.'%');
+                $q->orWhere(app(UserProfile::class)->getTable().'.first_name', 'like', '% '.$txt.'%')
+                ->orWhere(app(UserProfile::class)->getTable().'.last_name', 'like', '% '.$txt.'%');
             });
         }
 

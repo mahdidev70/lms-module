@@ -15,15 +15,15 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {        
         return [
-            'id' => $this->id, 
+            'id' => $this->id,
             'user_id' => $this->user_id,
-            'avatarUrl' => optional($this->userProfile)->avatar_url,
+            'avatarUrl' => $this->avatar_url,
             'role' => 'کاربر عادی',
-            'displayName' => optional($this->userProfile)->getDisplayName(),
-            'progress_count' => $this->where('in_roll', 'progress')->count(),
-            'done_count' => $this->where('in_roll', 'done')->count(),
-            'bookmark_count' => $this->where('bookmark', '1')->count(),
-            // 'necessary_count' => $courseCount,
+            'displayName' => $this->getDisplayName(),
+            "progress_count" => $this->progressCount,
+            "done_count" => $this->doneCount,
+            "bookmark_count" => $this->bookmarkCount,
+            // "necessary_count" => 1,
         ];
     }
 }
