@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use TechStudio\Lms\app\Http\Requests\SkillRequest;
 use TechStudio\Lms\app\Http\Resources\SkillResource;
+use TechStudio\Lms\app\Http\Resources\SkillsResource;
 use TechStudio\Lms\app\Repositories\Interfaces\SkillRepositoryInterface;
 
 class SkillController extends Controller
@@ -21,7 +22,7 @@ class SkillController extends Controller
     public function getSkillList(Request $request)
     {
         $skillList = $this->repository->list($request);
-        return SkillResource::collection($skillList);
+        return new SkillsResource($skillList);
     }
 
     public function editCreateSkill(SkillRequest $skillRequest)
