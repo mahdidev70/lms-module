@@ -61,8 +61,9 @@ class StudentRepository implements StudentRepositoryInterface
 
         $query->leftJoin(
         app(Student::class)->getTable(),
-        app(UserProfile::class)->getTable() . '.id', '=',app(Student::class)->getTable() . '.user_id') ->select([
-            app(Student::class)->getTable() . '.id',
+        app(UserProfile::class)->getTable() . '.id', '=',app(Student::class)->getTable() . '.user_id')
+        ->select([
+            app(UserProfile::class)->getTable() . '.id',
             app(Student::class)->getTable() . '.user_id',
             app(UserProfile::class)->getTable() . '.first_name',
             app(UserProfile::class)->getTable() . '.last_name',
@@ -73,7 +74,7 @@ class StudentRepository implements StudentRepositoryInterface
                 . app(Student::class)->getTable() . ".in_roll = 'done' THEN 1 ELSE 0 END) as doneCount"),
             DB::raw('COALESCE(sum( '
                 . app(Student::class)->getTable() . '.bookmark ), 0) as bookmarkCount')
-        ])->groupBy(app(UserProfile::class)->getTable() . '.id')->orderBy('id', 'DESC')->get();
+        ])->groupBy(app(UserProfile::class)->getTable() . '.id')->get();
 
         if ($request->filled('search')) {
             $txt = $request->get('search');
