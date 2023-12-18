@@ -24,7 +24,6 @@ class SkillRequest extends FormRequest
     {
         return [
             'id' => ['required', 'integer'],
-            'status' => ['required','in:active,hidden,deleted'],
             'title' => ['required', 'string', Rule::unique('lms_skills', 'title')->ignore($this->id, 'id')],
             'slug' => [Rule::unique('categories', 'slug')->ignore($this->id, 'id')],
             'description' => 'string',

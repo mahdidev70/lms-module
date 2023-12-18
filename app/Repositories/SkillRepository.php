@@ -43,7 +43,6 @@ class SkillRepository implements SkillRepositoryInterface
             [
                 'title' => $data['title'],
                 'slug' => $data['slug'] ? $data['slug'] : SlugGenerator::transform($data['title']),
-                'status' => $data['status'],
                 'description' => $data['description'],
             ]
         );
