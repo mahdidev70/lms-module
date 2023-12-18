@@ -27,7 +27,7 @@ class SkillController extends Controller
     public function editCreateSkill(SkillRequest $skillRequest)
     {
         $skill = $this->repository->createUpdate($skillRequest);
-        return new SkillResource($skill);
+        return $skill;
     }
 
     public function getCommonList() 
