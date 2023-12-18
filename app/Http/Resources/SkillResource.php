@@ -20,6 +20,10 @@ class SkillResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'status' => $this->status,
+            'courses_count' => $this->courses->count(),
+            'studentsCount' => $this->courses->flatMap(function ($course) {
+                return $course->students;
+            })->count(),
         ];
     }
 }

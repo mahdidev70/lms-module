@@ -21,13 +21,13 @@ class SkillController extends Controller
     public function getSkillList(Request $request)
     {
         $skillList = $this->repository->list($request);
-        return $skillList;
+        return SkillResource::collection($skillList);
     }
 
     public function editCreateSkill(SkillRequest $skillRequest)
     {
         $skill = $this->repository->createUpdate($skillRequest);
-        return $skill->id;
+        return new SkillResource($skill);
     }
 
     public function getCommonList() 
