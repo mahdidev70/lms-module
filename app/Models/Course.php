@@ -18,16 +18,16 @@ class Course extends Model
 
     protected $guarded = ['id'];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        if (!request()->is(['api/academy/panel/*'])) {
-            static::addGlobalScope('publishedCourse', function (Builder $builder) {
-                $builder->where('status', 'published');
-            });
-        }
-    }
+    //     if (!request()->is(['api/academy/panel/*'])) {
+    //         static::addGlobalScope('publishedCourse', function (Builder $builder) {
+    //             $builder->where('status', 'published');
+    //         });
+    //     }
+    // }
 
     public function chapters()
     {
