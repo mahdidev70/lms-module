@@ -17,15 +17,15 @@ class UserHomeResource extends JsonResource
         return [
             'user' => new InstructorResource($this->user),
             'userCourses' => [
-                'necessary' => CoursePreviewResource::collection($this->necessary),
-                'progress' => CoursePreviewResource::collection($this->progress),
-                'done' => CoursePreviewResource::collection($this->done),
-                'bookmarks' => CoursePreviewResource::collection($this->bookmarks),
+                'necessary' => ($this->necessary && sizeof($this->necessary) > 0 )?CoursePreviewResource::collection($this->necessary):[],
+                'progress' =>  ($this->progress && sizeof($this->progress) > 0 )? CoursePreviewResource::collection($this->progress):[],
+                'done' => ($this->done && sizeof($this->done) > 0 )? CoursePreviewResource::collection($this->done):[],
+                'bookmarks' => ($this->bookmarks && sizeof($this->bookmarks) > 0 )? CoursePreviewResource::collection($this->bookmarks):[],
             ],
             'categories' => CategoryCoursesResource::collection($this->categories),
             'comments' =>   CommentResource::collection($this->comments),
-            'topCourses' => CoursePreviewResource::collection($this->topCourses),
-            'recentlyVisitedCourses' => CoursePreviewResource::collection($this->recentlyVisitedCourses)
+            'topCourses' => ($this->topCourses && sizeof($this->topCourses) > 0 )?CoursePreviewResource::collection($this->topCourses):[],
+            'recentlyVisitedCourses' => ($this->recentlyVisitedCourses && sizeof($this->recentlyVisitedCourses) > 0 )?CoursePreviewResource::collection($this->recentlyVisitedCourses):null
         ];
     }
 }
