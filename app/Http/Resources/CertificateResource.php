@@ -19,8 +19,8 @@ class CertificateResource extends JsonResource
             'user_id' => $this->user_id,
             'displayName' => $this->userProfile->getDisplayName(),
             'avatarUrl' => $this->avatar_url,
-            'course' => ($this->course && sizeof($this->course) > 0)?$this->course->title:null,
-            'category' => ($this->course &&  sizeof($this->course->category) > 0)?$this->course->category->title:null,
+            'course' => ($this->course)?$this->course->title:null,
+            'category' => ($this->course)?$this->course->category->title:null,
             'finalScore' => 98,
             'certificateFile' => 'https://storage.sa-test.techstudio.diginext.ir/static/amirmahdi.jpg',
         ];

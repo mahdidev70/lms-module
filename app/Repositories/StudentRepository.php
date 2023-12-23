@@ -84,7 +84,7 @@ class StudentRepository implements StudentRepositoryInterface
             });
         }
 
-        $students = $query->paginate(10);
+        $students = $query->latest(app(UserProfile::class)->getTable() .'.created_at')->paginate(10);
         return $students;
     }
 
@@ -101,7 +101,7 @@ class StudentRepository implements StudentRepositoryInterface
             });
         }
 
-        $students = $query->paginate(10);
+        $students = $query->orderBy(app(Student::class)->getTable().'.created_at', 'desc')->paginate(10);
         return $students;
     }
 }

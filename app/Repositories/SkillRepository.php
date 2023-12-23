@@ -8,13 +8,13 @@ use TechStudio\Lms\app\Repositories\Interfaces\SkillRepositoryInterface;
 
 class SkillRepository implements SkillRepositoryInterface
 {
-    public function list($data) 
+    public function list($data)
     {
         $query = Skill::withCount('courses');
-        
+
         if ($data->filled('search')) {
             $txt = $data->get('search');
-        
+
             $query->where(function ($q) use ($txt) {
                 $q->where('title', 'like', '%' . $txt . '%');
             });
@@ -29,6 +29,8 @@ class SkillRepository implements SkillRepositoryInterface
             if ($data->sortKey == 'courseCount') {
                 $query->withCount('courses')->orderBy('courses_count', $sortOrder);
             }
+        }else{
+            $query->orderBy('created_at', $sortOrder);
         }
 
         $skill = $query->paginate(10);
@@ -50,7 +52,7 @@ class SkillRepository implements SkillRepositoryInterface
         return $skill;
     }
 
-    public function getCommonSkill() 
+    public function getCommonSkill()
     {
         $counts = [
             'all' => Skill::all()->count(),
@@ -62,11 +64,11 @@ class SkillRepository implements SkillRepositoryInterface
 
         return [
             'counts' => $counts,
-            'status' => $status, 
+            'status' => $status,
         ];
     }
 
-    public function changeStatus($data) 
+    public function changeStatus($data)
     {
         $validatedData = $data->validate([
             'status' => 'required|in:active,hidden,deleted',
