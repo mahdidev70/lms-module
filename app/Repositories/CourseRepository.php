@@ -56,7 +56,7 @@ class CourseRepository implements CourseRepositoryInterface
             $query->where('total_duration', '>', $request->moreTime);
         })->when($request->has('lessTime') && !empty($request->lessTime), function ($query) use ($request) {
             $query->where('total_duration', '<', $request->lessTime);
-        })->latest()->paginate();
+        })->latest('publication_date')->paginate();
 
         return $courses;
     }
@@ -80,7 +80,7 @@ class CourseRepository implements CourseRepositoryInterface
                     ->orWhere('last_name', 'like', '% '.$txt.'%');
             });
         }
-        
+
         if ($request->has('sort')) {
             if ($request->sort == 'commentCount') {
                 $instructors = $query->withCount(['courses as comment_count' => function ($query) {
@@ -93,17 +93,17 @@ class CourseRepository implements CourseRepositoryInterface
         } else {
             $instructors = $query->paginate(10);
         }
-    
+
         return $instructors;
     }
 
     public function getTopCourses()
     {
-        $result = DB::select('SELECT c.id, sum(s.rate) / COUNT(s.id) as "score"  
+        $result = DB::select('SELECT c.id, sum(s.rate) / COUNT(s.id) as "score"
         FROM lms_courses c
-        join lms_students s 
+        join lms_students s
         on s.course_id = c.id
-        GROUP BY c.id 
+        GROUP BY c.id
         ORDER BY score DESC Limit 4');
 
         $coursesIds = [];
@@ -112,12 +112,13 @@ class CourseRepository implements CourseRepositoryInterface
         }
 
         return Course::whereIn('id', $coursesIds)
-            ->orderByRaw('FIELD (id, ' . implode(', ', $coursesIds) . ')')->get();
+           // ->orderByRaw('FIELD (id, ' . implode(', ', $coursesIds) . ')')->get();
+            ->orderBy('publication_date', 'desc')->get();
     }
 
     public function getAllSkills()
     {
-        return Skill::get();
+        return Skill::orderBy('created_at', 'desc')->get();
     }
 
     public function incrementField($courseId, $field)
@@ -143,12 +144,12 @@ class CourseRepository implements CourseRepositoryInterface
         $languages = json_encode($data['languages']);
         $supportItems = json_encode($data['supportItems']);
         $faq = json_encode($data['faq']);
-        
+
         $instructorType = '';
         $instructorId = $data['instructor']['id'];
 
         $userModel = new UserProfile();
-    
+
         if ($data['instructor']['type'] == 'User') {
             $instructorType = get_class($userModel);
         }
@@ -169,15 +170,15 @@ class CourseRepository implements CourseRepositoryInterface
             'support_items' => $supportItems,
             'FAQ' => $faq,
         ];
-    
+
         $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
-    
+
         if (!empty($data['skillId'])) {
             $course->skills()->sync($data['skillId']);
         }
 
         $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
-    
+
         return $course;
     }
 

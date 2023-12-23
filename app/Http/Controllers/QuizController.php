@@ -31,7 +31,6 @@ class QuizController extends Controller
     public function participate($local, QuizParticipateRequest $request, $quizId)
     {
         $lastResult = $this->lessonRepository->getLastQuizResult($quizId, Auth::user()->id);
-
         if (
             ($lastResult &&
                 $lastResult->status == 'success')

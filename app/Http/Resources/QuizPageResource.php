@@ -21,8 +21,9 @@ class QuizPageResource extends JsonResource
     {
         // $course = $this->courseRepository->getBySlug($courseSlug);
         $chaptersIds = Chapter::where('course_id', $this->id)->pluck('id');
-        $quiz = Lesson::whereIn('chapter_id', $chaptersIds)->where('dominant_type', 'exam')->get();
-        $quizIds = Lesson::whereIn('chapter_id', $chaptersIds)->where('dominant_type', 'exam')->pluck('id');
+        $quiz = Lesson::whereIn('chapter_id', $chaptersIds)->orderBy('created_at', 'desc')->where('dominant_type', 'exam')->get();
+        $quizIds = $quiz->pluck('id')->toArray();
+     //   $quizIds = Lesson::whereIn('chapter_id', $chaptersIds)->where('dominant_type', 'exam')->pluck('id');
         $participants = QuizParticipant::whereIn('lesson_id', $quizIds)
         ->where('user_id', Auth::user()->id)->sum('score');
 

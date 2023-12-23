@@ -28,31 +28,31 @@ class StudentRepository implements StudentRepositoryInterface
     public function getUserProgressCourses($userId)
     {
         $courseIds = Student::where('user_id', $userId)->where('in_roll', 'progress')->pluck('course_id');
-        return Course::whereIn('id', $courseIds)->get();
+        return Course::whereIn('id', $courseIds)->orderBy('created_at', 'desc')->get();
     }
 
 
     public function getUserDoneCourses($userId)
     {
         $courseIds = Student::where('user_id', $userId)->where('in_roll', 'done')->pluck('course_id');
-        return Course::whereIn('id', $courseIds)->get();
+        return Course::whereIn('id', $courseIds)->orderBy('created_at', 'desc')->get();
     }
 
     public function getUserBookmarkedCourses($userId)
     {
         $courseIds = Student::where('user_id', $userId)->where('bookmark', 1)->pluck('course_id');
-        return Course::whereIn('id', $courseIds)->get();
+        return Course::whereIn('id', $courseIds)->orderBy('created_at', 'desc')->get();
     }
 
     public function getUserRecentlyVisited()
     {
         return View::where('user_id', Auth::user()->id)->with('course.instructor')
-            ->take(4)->get()->pluck('course');
+            ->orderBy('created_at', 'desc')->take(4)->get()->pluck('course');
     }
 
     public function getNecessaryCourses()
     {
-        return Course::where('necessary',1)->get();
+        return Course::where('necessary',1)->orderBy('created_at', 'desc')->get();
     }
 
     public function getStudentList($request)

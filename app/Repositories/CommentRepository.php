@@ -15,7 +15,7 @@ class CommentRepository implements CommentRepositoryInterface
         return $comments = Comment::where([
             'commentable_type' => get_class($course),
             'star' => 1
-        ])->latest()->with('user')->take(7)->get();
+        ])->latest('created_at')->with('user')->take(7)->get();
     }
 
     public function getCourseComments($request)

@@ -124,6 +124,8 @@ class CourseController extends Controller
                     $q->whereNotNull('rate');
                 }])->orderBy('students_count', $sortOrder);
             }
+        }else{
+            $query->orderBy('created_at', $sortOrder);
         }
 
 

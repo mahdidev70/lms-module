@@ -31,7 +31,7 @@ class LessonRepository implements LessonRepositoryInterface
     public function getLastQuizResult($lessonId,$userId)
     {
         return QuizParticipant::where('lesson_id', $lessonId)
-            ->where('user_id', $userId)->latest()->first();
+            ->where('user_id', $userId)->latest('created_at')->first();
     }
 
     public function createUpdate($data)
