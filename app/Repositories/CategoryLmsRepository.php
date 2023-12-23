@@ -11,7 +11,7 @@ class CategoryLmsRepository implements CategoryLmsRepositoryInterface
     public function getCategoriesWithCourses()
     {
         $course = new Course();
-        return Category::where('table_type', get_class($course))->with('courses')->get();
+        return Category::where('table_type', get_class($course))->whereHas('courses')->with('courses')->get();
     }
 
     public function getCategories()
