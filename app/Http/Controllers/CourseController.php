@@ -87,12 +87,7 @@ class CourseController extends Controller
 
         //Filtering
         if (isset($request->instructorId) && $request->instructorId != null ) {
-            $query->where('instructor_id', $request->input('instructor_id'));
-        }
-        if (isset($request->instructorType) && $request->instructorType != null) {
-            if ($request->instructorType == 'user') {
-                $query->where('instructor_type', get_class($user));
-            }
+            $query->where('instructor_id', $request->input('instructorId'));
         }
         if (isset($request->categorySlug) && $request->categorySlug != null) {
             $query->whereHas('category', function ($categoryQuery) use ($request) {
@@ -127,7 +122,6 @@ class CourseController extends Controller
         }else{
             $query->orderBy('created_at', $sortOrder);
         }
-
 
         $courses = $query->paginate(10);
 
