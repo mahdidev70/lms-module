@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use TechStudio\Core\app\Models\Category;
 use TechStudio\Core\app\Models\Comment;
 use Illuminate\Database\Eloquent\Builder;
+use TechStudio\Community\app\Models\ChatRoom;
 
 class Course extends Model
 {
@@ -22,7 +23,7 @@ class Course extends Model
     {
         parent::boot();
 
-        if (!request()->is(['*/api/academy/panel/*'])) {
+        if (!request()->is(['api/academy/panel/*', '/academy/course/{courseSlug}/'])) {
             static::addGlobalScope('publishedCourse', function (Builder $builder) {
                 $builder->where('status', 'published');
             });
