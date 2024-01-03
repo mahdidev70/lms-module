@@ -288,28 +288,36 @@ class CourseController extends Controller
         return $data;
     }
 
-    public function getUserCourse()
+    public function getUserCourse(Request $request)
     {
         $courseModel = new Course();
         $user = Auth::user();
         $studnetId = Student::where('user_id', $user->id)->get();
 
-        $necessaryCourse = $courseModel->where('necessary', 1)->get();
+        if ($request['data'] == 'necessary') {
 
-        $courseDoneId = $studnetId->where('in_roll', 'done')->pluck('course_id');
-        $courseDone = Course::whereIn('id', $courseDoneId)->get();
+            $necessaryCourse = $courseModel->where('necessary', 1)->paginate(10);
+            return new CoursesResource($necessaryCourse);
 
-        $courseProgressId = $studnetId->where('in_roll', 'progress')->pluck('course_id');
-        $courseProgress = Course::whereIn('id', $courseProgressId)->get();
+        }elseif ($request['data'] == 'done') {
 
-        $courseBookmarkId = $studnetId->where('bookmark', 1)->pluck('course_id');
-        $courseBookmark = Course::whereIn('id', $courseBookmarkId)->get();
+            $courseDoneId = $studnetId->where('in_roll', 'done')->pluck('course_id');
+            $courseDone = Course::whereIn('id', $courseDoneId)->paginate(10);
+            return new CoursesResource($courseDone);
 
-        return [
-            'necessaryCourse' => CourseResource::collection($necessaryCourse),
-            'courseDone' => CourseResource::collection($courseDone),
-            'courseProgress' => CourseResource::collection($courseProgress),
-            'courseBookmark' => CourseResource::collection($courseBookmark),
-        ];
+        }elseif ($request['data'] == 'bookmark') {
+
+            $courseBookmarkId = $studnetId->where('bookmark', 1)->pluck('course_id');
+            $courseBookmark = Course::whereIn('id', $courseBookmarkId)->paginate(10);
+            return new CoursesResource($courseBookmark);
+
+        }elseif ($request['data'] == 'inProgress') {
+
+            $courseProgressId = $studnetId->where('in_roll', 'progress')->pluck('course_id');
+            $courseProgress = Course::whereIn('id', $courseProgressId)->paginate(10);
+            return new CoursesResource($courseProgress);
+
+        }
+
     }
 }
