@@ -124,9 +124,11 @@ Route::prefix('academy')->group(function () {
 
             Route::get('students/list/common', [StudentController::class, 'studentCommonList']); //Done
 
-            Route::get('comment/excel/export', [CommentController::class, 'exportExcel']);
+            Route::get('comment/excel/export', [CommentController::class, 'exportExcel']); //Done
 
-            Route::put('skill/status', [SkillController::class, 'changeSkillStatus']);
+            Route::put('skill/status', [SkillController::class, 'changeSkillStatus']); //Done
+
+            Route::get('course/preview/{id}', [CourseController::class, 'coursePreview']); //Done
 
         });
     });
