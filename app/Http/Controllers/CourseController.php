@@ -320,4 +320,10 @@ class CourseController extends Controller
         }
 
     }
+
+    public function coursePreview($id) 
+    {
+        $course = $this->repository->coursePreview($id);
+        return response()->json(new CourseResource($course));
+    }
 }

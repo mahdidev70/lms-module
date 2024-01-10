@@ -192,4 +192,12 @@ class CourseRepository implements CourseRepositoryInterface
         return $course;
     }
 
+    public function coursePreview($id) 
+    {
+        $courses = Course::where('id', $id)
+            ->with('skills', 'instructor', 'category', 'chapters', 'comments')
+            ->firstOrFail();
+
+        return $courses;
+    }
 }

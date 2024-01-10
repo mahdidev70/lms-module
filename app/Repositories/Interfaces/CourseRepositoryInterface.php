@@ -14,4 +14,5 @@ interface CourseRepositoryInterface
     public function createUpdate($data);
     public function incrementField($courseId, $field);
     public function storeView($courseId, $userId);
+    public function coursePreview($id);
 }
