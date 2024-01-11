@@ -318,10 +318,9 @@ class CourseController extends Controller
             return new CoursesResource($courseProgress);
 
         }
-
     }
 
-    public function coursePreview($id) 
+    public function coursePreview($locale, $id) 
     {
         $course = $this->repository->coursePreview($id);
         return response()->json(new CourseResource($course));
