@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use TechStudio\Core\app\Models\Category;
+use TechStudio\Core\app\Models\UserProfile;
 use TechStudio\Core\app\Models\Comment;
 use Illuminate\Database\Eloquent\Builder;
 use TechStudio\Community\app\Models\ChatRoom;
