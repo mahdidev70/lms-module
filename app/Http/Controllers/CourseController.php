@@ -119,11 +119,9 @@ class CourseController extends Controller
                     $q->whereNotNull('rate');
                 }])->orderBy('students_count', $sortOrder);
             }
-        }else{
-            $query->orderBy('created_at', $sortOrder);
         }
 
-        $courses = $query->paginate(10);
+        $courses = $query->orderBy('created_at', $sortOrder)->paginate(10);
 
         $data = [
             'total' => $courses->total(),
