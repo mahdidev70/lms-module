@@ -121,7 +121,7 @@ class CourseController extends Controller
             }
         }
 
-        $courses = $query->orderBy('created_at', $sortOrder)->paginate(10);
+        $courses = $query->orderBy('id', $sortOrder)->paginate(10);
 
         $data = [
             'total' => $courses->total(),
