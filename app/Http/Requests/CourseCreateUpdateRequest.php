@@ -33,7 +33,7 @@ class CourseCreateUpdateRequest extends FormRequest
             'languages' => 'array',
             'level' => 'in:beginner,intermediate,advance',
             'supportItem' => 'array',
-            'learningPoints*.title' => 'string',
+            'learningPoints*.title' => 'required|string',
             'learningPoints*.description' => 'string',
             'features' => 'array',
             'faq' => 'array'
