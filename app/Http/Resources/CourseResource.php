@@ -4,9 +4,11 @@ namespace TechStudio\Lms\app\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use TechStudio\Lms\app\Models\Lesson;
+use TechStudio\Lms\app\Models\Chapter;
+use TechStudio\Lms\app\Models\Student;
 use Illuminate\Http\Resources\Json\JsonResource;
 use TechStudio\Lms\app\Http\Resources\SkillResource;
-use TechStudio\Lms\app\Models\Student;
 
 class CourseResource extends JsonResource
 {
@@ -33,6 +35,21 @@ class CourseResource extends JsonResource
             $average = (int)$rateSumResult / (int)$rateCountResult;
         }
         
+        $chaptersId = Chapter::where('course_id', $this->id)->pluck('id');
+        $lessonsId = Lesson::whereIn('chapter_id', $chaptersId)->pluck('id');
+
+        $passedCount = null;
+        $passedPercentage = null;
+        $id = auth()->id();
+        if($id)
+        {
+            $passedCount = UserLessonProgress::where('user_id', $id)->whereIn('lesson_id',$lessonsId)->count();
+            $passedPercentage = 0;
+            if($passedCount > 0 && count($lessonsId) > 0)
+            {
+                $passedPercentage =  floor( $passedCount / count($lessonsId) * 100 );
+            }
+        }
         return [
             'id' => $this->id,
             'title' => $this->title,
