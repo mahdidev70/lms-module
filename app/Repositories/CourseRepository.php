@@ -120,7 +120,9 @@ class CourseRepository implements CourseRepositoryInterface
         foreach ($result as $item) {
             array_push($coursesIds, $item->id);
         }
-
+        if(! sizeof($coursesIds) > 0){
+            return [];
+        }
         return Course::whereIn('id', $coursesIds)
            // ->orderByRaw('FIELD (id, ' . implode(', ', $coursesIds) . ')')->get();
             ->orderBy('publication_date', 'desc')->get();
