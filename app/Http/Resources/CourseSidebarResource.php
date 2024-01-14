@@ -82,6 +82,9 @@ class CourseSidebarResource extends JsonResource
         foreach($userLessonProgress as $lessonScore){
             $lessonProgress += $lessonScore;
         }
-        return number_format( $lessonProgress / count($lessons) * 100 );
-    }
+        if($lessonProgress > 0 && count($lessons) > 0)
+        {
+            return number_format( $lessonProgress / count($lessons) * 100 );
+        }
+        return 0;    }
 }
