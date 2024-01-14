@@ -61,7 +61,10 @@ class QuizController extends Controller
         $diff = $tureAnswers->diffAssoc(collect($userAnswers));
         $falseAnswers = $diff->all();
         $answerNumber = count((array)json_decode($quiz->information));
-        $score = ($answerNumber - count((array) $falseAnswers)) * 100 / $answerNumber;
+        $score = 0;
+        if( $answerNumber > 0 && count((array) $falseAnswers)){
+            $score = ($answerNumber - count((array) $falseAnswers)) * 100 / $answerNumber;
+        }
 
         $status = 'fail';
         if ($score >= 80) {
