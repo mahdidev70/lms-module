@@ -39,12 +39,14 @@ class CourseResource extends JsonResource
         $lessonsId = Lesson::whereIn('chapter_id', $chaptersId)->pluck('id');
 
         $passedCount = null;
-        $passedPercentage = null;
-        $id = auth()->id();
-        if($id)
+        $passedPercentage = 0;
+        $id = null;
+        try{
+            $id = Auth::user()->id;
+        }catch(Exception $e){}
+        if($id && count($lessonsId) > 0 )
         {
             $passedCount = UserLessonProgress::where('user_id', $id)->whereIn('lesson_id',$lessonsId)->count();
-            $passedPercentage = 0;
             if($passedCount > 0 && count($lessonsId) > 0)
             {
                 $passedPercentage =  floor( $passedCount / count($lessonsId) * 100 );
