@@ -72,7 +72,7 @@ class CourseRepository implements CourseRepositoryInterface
             $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
             $instructors = UserProfile::whereIn('id', $instructors)->get();
         }
-        
+
         return $instructors;
     }
 
@@ -124,8 +124,8 @@ class CourseRepository implements CourseRepositoryInterface
             return [];
         }
         return Course::whereIn('id', $coursesIds)
-           // ->orderByRaw('FIELD (id, ' . implode(', ', $coursesIds) . ')')->get();
-            ->orderBy('publication_date', 'desc')->get();
+            ->orderByRaw('FIELD (id, ' . implode(', ', $coursesIds) . ')')->get();
+           // ->orderBy('publication_date', 'desc')->get();
     }
 
     public function getAllSkills()
@@ -194,7 +194,7 @@ class CourseRepository implements CourseRepositoryInterface
         return $course;
     }
 
-    public function coursePreview($id) 
+    public function coursePreview($id)
     {
         $courses = Course::where('id', $id)
             ->with('skills', 'instructor', 'category', 'chapters', 'comments')
