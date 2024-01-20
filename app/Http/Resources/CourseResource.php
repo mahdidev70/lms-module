@@ -9,6 +9,7 @@ use TechStudio\Lms\app\Models\Chapter;
 use TechStudio\Lms\app\Models\Student;
 use Illuminate\Http\Resources\Json\JsonResource;
 use TechStudio\Lms\app\Http\Resources\SkillResource;
+use TechStudio\Lms\app\Models\UserLessonProgress;
 
 class CourseResource extends JsonResource
 {
