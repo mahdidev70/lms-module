@@ -42,7 +42,7 @@ class LessonRepository implements LessonRepositoryInterface
             ['id' => $data['id']],
             [
                 'title' => $data['title'],
-                'slug' => SlugGenerator::transform($data['title']),
+                'slug' => $data['slug'] ? $data['slug'] : SlugGenerator::transform($data['title']),
                 'chapter_id' => $data['chapterId'],
                 'dominant_type' => $data['dominantType'],
                 'content' => $data['content'],
