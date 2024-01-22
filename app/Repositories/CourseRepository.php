@@ -161,10 +161,7 @@ class CourseRepository implements CourseRepositoryInterface
         $instructorId = $data['instructor']['id'];
 
         $userModel = new UserProfile();
-
-        if ($data['instructor']['type'] == 'User') {
-            $instructorType = get_class($userModel);
-        }
+        $instructorType = get_class($userModel);
 
         $courseData = [
             'title' => $data['title'],
