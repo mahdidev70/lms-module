@@ -12,5 +12,6 @@ interface StudentRepositoryInterface
     public function getUserRecentlyVisited();
     public function getNecessaryCourses();
     public function getStudentList($request);
+    public function getStudentListExcel($request);
     public function certificatesByStudent($request);
 }

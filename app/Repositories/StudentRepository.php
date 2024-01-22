@@ -57,34 +57,7 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentList($request)
     {
-        $query = UserProfile::query();
-
-        $query->leftJoin(
-        app(Student::class)->getTable(),
-        app(UserProfile::class)->getTable() . '.id', '=',app(Student::class)->getTable() . '.user_id')
-        ->select([
-            app(UserProfile::class)->getTable() . '.id',
-            app(Student::class)->getTable() . '.user_id',
-            app(UserProfile::class)->getTable() . '.first_name',
-            app(UserProfile::class)->getTable() . '.last_name',
-            app(UserProfile::class)->getTable() . '.avatar_url',
-            DB::raw('sum(CASE WHEN '
-                . app(Student::class)->getTable() . ".in_roll = 'progress' THEN 1 ELSE 0 END) as progressCount"),
-            DB::raw('sum(CASE WHEN '
-                . app(Student::class)->getTable() . ".in_roll = 'done' THEN 1 ELSE 0 END) as doneCount"),
-            DB::raw('COALESCE(sum( '
-                . app(Student::class)->getTable() . '.bookmark ), 0) as bookmarkCount')
-        ])->groupBy(app(UserProfile::class)->getTable() . '.id')->get();
-
-        if ($request->filled('search')) {
-            $txt = $request->get('search');
-            $query->where(function ($q) use ($txt) {
-                $q->orWhere(app(UserProfile::class)->getTable().'.first_name', 'like', '% '.$txt.'%')
-                ->orWhere(app(UserProfile::class)->getTable().'.last_name', 'like', '% '.$txt.'%');
-            });
-        }
-
-        $students = $query->latest(app(UserProfile::class)->getTable() .'.created_at')->paginate(10);
+       $students = self::getStudentListMainQuery($request)->paginate(10);
         return $students;
     }
 
@@ -104,4 +77,42 @@ class StudentRepository implements StudentRepositoryInterface
         $students = $query->orderBy(app(Student::class)->getTable().'.created_at', 'desc')->paginate(10);
         return $students;
     }
+
+    public function getStudentListExcel($request)
+    {
+        return self::getStudentListMainQuery($request)->get();
+    }
+
+    public function getStudentListMainQuery($request)
+    {
+        $query = UserProfile::query();
+
+        $query->leftJoin(
+            app(Student::class)->getTable(),
+            app(UserProfile::class)->getTable() . '.id', '=',app(Student::class)->getTable() . '.user_id')
+            ->select([
+                app(UserProfile::class)->getTable() . '.id',
+                app(Student::class)->getTable() . '.user_id',
+                app(UserProfile::class)->getTable() . '.first_name',
+                app(UserProfile::class)->getTable() . '.last_name',
+                app(UserProfile::class)->getTable() . '.avatar_url',
+                DB::raw('sum(CASE WHEN '
+                    . app(Student::class)->getTable() . ".in_roll = 'progress' THEN 1 ELSE 0 END) as progressCount"),
+                DB::raw('sum(CASE WHEN '
+                    . app(Student::class)->getTable() . ".in_roll = 'done' THEN 1 ELSE 0 END) as doneCount"),
+                DB::raw('COALESCE(sum( '
+                    . app(Student::class)->getTable() . '.bookmark ), 0) as bookmarkCount')
+            ])->groupBy(app(UserProfile::class)->getTable() . '.id')->get();
+
+        if ($request->filled('search')) {
+            $txt = $request->get('search');
+            $query->where(function ($q) use ($txt) {
+                $q->orWhere(app(UserProfile::class)->getTable().'.first_name', 'like', '% '.$txt.'%')
+                    ->orWhere(app(UserProfile::class)->getTable().'.last_name', 'like', '% '.$txt.'%');
+            });
+        }
+
+        return $query->latest(app(UserProfile::class)->getTable() .'.created_at');
+    }
+
 }

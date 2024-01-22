@@ -2,6 +2,8 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
+use TechStudio\Core\app\Export\StudentsExport;
 use TechStudio\Lms\app\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -60,19 +62,32 @@ class StudentController extends Controller
         return response()->json(new CourseResource($course));
     }
 
-    public function StudentList(Request $request) 
+    public function StudentList(Request $request)
     {
         $students = $this->studentRepository->getStudentList($request);
         return new StudentsResource($students);
     }
 
-    public function certificateByStudentList(Request $request) 
+    public function StudentListExport(Request $request)
+    {
+        $students = $this->studentRepository->getStudentListExcel($request)->map(fn($student)=>[
+            /*  'id' => $student->user_id,*/
+            'displayName' => $student->getDisplayName(),
+            'role' => 'کاربر عادی',
+            "progress_count" => $student->progressCount,
+            "done_count" => $student->doneCount,
+            "bookmark_count" => $student->bookmarkCount,
+        ]);
+        return Excel::download(new StudentsExport($students), 'students.xlsx');
+    }
+
+    public function certificateByStudentList(Request $request)
     {
         $certificates = $this->studentRepository->certificatesByStudent($request);
         return new CertificatesResource($certificates);
     }
 
-    public function certificateCommon() 
+    public function certificateCommon()
     {
         $all = Student::whereNotNull('certificate_file')->count();
         return [
@@ -82,7 +97,7 @@ class StudentController extends Controller
         ];
     }
 
-    public function studentCommonList() 
+    public function studentCommonList()
     {
         $all = Student::distinct()->count('user_id');
         return [

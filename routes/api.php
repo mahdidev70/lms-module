@@ -89,6 +89,8 @@ Route::prefix('academy')->group(function () {
 
             Route::get('/students/list', [StudentController::class, 'StudentList']); //Done =sellerBug=
 
+            Route::get('students/export', [StudentController::class, 'StudentListExport']);
+
             Route::get('/instructor/list/common', [UserController::class, 'getInstructorCommonList']); //Done
 
             Route::get('/comment/list/common', [CommentController::class, 'getCourseCommonList']); //Done
