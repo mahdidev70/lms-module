@@ -15,9 +15,9 @@ class InstructorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        try{
-            optional($this->load('courses.comments'));
-        }catch(Exception $e){}
+        // try{
+        //     optional($this->load('courses.comments'));
+        // }catch(Exception $e){}
 
 
         return [
