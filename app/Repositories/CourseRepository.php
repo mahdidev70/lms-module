@@ -67,7 +67,7 @@ class CourseRepository implements CourseRepositoryInterface
         if (auth()->check()) {
             $userId = Auth::user()->id;
             $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
-            $instructors = UserProfile::whereIn('id', $instructors)->orWhere('id', $userId)->get();
+            $instructors = UserProfile::whereIn('id', $instructors)->orWhere('user_id', $userId)->get();
         }else {
             $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
             $instructors = UserProfile::whereIn('id', $instructors)->get();
