@@ -14,7 +14,7 @@ class InstructorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $this->load('courses.comments'); 
+        optional($this->load('courses.comments')); 
 
         return [
             'id' => optional($this->id),
