@@ -23,12 +23,12 @@ class InstructorResource extends JsonResource
         return [
             'id' => optional($this)->id,
             // 'type' => $this->getUserType(),
-            'displayName' => optional($this->getDisplayName()),
-            'avatarUrl' => optional($this->avatar_url),
-            'description' => optional($this->description),
-            'status' => optional($this->status),
-            'commentCount' => optional($this->courses)->flatMap->comments->count(),
-            'courseCount' => optional($this->courses)->count(),
+            'displayName' => optional($this)->getDisplayName(),
+            'avatarUrl' => optional($this)->avatar_url,
+            'description' => optional($this)->description,
+            'status' => optional($this)->status,
+            'commentCount' => optional($this)->courses->flatMap->comments->count(),
+            'courseCount' => optional($this)->courses->count(),
         ];
     }
 }
