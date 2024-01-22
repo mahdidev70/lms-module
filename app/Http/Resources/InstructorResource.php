@@ -14,11 +14,11 @@ class InstructorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if($this == null)
-        {
-            return [];
-        }
-        $this->load('courses.comments'); 
+        // if($this == null)
+        // {
+        //     return [];
+        // }
+        // $this->load('courses.comments'); 
 
         return [
             'id' => $this->id,
