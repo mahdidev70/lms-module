@@ -21,7 +21,7 @@ class InstructorResource extends JsonResource
 
 
         return [
-            'id' => optional($this->id),
+            'id' => optional($this)->id,
             // 'type' => $this->getUserType(),
             'displayName' => optional($this->getDisplayName()),
             'avatarUrl' => optional($this->avatar_url),
