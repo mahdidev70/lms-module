@@ -2,6 +2,7 @@
 
 namespace TechStudio\Lms\app\Http\Resources;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +15,10 @@ class InstructorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        optional($this->load('courses.comments')); 
+        try{
+            optional($this->load('courses.comments'));
+        }catch(Exception $e){}
+
 
         return [
             'id' => optional($this->id),
