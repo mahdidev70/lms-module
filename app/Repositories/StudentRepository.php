@@ -111,7 +111,12 @@ class StudentRepository implements StudentRepositoryInterface
                     ->orWhere(app(UserProfile::class)->getTable().'.last_name', 'like', '% '.$txt.'%');
             });
         }
-
+        if ($request->filled('filter')) {
+            $filterTxt = $request->get('filter');
+            $query->where(function ($q) use ($filterTxt) {
+                $q->where(app(Student::class)->getTable().'.in_roll', 'like', '% '.$filterTxt.'%');
+            });
+        }
         return $query->latest(app(UserProfile::class)->getTable() .'.created_at');
     }
 
