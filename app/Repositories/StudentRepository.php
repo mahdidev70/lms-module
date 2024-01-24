@@ -102,7 +102,7 @@ class StudentRepository implements StudentRepositoryInterface
                     . app(Student::class)->getTable() . ".in_roll = 'done' THEN 1 ELSE 0 END) as doneCount"),
                 DB::raw('COALESCE(sum( '
                     . app(Student::class)->getTable() . '.bookmark ), 0) as bookmarkCount')
-            ])->groupBy(app(UserProfile::class)->getTable() . '.id')->get();
+            ])->groupBy(app(UserProfile::class)->getTable() . '.id');
 
         if ($request->filled('search')) {
             $txt = $request->get('search');
