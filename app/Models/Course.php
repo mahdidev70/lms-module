@@ -38,7 +38,7 @@ class Course extends Model
 
     public function instructor()
     {
-        return $this->belongsTo(UserProfile::class, 'user_id', 'instructor_id');
+        return $this->belongsTo(UserProfile::class, 'instructor_id', 'user_id');
     }
 
     public function students()
