@@ -24,7 +24,7 @@ class Course extends Model
     {
         parent::boot();
 
-        if (!request()->is(['api/academy/panel/*', '/academy/course/{courseSlug}/'])) {
+        if (!request()->is(['*/academy/panel/*', '*/academy/course/{courseSlug}/'])) {
             static::addGlobalScope('publishedCourse', function (Builder $builder) {
                 $builder->where('status', 'published');
             });
