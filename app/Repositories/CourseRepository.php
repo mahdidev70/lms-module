@@ -177,7 +177,7 @@ class CourseRepository implements CourseRepositoryInterface
             'instructor_id' => $instructorId,
             'learning_points' => $learningPoints,
             'support_items' => $supportItems,
-            'FAQ' => $faq,
+            'faq' => $faq,
         ];
 
         $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
