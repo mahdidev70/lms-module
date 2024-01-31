@@ -83,7 +83,7 @@ class CourseResource extends JsonResource
             'certificate' => [],
             'comments' => CommentResource::collection($this->comments),
             'skills' => SkillResource::collection($this->skills),
-            'faq' => json_decode($this->FAQ),
+            'faq' => json_decode($this->faq),
             'features' => json_decode($this->features),
         ];
     }
