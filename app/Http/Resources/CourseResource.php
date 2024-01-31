@@ -2,6 +2,7 @@
 
 namespace TechStudio\Lms\app\Http\Resources;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use TechStudio\Lms\app\Models\Lesson;
