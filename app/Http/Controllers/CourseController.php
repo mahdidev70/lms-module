@@ -213,6 +213,7 @@ class CourseController extends Controller
     public function getCourse($local, $id)
     {
         $course = Course::where('id', $id)->firstOrFail();
+        $course->shortData = true;
         return response()->json(new CourseResource($course));
     }
 

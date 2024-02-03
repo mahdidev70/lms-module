@@ -21,6 +21,7 @@ class CourseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        
         $student = null;
         if (Auth::user()) {
             $student = Student::where('course_id', $this->id)
@@ -83,7 +84,8 @@ class CourseResource extends JsonResource
             'chapters' => ChapterResource::collection($this->chapters),
             'certificate' => [],
             'comments' => CommentResource::collection($this->comments),
-            'skills' => SkillResource::collection($this->skills),
+            'skills' => (isset($this->shortData) && $this->shortData == true) ? $this->skills->pluck('id')
+                : SkillResource::collection($this->skills),
             'faq' => json_decode($this->faq),
             'features' => json_decode($this->features),
         ];
