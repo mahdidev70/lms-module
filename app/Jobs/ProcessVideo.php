@@ -15,6 +15,8 @@ class ProcessVideo implements ShouldQueue
 
     public $record;
     public $videoId;
+    public $tries = 10;
+    public $backoff = [60, 60, 2*60, 3*60, 5*60, 10*60, 15*60, 20*60, 22*60, 25*60];
     /**
      * Create a new job instance.
      */
@@ -59,6 +61,8 @@ class ProcessVideo implements ShouldQueue
                 json_encode($this->record->content)
             ));
             $this->record->save();
+            $this->dontRelease();
         }
+        $this->realese();
     }
 }
