@@ -29,6 +29,7 @@ class ProcessVideo implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("video process");
         $api_key = env('ARVAN_API_KEY');
         $endpoint = "https://napi.arvancloud.ir/vod/2.0/videos/";
         $client = new \GuzzleHttp\Client();
