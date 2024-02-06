@@ -3,7 +3,7 @@
 namespace TechStudio\Lms\app\Repositories;
 
 use Exception;
-use TechStudio\Lms\app\Jobs\ProcessVideo;
+use App\Jobs\ProcessVideo;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Log;
 use TechStudio\Core\app\Helper\SlugGenerator;
