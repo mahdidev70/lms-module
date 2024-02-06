@@ -63,7 +63,7 @@ class LessonRepository implements LessonRepositoryInterface
             $videoId != null &&
             !filter_var($videoId, FILTER_VALIDATE_URL)
         ) {
-            ProcessVideo::dispatch($lesson, $videoId)->onQueue('process-video');
+            ProcessVideo::dispatch($lesson, $videoId);
         }
         return $lesson;
     }

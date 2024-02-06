@@ -22,6 +22,7 @@ class ProcessVideo implements ShouldQueue
     {
         $this->record = $lesson;
         $this->videoId = $videoId;
+        $this->onQueue('process-video');
     }
 
     /**
