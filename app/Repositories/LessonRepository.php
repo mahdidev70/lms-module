@@ -2,6 +2,8 @@
 
 namespace TechStudio\Lms\app\Repositories;
 
+use Exception;
+use TechStudio\Lms\app\Jobs\ProcessVideo;
 use Dflydev\DotAccessData\Data;
 use TechStudio\Core\app\Helper\SlugGenerator;
 use TechStudio\Lms\app\Models\Lesson;
@@ -51,6 +53,18 @@ class LessonRepository implements LessonRepositoryInterface
             ]
         );
 
+        $videoId = null;
+        try {
+            $videoId = $data->content[0][0]['content']['url'];
+        } catch (Exception $e) {
+        }
+        if (
+            $data->dominantType == 'video' &&
+            $videoId != null &&
+            !filter_var($videoId, FILTER_VALIDATE_URL)
+        ) {
+            ProcessVideo::dispatch($lesson, $videoId);
+        }
         return $lesson;
     }
 }
