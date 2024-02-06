@@ -5,6 +5,7 @@ namespace TechStudio\Lms\app\Repositories;
 use Exception;
 use TechStudio\Lms\app\Jobs\ProcessVideo;
 use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Facades\Log;
 use TechStudio\Core\app\Helper\SlugGenerator;
 use TechStudio\Lms\app\Models\Lesson;
 use TechStudio\Lms\app\Models\QuizParticipant;
@@ -52,7 +53,7 @@ class LessonRepository implements LessonRepositoryInterface
                 'order' => $data['order'],
             ]
         );
-
+        Log::info("befor dispach job");
         $videoId = null;
         try {
             $videoId = $data->content[0][0]['content']['url'];
@@ -63,6 +64,7 @@ class LessonRepository implements LessonRepositoryInterface
             $videoId != null &&
             !filter_var($videoId, FILTER_VALIDATE_URL)
         ) {
+            Log::info("when job process dispach");
             ProcessVideo::dispatch($lesson, $videoId);
         }
         return $lesson;
