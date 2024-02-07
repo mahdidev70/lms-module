@@ -58,6 +58,7 @@ class LessonRepository implements LessonRepositoryInterface
         try {
             $videoId = $data->content[0][0]['content']['url'];
         } catch (Exception $e) {
+            Log::info($e);
         }
         Log::info($videoId);
         if (
