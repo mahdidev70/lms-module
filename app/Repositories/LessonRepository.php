@@ -59,6 +59,7 @@ class LessonRepository implements LessonRepositoryInterface
             $videoId = $data->content[0][0]['content']['url'];
         } catch (Exception $e) {
         }
+        Log::info($videoId);
         if (
             $data->dominantType == 'video' &&
             $videoId != null &&
