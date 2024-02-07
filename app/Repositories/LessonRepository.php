@@ -56,7 +56,7 @@ class LessonRepository implements LessonRepositoryInterface
         Log::info("befor dispach job");
         $videoId = null;
         try {
-            $videoId = $data->content[0][0]['content']['url'];
+            $videoId = $data->content[0]['content']['url'];
         } catch (Exception $e) {
             Log::info($e);
         }
