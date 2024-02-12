@@ -46,8 +46,19 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getUserRecentlyVisited()
     {
-        return View::where('user_id', Auth::user()->id)->with('course.instructor')
-            ->orderBy('created_at', 'desc')->take(4)->get()->pluck('course');
+        /* return View::where('user_id', Auth::user()->id)->with('course.instructor')
+             ->orderBy('created_at', 'desc')->take(4)->get()->pluck('course');*/
+        $userViews = View::where('user_id', Auth::user()->id)
+            ->with('course.instructor')
+            ->orderBy('created_at', 'desc')
+            ->take(4)
+            ->get();
+
+        $validCourses = $userViews->filter(function ($view) {
+            return $view->course !== null;
+        })->pluck('course');
+
+        return $validCourses;
     }
 
     public function getNecessaryCourses()
