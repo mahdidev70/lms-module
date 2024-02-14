@@ -57,6 +57,7 @@ class UserController extends Controller
     public function instructors(Request $request)
     {
         $instructors = $this->courseRepository->getInstructors($request);
+        // return $instructors;
         return new InstructorsResource($instructors);
     }
 
