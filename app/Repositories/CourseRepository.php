@@ -79,7 +79,7 @@ class CourseRepository implements CourseRepositoryInterface
     public function getInstructors($request)
     {
         $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
-        $query = UserProfile::whereIn('id', $instructors);
+        $query = UserProfile::whereIn('user_id', $instructors);
 
         if ($request->filled('search')) {
             $txt = $request->get('search');
