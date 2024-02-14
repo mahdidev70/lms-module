@@ -86,16 +86,16 @@ class CourseRepository implements CourseRepositoryInterface
 
             $query->where(function ($q) use ($txt) {
                 $q
-                    ->orWhere('first_name', 'like', '% '.$txt.'%')
-                    ->orWhere('last_name', 'like', '% '.$txt.'%');
+                    ->orWhere('first_name', 'like', '%'.$txt.'%')
+                    ->orWhere('last_name', 'like', '%'.$txt.'%');
             });
         }
 
         if ($request->has('sort')) {
             if ($request->sort == 'commentCount') {
                 $instructors = $query->withCount(['courses as comment_count' => function ($query) {
-                    $query->select('instructor_id')->join('comments', 'comments.commentable_id', '=', 'courses.id')
-                    ->where('courses.instructor_id', '=', 'user_profiles.id');
+                    $query->select('instructor_id')->join('core_comments', 'core_comments.commentable_id', '=', 'lms_courses.id')
+                    ->where('lms_courses.instructor_id', '=', 'core_user_profiles.id');
                 }])->orderBy('comment_count', 'desc')->paginate(10);
             } elseif ($request->sort == 'courseCount') {
                 $instructors = $query->withCount('courses')->orderBy('courses_count', 'desc')->paginate(10);
