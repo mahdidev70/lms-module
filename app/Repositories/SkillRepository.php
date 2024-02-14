@@ -77,6 +77,14 @@ class SkillRepository implements SkillRepositoryInterface
 
         $ids = collect($validatedData['ids']);
 
+        if ($validatedData['status'] != 'active') {
+            if(Skill::first()->courses()->exists()) {
+                return [
+                    'message' => 'برای تغییر وضعیت این مهارت ابتدا زیرمجموعه‌های آن را بردارید'
+                ];
+            }
+        }
+
         Skill::whereIn('id', $ids)->update(['status' => $validatedData['status']]);
 
         return [
