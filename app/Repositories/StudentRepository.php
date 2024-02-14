@@ -118,8 +118,8 @@ class StudentRepository implements StudentRepositoryInterface
         if ($request->filled('search')) {
             $txt = $request->get('search');
             $query->where(function ($q) use ($txt) {
-                $q->orWhere(app(UserProfile::class)->getTable().'.first_name', 'like', '% '.$txt.'%')
-                    ->orWhere(app(UserProfile::class)->getTable().'.last_name', 'like', '% '.$txt.'%');
+                $q->orWhere(app(UserProfile::class)->getTable().'.first_name', 'like', '%'.$txt.'%')
+                    ->orWhere(app(UserProfile::class)->getTable().'.last_name', 'like', '%'.$txt.'%');
             });
         }
         if ($request->filled('filter')) {
