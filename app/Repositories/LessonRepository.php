@@ -69,7 +69,7 @@ class LessonRepository implements LessonRepositoryInterface
         ) {
             Log::info("when job process dispach");
             ConvertVideo::dispatch($lesson, $videoId,$data['title']);
-            ProcessVideo::dispatch($lesson, $videoId);
+            // ProcessVideo::dispatch($lesson, $videoId);
         }
         return $lesson;
     }
