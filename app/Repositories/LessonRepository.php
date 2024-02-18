@@ -4,6 +4,7 @@ namespace TechStudio\Lms\app\Repositories;
 
 use Exception;
 use App\Jobs\ProcessVideo;
+use App\Jobs\ConvertVideo;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Log;
 use TechStudio\Core\app\Helper\SlugGenerator;
@@ -67,6 +68,7 @@ class LessonRepository implements LessonRepositoryInterface
             !filter_var($videoId, FILTER_VALIDATE_URL)
         ) {
             Log::info("when job process dispach");
+            ConvertVideo::dispatch($lesson, $videoId,$data['title']);
             ProcessVideo::dispatch($lesson, $videoId);
         }
         return $lesson;
