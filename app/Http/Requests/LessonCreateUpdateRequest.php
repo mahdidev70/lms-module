@@ -3,6 +3,7 @@
 namespace TechStudio\Lms\app\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LessonCreateUpdateRequest extends FormRequest
 {
@@ -23,7 +24,8 @@ class LessonCreateUpdateRequest extends FormRequest
     {
         return [
             //required fields to createUpdate a lesson: 
-            'title' => 'required|string',
+            'title' => ['string', 'required', Rule::unique('lms_lessons')->ignore($this->id)],
+            'slug' => ['string', Rule::unique('lms_lessons')->ignore($this->id)],
             'dominantType' => 'required|in:text,video,exam',
             'chapterId' => 'required|integer',
             'content' => 'required|array',
