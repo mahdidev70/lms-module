@@ -3,6 +3,7 @@
 namespace TechStudio\Lms\app\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ChapterCreateUpdateRequest extends FormRequest
 {
@@ -22,8 +23,8 @@ class ChapterCreateUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => ['string', 'required', Rule::unique('lms_lessons')->ignore($this->id)],
             'courseId' => 'required|integer',
-            'title' => 'required|string',
             'description' => 'string',
             'order' => 'integer',
         ];
