@@ -3,6 +3,7 @@
 namespace TechStudio\Lms\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use TechStudio\Lms\app\Models\Course;
 use TechStudio\Lms\app\Models\Skill;
 use stdClass;
@@ -58,7 +59,10 @@ class CourseController extends Controller
 
     public function getAllCourseData(Request $request)
     {
-        $courses = $this->repository->all($request);
+        $minutes = config('cache.short_time')??30;
+        $courses = Cache::remember('all_courses', $minutes, function () use ($request) {
+            return $this->repository->all($request);
+        });
         return response()->json(new CoursesResource($courses));
     }
 
@@ -319,7 +323,7 @@ class CourseController extends Controller
         }
     }
 
-    public function coursePreview($locale, $id) 
+    public function coursePreview($locale, $id)
     {
         $course = $this->repository->coursePreview($id);
         return response()->json(new CourseResource($course));
