@@ -79,9 +79,9 @@ class SkillRepository implements SkillRepositoryInterface
 
         if ($validatedData['status'] != 'active') {
             if(Skill::first()->courses()->exists()) {
-                return [
-                    'message' => 'برای تغییر وضعیت این مهارت ابتدا زیرمجموعه‌های آن را بردارید'
-                ];
+                return response()->json([
+                    'message' => 'برای تغییر وضعیت این دسته بندی ابتدا زیرمجموعه‌های آن را بردارید'
+                ], 409);
             }
         }
 
