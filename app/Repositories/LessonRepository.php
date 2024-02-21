@@ -72,7 +72,7 @@ class LessonRepository implements LessonRepositoryInterface
             !filter_var($videoId, FILTER_VALIDATE_URL)
         ) {
             Log::info("when job process dispach");
-            ConvertVideo::dispatch($lesson, $videoId,$data['title']);
+            ConvertVideo::dispatchSync($lesson, $videoId,$data['title']);
             // ProcessVideo::dispatch($lesson, $videoId);
         }
         return $lesson;
