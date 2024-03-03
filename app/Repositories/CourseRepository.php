@@ -182,7 +182,7 @@ class CourseRepository implements CourseRepositoryInterface
 
         $course = Course::updateOrCreate(['id' => $data['id']], $courseData);
 
-        if (!empty($data['skillsId'])) {
+        if (isset($data['skillsId'])) {
             $course->skills()->sync($data['skillsId']);
         }
 
