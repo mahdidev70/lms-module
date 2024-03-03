@@ -2,6 +2,7 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use stdClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,16 +42,43 @@ class UserController extends Controller
     {
         $id = Auth::user()->id;
         $data = new stdClass();
-        $data->user = $this->userRepository->getById(Auth::user());
-        $data->progress = $this->studentRepository->getUserProgressCourses($id);
-        $data->done = $this->studentRepository->getUserDoneCourses($id);
-        $data->necessary = $this->studentRepository->getNecessaryCourses();
-        $data->categories = $this->categoryRepository->getCategoriesWithCourses();
-        $data->bookmarks = $this->studentRepository->getUserBookmarkedCourses($id);
-        $data->comments = $this->commentRepository->getStarComments();
-        $data->recentlyVisitedCourses = $this->studentRepository->getUserRecentlyVisited();
-        $data->topCourses = $this->courseRepository->getTopCourses();
+        $minute = config('cache.mid_time')?? 720;
+        //  $data->user = $this->userRepository->getById(Auth::user());
+        $data->user = Cache::remember('user_' . $id, $minute, function () use ($id) {
+            return $this->userRepository->getById(Auth::user());
+        });
 
+        $data->progress = Cache::remember('user_progress_courses_' . $id, $minute, function () use ($id) {
+            return $this->studentRepository->getUserProgressCourses($id);
+        });
+
+        $data->done = Cache::remember('user_done_courses_' . $id, $minute, function () use ($id) {
+            return $this->studentRepository->getUserDoneCourses($id);
+        });
+
+        $data->necessary = Cache::remember('necessary_courses', $minute, function () {
+            return $this->studentRepository->getNecessaryCourses();
+        });
+
+        $data->categories = Cache::remember('categories_with_courses', $minute, function () {
+            return $this->categoryRepository->getCategoriesWithCourses();
+        });
+
+        $data->bookmarks = Cache::remember('user_bookmarked_courses_' . $id, $minute, function () use ($id) {
+            return $this->studentRepository->getUserBookmarkedCourses($id);
+        });
+
+        $data->comments = Cache::remember('star_comments', $minute, function () {
+            return $this->commentRepository->getStarComments();
+        });
+
+        $data->recentlyVisitedCourses = Cache::remember('user_recently_visited_courses_' . $id, $minute, function () use ($id) {
+            return $this->studentRepository->getUserRecentlyVisited($id);
+        });
+
+        $data->topCourses = Cache::remember('top_courses', $minute, function () {
+            return $this->courseRepository->getTopCourses();
+        });
         return response()->json(new UserHomeResource($data));
     }
 
