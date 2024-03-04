@@ -24,6 +24,7 @@ class CourseCreateUpdateRequest extends FormRequest
         return [
             //required fields to create a course: 
             'title' => 'required|string',
+            'slug' => 'string', 
             'description' => 'required|string',
             'categoryId' => 'integer',
             'instructor' => 'required|array',
@@ -36,7 +37,9 @@ class CourseCreateUpdateRequest extends FormRequest
             'learningPoints*.title' => 'required|string',
             'learningPoints*.description' => 'string',
             'features' => 'array',
-            'faq' => 'array'
+            'faq' => 'array',
+            'supportItems' => 'array',
+            'skillsId' => 'array',
         ];
     }
 }
