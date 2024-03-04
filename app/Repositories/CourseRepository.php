@@ -64,15 +64,15 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getAllInstructors()
     {
-        if (auth()->check()) {
-            $userId = Auth::user()->id;
-            $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
-            $instructors = UserProfile::whereIn('id', $instructors)->orWhere('user_id', $userId)->get();
-        }else {
-            $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
-            $instructors = UserProfile::whereIn('id', $instructors)->get();
-        }
-
+        // if (auth()->check()) {
+        //     $userId = Auth::user()->id;
+        //     $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
+        //     $instructors = UserProfile::whereIn('id', $instructors)->orWhere('user_id', $userId)->get();
+        // }else {
+        //     $instructors = Course::groupBy('instructor_id')->pluck('instructor_id');
+        //     $instructors = UserProfile::whereIn('id', $instructors)->get();
+        // }
+        $instructors = UserProfile::get();
         return $instructors;
     }
 
