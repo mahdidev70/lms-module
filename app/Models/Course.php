@@ -30,11 +30,10 @@ class Course extends Model
             });
         }
 
-        if (request()->is('')) {
-            static::addGlobalScope('deletedCourse', function (Builder $builder) {
-                $builder->where('status', 'deleted');
-            });
-        }
+        static::addGlobalScope('deletedCourse', function (Builder $builder) {
+            $builder->where('status', '!=', 'deleted');
+        });
+        
     }
 
     public function chapters()
