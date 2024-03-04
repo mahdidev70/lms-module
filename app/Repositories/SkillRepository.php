@@ -75,10 +75,12 @@ class SkillRepository implements SkillRepositoryInterface
             'ids' => 'required|array',
         ]);
 
+        $skill = Skill::whereIn('id', $validatedData['ids'])->get();
+
         $ids = collect($validatedData['ids']);
 
         if ($validatedData['status'] != 'active') {
-            if(Skill::first()->courses()->exists()) {
+            if($skill->first()->courses()->exists()) {
                 return response()->json([
                     'message' => 'برای تغییر وضعیت این دسته بندی ابتدا زیرمجموعه‌های آن را بردارید'
                 ], 409);
