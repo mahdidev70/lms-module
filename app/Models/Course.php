@@ -29,6 +29,12 @@ class Course extends Model
                 $builder->where('status', 'published');
             });
         }
+
+        if (request()->is('')) {
+            static::addGlobalScope('deletedCourse', function (Builder $builder) {
+                $builder->where('status', 'deleted');
+            });
+        }
     }
 
     public function chapters()
