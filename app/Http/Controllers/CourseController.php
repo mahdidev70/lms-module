@@ -9,7 +9,7 @@ use TechStudio\Lms\app\Models\Skill;
 use stdClass;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
@@ -156,6 +156,7 @@ class CourseController extends Controller
 
         $course = $this->repository->createUpdate($courseCreateUpdateRequest);
        // new CoursePreviewResource($course);
+       Artisan::call('course-duration:update', ['courseId' => $course->id]);
 
         return response()->json([
             'message' => 'تغییرات با موفقیت ثبت شد.',
