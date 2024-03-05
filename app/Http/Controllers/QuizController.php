@@ -62,7 +62,7 @@ class QuizController extends Controller
         $falseAnswers = $diff->all();
         $answerNumber = count((array)json_decode($quiz->information));
         $score = 0;
-        if( $answerNumber > 0 && count((array) $falseAnswers)){
+        if( $answerNumber > 0 && count((array) $falseAnswers) >= 0){
             $score = ($answerNumber - count((array) $falseAnswers)) * 100 / $answerNumber;
         }
 
