@@ -48,7 +48,7 @@ class QuizPageResource extends JsonResource
             'sidebar' => new CourseSidebarResource($this),
             'score' => $average,
             'passed' => $pass,
-            'certificate' => $certificate,
+            'certificate' => 'https://storage.sa-test.techstudio.diginext.ir/static/free-printable-certificate-design-template-cbf0882bc95c38a60fbf0570406cf533_screen.jpg',
             'rate' => $rate,
             'quizzes' => LessonResource::collection($quiz)
         ];
