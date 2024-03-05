@@ -47,7 +47,9 @@ class SkillRepository implements SkillRepositoryInterface
             ]
         );
 
-        return $skill;
+        $data = Skill::where('id', $skill->id)->first();
+
+        return $data;
     }
 
     public function getCommonSkill()
