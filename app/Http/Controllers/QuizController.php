@@ -73,7 +73,7 @@ class QuizController extends Controller
 
         $quizResult = $this->lessonRepository->storeQuizResult([
             'lesson_id' => $quizId,
-            'user_id' => Auth::user()->id,
+            'user_id' => auth()->id(),
             'selected_choices' => [
                 'version' => $request->version,
                 'trueAnswers' => $request->trueAnswers
@@ -82,7 +82,7 @@ class QuizController extends Controller
             'status' => $status
         ]);
         $userProgress = UserLessonProgress::updateOrInsert(
-            ['lesson_id' => $quizId, 'user_id' => Auth::user()->id],
+            ['lesson_id' => $quizId, 'user_id' => auth()->id()],
             ['progress'=>1]
         );
         return response()->json(new QuizResultResource($quizResult));
