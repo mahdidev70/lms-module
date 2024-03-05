@@ -29,11 +29,9 @@ class SkillRepository implements SkillRepositoryInterface
             if ($data->sortKey == 'courseCount') {
                 $query->withCount('courses')->orderBy('courses_count', $sortOrder);
             }
-        }else{
-            $query->orderBy('created_at', $sortOrder);
         }
-
-        $skill = $query->paginate(10);
+        
+        $skill = $query->orderBy('id', $sortOrder)->paginate(10);
 
         return $skill;
     }
