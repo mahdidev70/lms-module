@@ -88,6 +88,8 @@ class CourseResource extends JsonResource
                 : SkillResource::collection($this->skills),
             'faq' => json_decode($this->faq),
             'features' => json_decode($this->features),
+            'passedCount' => $passedCount,
+            'lessonsCount' => count($lessonsId),
         ];
     }
 }
