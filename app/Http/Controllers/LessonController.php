@@ -4,6 +4,7 @@ namespace TechStudio\Lms\app\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Controller;
 use TechStudio\Blog\app\Models\Article;
 use TechStudio\Lms\app\Http\Requests\LessonCreateUpdateRequest;
@@ -30,6 +31,7 @@ class LessonController extends Controller
     public function editCreateLesson(LessonCreateUpdateRequest $lessonCreateUpdateRequest)
     {
         $lesson = $this->repository->createUpdate($lessonCreateUpdateRequest);
+        Artisan::call('lesson-duration:update', ['lessonId' => $lesson->id]);
         new LessonPageResource($lesson);
         return $lesson->id;
     }
