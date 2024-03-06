@@ -84,6 +84,7 @@ class CourseResource extends JsonResource
             'chapters' => ChapterResource::collection($this->chapters),
             'certificate' => [],
             'comments' => CommentResource::collection($this->comments),
+            'commentCount' => $this->comments->count(),
             'skills' => (isset($this->shortData) && $this->shortData == true) ? $this->skills->pluck('id')
                 : SkillResource::collection($this->skills),
             'faq' => json_decode($this->faq),
