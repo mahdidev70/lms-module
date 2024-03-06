@@ -65,7 +65,7 @@ class CourseResource extends JsonResource
             'bannerUrl' => $this->banner_url,
             'bannerUrlMobile' => $this->banner_url_mobile,
             'currentUserBookmarked' => isset($student->bookmark) ? $student->bookmark : null,
-            'currentUserEnroled' => (Auth::user() && isset($student->in_roll)) ? 1 : 0,
+            'currentUserEnroled' => (Auth('sanctum')->user() && isset($student->in_roll)) ? 1 : 0,
             'participantsCount' => $studentCount,
             'category' => new CategoryResource($this->category),
             'totalDurationMinutes' => $this->duration,

@@ -74,7 +74,11 @@ class Course extends Model
 
     public function getTotalDuration() {
         if($this->total_duration < 10080){
-            return intval($this->total_duration / 1440) .' روز';
+            if(intval($this->total_duration / 1440) > 0){
+                return intval($this->total_duration / 1440) .' روز';
+            }else{
+                return '۱ روز';
+            }
         }elseif($this->total_duration > 10080 && $this->total_duration < 43800){
             return intval($this->total_duration / 10080) .' هفته';
         }else{

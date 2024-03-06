@@ -55,7 +55,7 @@ class CoursePreviewResource extends JsonResource
             'bannerUrlMobile' => $this->banner_url_mobile,
             'participantsCount' => $studentCount,
             'totalDurationMinutes' => $this->duration,
-            'totalDuration' => $this->duration?$this->getTotalDuration():0,
+            'totalDuration' => $this->duration?$this->getTotalDuration():1,
             'videosCount' => $this->videos_count,
             'languages' => json_decode($this->languages),
             'ratingsCount' => $rateCount,
