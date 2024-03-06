@@ -23,9 +23,9 @@ class CourseResource extends JsonResource
     {
         
         $student = null;
-        if (Auth::user()) {
+        if (Auth('sanctum')->user()) {
             $student = Student::where('course_id', $this->id)
-                ->where('user_id', Auth::user()->id)->first();
+                ->where('user_id', Auth('sanctum')->user()->id)->first();
         }
         $studentCount = $this->students()->count();
         
@@ -45,7 +45,7 @@ class CourseResource extends JsonResource
         $passedPercentage = 0;
         $id = null;
         try{
-            $id = Auth::user()->id;
+            $id = Auth('sanctum')->user()->id;
         }catch(Exception $e){}
         if($id && count($lessonsId) > 0 )
         {
