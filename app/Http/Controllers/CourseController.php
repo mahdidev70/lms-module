@@ -192,7 +192,6 @@ class CourseController extends Controller
             'published' => $courseModel->where('status', 'published')->count(),
             'draft' => $courseModel->where('status', 'draft')->count(),
             'hidden' => $courseModel->where('status', 'hidden')->count(),
-            'deleted' => $courseModel->where('status', 'deleted')->count(),
         ];
 
         $categories = Category::where('table_type', get_class($courseModel))->get()->map(function ($category) {
@@ -202,7 +201,7 @@ class CourseController extends Controller
             ];
         });
 
-        $status = ['published', 'draft', 'hidden', 'deleted'];
+        $status = ['published', 'draft', 'hidden'];
 
         $instructors = $this->repository->getAllInstructors();
 
