@@ -59,7 +59,7 @@ Route::prefix('academy')->group(function () {
 
         // ============== PANEL ================
 
-        Route::middleware('academy')->prefix('panel')->group(function () {
+        Route::prefix('panel')->group(function () {
 
             Route::get('/instructor/list', [UserController::class, 'instructors']); //Done
 
