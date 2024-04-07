@@ -328,4 +328,5 @@ class CourseController extends Controller
         $course = $this->repository->coursePreview($id);
         return response()->json(new CourseResource($course));
     }
+
 }

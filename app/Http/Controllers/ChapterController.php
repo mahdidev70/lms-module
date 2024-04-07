@@ -21,6 +21,7 @@ class ChapterController extends Controller
     public function show($local, $chapterSlug)
     {
         $chapter = $this->repository->getBySlug($chapterSlug);
+
         return response()->json(new ChapterPageResource($chapter));
     }
 
@@ -43,4 +44,10 @@ class ChapterController extends Controller
         return response("OK", 200);
     }
 
+
+    public function chapterPreview($locale, $slug)
+    {
+        $chapter = $this->repository->preview($slug);
+        return response()->json(new ChapterPageResource($chapter));
+    }
 }

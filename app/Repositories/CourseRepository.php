@@ -18,7 +18,7 @@ class CourseRepository implements CourseRepositoryInterface
     function getBySlug($slug)
     {
         $courses = Course::where('slug', $slug)
-            ->with('skills', 'instructor', 'category', 'chapters', 'comments')->firstOrFail();
+            ->with('skills', 'instructor', 'category', 'chapters', 'comments')->where('status','published')->firstOrFail();
         return $courses;
     }
 

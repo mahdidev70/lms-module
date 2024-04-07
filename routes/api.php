@@ -131,7 +131,7 @@ Route::prefix('academy')->group(function () {
             Route::put('skill/status', [SkillController::class, 'changeSkillStatus']); //Done
 
             Route::get('course/preview/{id}', [CourseController::class, 'coursePreview']); //Done
-
+            Route::get('course/chapter/preview/{slug}', [CourseController::class, 'chapterPreview']); //Done
         });
     });
 });

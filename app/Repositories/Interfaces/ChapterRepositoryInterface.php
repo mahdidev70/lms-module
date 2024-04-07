@@ -6,4 +6,5 @@ interface ChapterRepositoryInterface
 {
     public function getBySlug($slug);
     public function createUpdate($data);
+    public function preview($slug);
 }
