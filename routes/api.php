@@ -59,7 +59,7 @@ Route::prefix('academy')->group(function () {
 
         // ============== PANEL ================
 
-        Route::prefix('panel')->group(function () {
+        Route::middleware('academy')->prefix('panel')->group(function () {
 
             Route::get('/instructor/list', [UserController::class, 'instructors']); //Done
 
@@ -114,24 +114,24 @@ Route::prefix('academy')->group(function () {
 
             Route::put('set_status', [CourseController::class, 'editStatus']); //Done =sellerBug=
 
-            Route::put('comment/status', [CommentController::class, 'updateCommentsStatus']); //Done
+            Route::put('comment/status', [CommentController::class, 'updateCommentsStatus']);
 
-            Route::put('category/status', [CategoriesController::class, 'updateCategoryStatus']); //Done
+            Route::put('category/status', [CategoriesController::class, 'updateCategoryStatus']); 
 
-            Route::get('view_dashboard', [CourseController::class, 'viewDashboard']); //Done
+            Route::get('view_dashboard', [CourseController::class, 'viewDashboard']); 
 
-            Route::get('certificate/list', [StudentController::class, 'certificateByStudentList']); //Done
+            Route::get('certificate/list', [StudentController::class, 'certificateByStudentList']); 
 
-            Route::get('certificate/common', [StudentController::class, 'certificateCommon']); //Done
+            Route::get('certificate/common', [StudentController::class, 'certificateCommon']); 
 
-            Route::get('students/list/common', [StudentController::class, 'studentCommonList']); //Done
+            Route::get('students/list/common', [StudentController::class, 'studentCommonList']); 
 
-            Route::get('comment/excel/export', [CommentController::class, 'exportExcel']); //Done
+            Route::get('comment/excel/export', [CommentController::class, 'exportExcel']); 
 
-            Route::put('skill/status', [SkillController::class, 'changeSkillStatus']); //Done
+            Route::put('skill/status', [SkillController::class, 'changeSkillStatus']);
 
-            Route::get('course/preview/{id}', [CourseController::class, 'coursePreview']); //Done
-            Route::get('course/chapter/preview/{slug}', [CourseController::class, 'chapterPreview']); //Done
+            Route::get('course/preview/{id}', [CourseController::class, 'coursePreview']);
+            Route::get('course/chapter/preview/{slug}', [CourseController::class, 'chapterPreview']);
         });
     });
 });
