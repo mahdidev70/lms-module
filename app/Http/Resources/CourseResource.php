@@ -61,7 +61,7 @@ class CourseResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'instructor' => new InstructorResource($this->instructor),
-            'instructorCourses' => CoursePreviewResource::collection($this->instructor->courses),
+            'instructorCourses' => CoursePreviewResource::collection($this->instructor->courses) ?? [],
             'bannerUrl' => $this->banner_url,
             'bannerUrlMobile' => $this->banner_url_mobile,
             'currentUserBookmarked' => isset($student->bookmark) ? $student->bookmark : null,
