@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->json('prerequisite')->nullable()->after('laravel');
+            $table->json('prerequisites')->nullable()->after('level');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->dropColumn('prerequisite');
+            $table->dropColumn('prerequisites');
         });
     }
 };
