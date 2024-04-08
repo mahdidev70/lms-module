@@ -40,7 +40,7 @@ class CourseCreateUpdateRequest extends FormRequest
             'faq' => 'array',
             'supportItems' => 'array',
             'skillsId' => 'array',
-            'prerequisites' => 'nullable',
+            'prerequisites' => 'nullable|array',
             'prerequisites.*' => 'exists:courses,id' 
         ];
     }
