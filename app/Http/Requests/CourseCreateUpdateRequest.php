@@ -41,7 +41,7 @@ class CourseCreateUpdateRequest extends FormRequest
             'supportItems' => 'array',
             'skillsId' => 'array',
             'prerequisites' => 'nullable|array',
-            'prerequisites.*' => 'exists:courses,id' 
+            'prerequisites.*' => 'exists:lms_courses,id' 
         ];
     }
 }
