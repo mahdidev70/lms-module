@@ -72,6 +72,14 @@ class Course extends Model
         return $this->hasMany(ChatRoom::class);
     }
 
+    public function prerequisite()
+    {
+        if (is_array((array)$this->prerequisites) && !is_null($this->prerequisites)) {
+            return Course::whereIn('id', json_decode($this->prerequisites,true))->get();
+        }
+        return collect();
+    }
+
     public function getTotalDuration() {
         if($this->total_duration < 10080){
             if(intval($this->total_duration / 1440) > 0){

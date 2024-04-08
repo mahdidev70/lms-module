@@ -9,8 +9,10 @@ use TechStudio\Lms\app\Models\Lesson;
 use TechStudio\Lms\app\Models\Chapter;
 use TechStudio\Lms\app\Models\Student;
 use Illuminate\Http\Resources\Json\JsonResource;
-use TechStudio\Lms\app\Http\Resources\SkillResource;
 use TechStudio\Lms\app\Models\UserLessonProgress;
+use TechStudio\Lms\app\Http\Resources\SkillResource;
+use TechStudio\Lms\app\Http\Resources\CoursePreviewResource;
+
 
 class CourseResource extends JsonResource
 {
@@ -91,6 +93,8 @@ class CourseResource extends JsonResource
             'features' => json_decode($this->features),
             'passedCount' => $passedCount,
             'lessonsCount' => count($lessonsId),
+            'HasDonePrerequisites' =>(boolean) rand(0,1),
+            'prerequisites' => CoursePreviewResource::collection($this->prerequisite())
         ];
     }
 }
