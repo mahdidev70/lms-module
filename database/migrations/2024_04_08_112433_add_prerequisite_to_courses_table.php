@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
+        Schema::table('lms_courses', function (Blueprint $table) {
             $table->json('prerequisites')->nullable()->after('level');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
+        Schema::table('lms_courses', function (Blueprint $table) {
             $table->dropColumn('prerequisites');
         });
     }
