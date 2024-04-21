@@ -2,30 +2,31 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
+use stdClass;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use TechStudio\Lms\app\Models\Skill;
 use Illuminate\Support\Facades\Cache;
 use TechStudio\Lms\app\Models\Course;
-use TechStudio\Lms\app\Models\Skill;
-use stdClass;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Auth;
-use TechStudio\Core\app\Models\Category;
-use TechStudio\Core\app\Models\UserProfile;
-use TechStudio\Lms\app\Http\Requests\CourseCreateUpdateRequest;
-use TechStudio\Lms\app\Http\Resources\CategoryResource;
-use TechStudio\Lms\app\Http\Resources\CoursePreviewResource;
-use TechStudio\Lms\app\Http\Resources\CourseResource;
-use TechStudio\Lms\app\Http\Resources\CourseRoomResource;
-use TechStudio\Lms\app\Http\Resources\CoursesResource;
-use TechStudio\Lms\app\Http\Resources\FiltersCourseResource;
-use TechStudio\Lms\app\Http\Resources\InstructorResource;
 use TechStudio\Lms\app\Models\Student;
-use TechStudio\Lms\app\Repositories\Interfaces\CategoryLmsRepositoryInterface;
+use Illuminate\Support\Facades\Artisan;
+use TechStudio\Core\app\Models\Category;
+use Illuminate\Support\Facades\Validator;
+use TechStudio\Core\app\Models\UserProfile;
+use TechStudio\Lms\app\Http\Resources\CourseResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use TechStudio\Lms\app\Http\Resources\CoursesResource;
+use TechStudio\Lms\app\Http\Resources\FeatureResource;
+use TechStudio\Lms\app\Http\Resources\CategoryResource;
+use TechStudio\Lms\app\Http\Resources\CourseRoomResource;
+use TechStudio\Lms\app\Http\Resources\InstructorResource;
+use TechStudio\Lms\app\Http\Resources\CoursePreviewResource;
+use TechStudio\Lms\app\Http\Resources\FiltersCourseResource;
+use TechStudio\Lms\app\Http\Requests\CourseCreateUpdateRequest;
 use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\CategoryLmsRepositoryInterface;
 
 class CourseController extends Controller
 {
@@ -175,7 +176,7 @@ class CourseController extends Controller
             'level' => [
                 'beginner', 'intermediate', 'advance'
             ],
-            'features' => $features,
+            'features' => FeatureResource::collection($features),
             'skills' => $skills,
             'instructor' =>InstructorResource::collection($instructors),
             'category' =>CategoryResource::collection($categories),
