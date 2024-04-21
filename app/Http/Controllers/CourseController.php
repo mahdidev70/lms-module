@@ -169,14 +169,13 @@ class CourseController extends Controller
         $skills = Skill::all()->toArray();
         $instructors = $this->repository->getAllInstructors();
         $categories = $this->categoryRepository->getCategories();
+        $features = $this->repository->getAllFeatures();
 
         return [
             'level' => [
                 'beginner', 'intermediate', 'advance'
             ],
-            'features' => [
-                'گواهینامه شرکت در دوره', 'ضمانت بازگشت وجه', 'پشتیبانی مستقیم مدرس', 'فضای تعاملی',
-            ],
+            'features' => $features,
             'skills' => $skills,
             'instructor' =>InstructorResource::collection($instructors),
             'category' =>CategoryResource::collection($categories),
