@@ -2,15 +2,16 @@
 
 namespace TechStudio\Lms\app\Repositories;
 
-use App\Http\Resources\Lms\InstructorResource;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use TechStudio\Core\app\Helper\SlugGenerator;
-use TechStudio\Core\app\Models\UserProfile;
-use TechStudio\Lms\app\Models\Course;
-use TechStudio\Lms\app\Models\Skill;
+use Illuminate\Support\Facades\DB;
 use TechStudio\Lms\app\Models\View;
+use Illuminate\Support\Facades\Auth;
+use TechStudio\Lms\app\Models\Skill;
+use TechStudio\Lms\app\Models\Course;
+use TechStudio\Core\app\Models\UserProfile;
+use TechStudio\Lms\app\Models\CourseFeature;
+use TechStudio\Core\app\Helper\SlugGenerator;
+use App\Http\Resources\Lms\InstructorResource;
 use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 
 class CourseRepository implements CourseRepositoryInterface
@@ -197,5 +198,24 @@ class CourseRepository implements CourseRepositoryInterface
             ->firstOrFail();
 
         return $courses;
+    }
+
+    public function getAllFeatures()
+    {
+        return CourseFeature::all();
+    }
+
+    public function featureUpdateCreate($request)
+    {
+        return CourseFeature::updateOrCreate([
+            'id' => $request->id
+        ], [
+            'title' => $request->title,
+        ]);
+    }
+
+    public function featureDelete($request)
+    {
+        return CourseFeature::where('id', $request->id)->delete();
     }
 }

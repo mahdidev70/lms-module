@@ -1,18 +1,19 @@
 <?php
 
-use TechStudio\Lms\app\Http\Controllers\CourseController;
-use TechStudio\Lms\app\Http\Controllers\HomeController;
-use TechStudio\Lms\app\Http\Controllers\ChapterController;
-use TechStudio\Lms\app\Http\Controllers\LessonController;
-use TechStudio\Lms\app\Http\Controllers\SkillController;
-use TechStudio\Lms\app\Http\Controllers\QuizController;
-use TechStudio\Lms\app\Http\Controllers\StudentController;
-use TechStudio\Lms\app\Http\Controllers\UserController;
-use TechStudio\Core\app\Http\Controllers\CategoriesController;
-use TechStudio\Core\app\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Config;
+use TechStudio\Lms\app\Http\Controllers\HomeController;
+use TechStudio\Lms\app\Http\Controllers\QuizController;
+use TechStudio\Lms\app\Http\Controllers\UserController;
+use TechStudio\Lms\app\Http\Controllers\SkillController;
+use TechStudio\Lms\app\Http\Controllers\CourseController;
+use TechStudio\Lms\app\Http\Controllers\LessonController;
+use TechStudio\Lms\app\Http\Controllers\ChapterController;
+use TechStudio\Lms\app\Http\Controllers\FeatureController;
+use TechStudio\Lms\app\Http\Controllers\StudentController;
+use TechStudio\Core\app\Http\Controllers\CommentController;
+use TechStudio\Core\app\Http\Controllers\CategoriesController;
 
 
 /*
@@ -103,6 +104,9 @@ Route::prefix('academy')->group(function () {
 
             Route::get('/course/{id}', [CourseController::class, 'getCourse']); //Done
 
+            Route::get('/feature/list', [FeatureController::class, 'getAllFeatures']);
+            Route::put('/feature/editor', [FeatureController::class, 'updateOrCreate']);
+            Route::delete('/feature/delete', [FeatureController::class, 'delete']);
     // =============================== NEW ROUTES ===========================================
             Route::get('lesson/{id}', [LessonController::class, 'getLesson']); //Done
 

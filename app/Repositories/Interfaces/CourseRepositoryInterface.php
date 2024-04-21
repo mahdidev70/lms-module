@@ -15,4 +15,7 @@ interface CourseRepositoryInterface
     public function incrementField($courseId, $field);
     public function storeView($courseId, $userId);
     public function coursePreview($id);
+    public function getAllFeatures();
+    public function featureUpdateCreate($request);
+    public function featureDelete($request);
 }
