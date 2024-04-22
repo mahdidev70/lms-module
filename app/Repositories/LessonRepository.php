@@ -32,7 +32,7 @@ class LessonRepository implements LessonRepositoryInterface
         return QuizParticipant::create($request);
     }
 
-    public function getLastQuizResult($lessonId,$userId)
+    public function getLastQuizResult($lessonId, $userId)
     {
         return QuizParticipant::where('lesson_id', $lessonId)
             ->where('user_id', $userId)->latest('created_at')->first();
@@ -56,12 +56,11 @@ class LessonRepository implements LessonRepositoryInterface
         );
         Log::info("befor dispach job");
         $videoId = null;
-        if(
-            isset($data->content[0]) && 
-            isset($data->content[0]['content']) && 
+        if (
+            isset($data->content[0]) &&
+            isset($data->content[0]['content']) &&
             isset($data->content[0]['content']['url'])
-            )
-        {
+        ) {
             $videoId = $data->content[0]['content']['url'];
         }
 
@@ -72,9 +71,22 @@ class LessonRepository implements LessonRepositoryInterface
             !filter_var($videoId, FILTER_VALIDATE_URL)
         ) {
             Log::info("when job process dispach");
-            ConvertVideo::dispatch($lesson, $videoId,$data['title']);
+            ConvertVideo::dispatch($lesson, $videoId, $data['title']);
             // ProcessVideo::dispatch($lesson, $videoId);
         }
         return $lesson;
+    }
+
+
+    public function incrementOrders($chaptersId, $order)
+    {
+        return Lesson::whereIn('chapter_id',  $chaptersId)->where('order', '>=', $order)
+            ->update(['order' => DB::raw('`order` + 1')]);
+    }
+
+    public function decrementOrders($chaptersId, $order)
+    {
+        return Lesson::whereIn('chapter_id',  $chaptersId)->where('order', '>=', $order)
+            ->update(['order' => DB::raw('`order` - 1')]);
     }
 }

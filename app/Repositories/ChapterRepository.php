@@ -15,7 +15,7 @@ class ChapterRepository implements ChapterRepositoryInterface
     public function getBySlug($slug)
     {
         return $chapter = Chapter::where('slug', $slug)->with('course')->firstOrFail();
-        if( $chapter->course == null || $chapter->course->status != 'published'){
+        if ($chapter->course == null || $chapter->course->status != 'published') {
             return abort(404, 'Chapter Not Found!');
         }
         $user = Auth::user();
@@ -48,7 +48,7 @@ class ChapterRepository implements ChapterRepositoryInterface
                 'course_id' => $data['courseId'],
                 'order' => $data['order'],
             ]
-            );
+        );
 
         return $chapter;
     }
@@ -58,5 +58,10 @@ class ChapterRepository implements ChapterRepositoryInterface
         $chapter = Chapter::where('slug', $slug)->with('course')->firstOrFail();
 
         return $chapter;
+    }
+
+    public function getCourseChaptersId($request)
+    {
+        return $chapters = Chapter::where('course_id', $request)->pluck('id');
     }
 }

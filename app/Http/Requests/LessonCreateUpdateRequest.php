@@ -24,6 +24,7 @@ class LessonCreateUpdateRequest extends FormRequest
     {
         return [
             //required fields to createUpdate a lesson: 
+            'id' => ['nullable', 'integer'],
             'title' => ['string', 'required', Rule::unique('lms_lessons')->ignore($this->id)],
             'slug' => ['string', Rule::unique('lms_lessons')->ignore($this->id)],
             'dominantType' => 'required|in:text,video,exam',

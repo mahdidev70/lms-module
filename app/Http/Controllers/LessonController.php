@@ -31,8 +31,11 @@ class LessonController extends Controller
     public function editCreateLesson(LessonCreateUpdateRequest $lessonCreateUpdateRequest)
     {
         $lesson = $this->repository->createUpdate($lessonCreateUpdateRequest);
+        if ($lesson->wasRecentlyCreated) {
+            $chaptersId = $this->chapterRepository->getCourseChaptersId($lesson->chapter->course_id);
+            $this->repository->incrementOrders($chaptersId, $lesson->order);
+        }
         Artisan::call('lesson-duration:update', ['lessonId' => $lesson->id]);
-        new LessonPageResource($lesson);
         return $lesson->id;
     }
 
@@ -46,6 +49,8 @@ class LessonController extends Controller
     {
         $lesson = Lesson::where('slug', $slug)->firstOrFail();
         $lesson = $lesson->delete();
+        $chaptersId = $this->chapterRepository->getCourseChaptersId($lesson->chapter->course_id);
+        $this->repository->decrementOrders($chaptersId, $lesson->order);
         return response("OK", 200);
     }
 
