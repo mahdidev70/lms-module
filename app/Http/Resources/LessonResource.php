@@ -46,6 +46,7 @@ class LessonResource extends JsonResource
             'currentUserStartTime' => $startTime,
             'timeLimitMinutes' => 60,
             'content' => $this->content,
+            'order' => $this->order,
             'trueAnswers' => $information,
             'userQuizStatus' => $quizStatus,
             'score' => $score,

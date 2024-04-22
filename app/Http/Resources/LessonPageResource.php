@@ -76,6 +76,7 @@ class LessonPageResource extends JsonResource
             'score' => $score,
             'timeLimitMinutes' => 60,
             'content' => $this->content,
+            'order' => $this->order,
             'course' => new CoursePreviewResource($this->chapter->course),
             'chapter' => new ChapterResource($this->chapter),
             'informations' => $this->informations,
