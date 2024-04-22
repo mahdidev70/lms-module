@@ -23,7 +23,9 @@ class LessonOrderUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lessons' => ['required', 'array']
+            'lessons' => ['required', 'array'],
+            'lessons.*.id' => ['required', 'exists:lms_lessons,id'],
+            'lessons.*.order' => ['required', 'integer']
         ];
     }
 }

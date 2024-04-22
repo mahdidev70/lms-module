@@ -80,6 +80,12 @@ class LessonController extends Controller
 
     public function updateOrders(LessonOrderUpdateRequest $request)
     {
-        return 'zdfdsfs';
+        $result = $this->repository->lessonOrderUpdate($request['lessons']);
+        if($result)
+        {
+            return response()->json([
+                'message' => 'تغییرات با موفقیت ثبت شد.'
+            ], 200); 
+        }
     }
 }

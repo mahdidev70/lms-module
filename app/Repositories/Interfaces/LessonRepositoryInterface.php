@@ -11,4 +11,5 @@ interface LessonRepositoryInterface
     public function getLastQuizResult($lessonId,$userId);
     public function incrementOrders($chaptersId, $order);
     public function decrementOrders($chaptersId, $order);
+    public function updateOrders($request);
 }

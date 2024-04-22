@@ -89,4 +89,11 @@ class LessonRepository implements LessonRepositoryInterface
         return Lesson::whereIn('chapter_id',  $chaptersId)->where('order', '>=', $order)
             ->update(['order' => DB::raw('`order` - 1')]);
     }
+
+    public function updateOrders($request)
+    {
+        foreach ($request as $lesson) {
+            return Lesson::where('id', $lesson['id'])->update(['order' => $lesson['order']]);
+        }
+    }
 }
