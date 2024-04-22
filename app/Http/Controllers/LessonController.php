@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Artisan;
 use TechStudio\Blog\app\Models\Article;
 use TechStudio\Lms\app\Http\Resources\LessonResource;
 use TechStudio\Lms\app\Http\Resources\LessonPageResource;
+use TechStudio\Lms\app\Http\Requests\LessonOrderUpdateRequest;
 use TechStudio\Lms\app\Http\Requests\LessonCreateUpdateRequest;
 use TechStudio\Lms\app\Repositories\Interfaces\LessonRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\ChapterRepositoryInterface;
