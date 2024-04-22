@@ -71,6 +71,7 @@ Route::prefix('academy')->group(function () {
             Route::put('/chapter_editor/data', [ChapterController::class, 'editCreateCahpter']); //Done
 
             Route::put('lesson_editor/data', [LessonController::class, 'editCreateLesson']); //Done
+            Route::put('lesson/orders', [LessonController::class, 'updateOrders']);
 
             Route::get('/comment/list', [CommentController::class, 'getCourseCommnetsList']); //Done
 

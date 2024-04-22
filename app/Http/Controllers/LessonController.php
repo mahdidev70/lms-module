@@ -4,22 +4,27 @@ namespace TechStudio\Lms\app\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Controller;
-use TechStudio\Blog\app\Models\Article;
-use TechStudio\Lms\app\Http\Requests\LessonCreateUpdateRequest;
-use TechStudio\Lms\app\Http\Resources\LessonPageResource;
-use TechStudio\Lms\app\Http\Resources\LessonResource;
 use TechStudio\Lms\app\Models\Lesson;
+use Illuminate\Support\Facades\Artisan;
+use TechStudio\Blog\app\Models\Article;
+use TechStudio\Lms\app\Http\Resources\LessonResource;
+use TechStudio\Lms\app\Http\Resources\LessonPageResource;
+use TechStudio\Lms\app\Http\Requests\LessonCreateUpdateRequest;
 use TechStudio\Lms\app\Repositories\Interfaces\LessonRepositoryInterface;
+use TechStudio\Lms\app\Repositories\Interfaces\ChapterRepositoryInterface;
 
 class LessonController extends Controller
 {
     private LessonRepositoryInterface $repository;
+    private ChapterRepositoryInterface $chapterRepository;
 
-    public function __construct(LessonRepositoryInterface $repository)
-    {
+    public function __construct(
+        LessonRepositoryInterface $repository,
+        ChapterRepositoryInterface $chapterRepository
+    ) {
         $this->repository = $repository;
+        $this->chapterRepository = $chapterRepository;
     }
 
     public function show($local, $lessonSlug)
@@ -70,5 +75,10 @@ class LessonController extends Controller
 
         $articles = Article::whereIn('id', $articleIds)->get();
         return $articles;
+    }
+
+    public function updateOrders(LessonOrderUpdateRequest $request)
+    {
+        return 'zdfdsfs';
     }
 }
