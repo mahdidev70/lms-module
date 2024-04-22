@@ -80,7 +80,7 @@ class LessonController extends Controller
 
     public function updateOrders(LessonOrderUpdateRequest $request)
     {
-        $result = $this->repository->lessonOrderUpdate($request['lessons']);
+        $result = $this->repository->updateOrders($request['lessons']);
         if($result)
         {
             return response()->json([
