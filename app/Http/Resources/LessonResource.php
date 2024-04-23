@@ -42,7 +42,7 @@ class LessonResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'dominantType' => $this->dominant_type,
-            'currentUserStatus' => $userStatus,
+            'isCompleted' => $userStatus,
             'currentUserStartTime' => $startTime,
             'timeLimitMinutes' => 60,
             'content' => $this->content,

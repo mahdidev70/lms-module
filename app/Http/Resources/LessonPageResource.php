@@ -69,7 +69,7 @@ class LessonPageResource extends JsonResource
             'id' => $this->id,
             'slug' => $this->slug,
             'dominantType' => $this->dominant_type,
-            'currentUserStatus' => $userStatus,
+            'isCompleted' => $userStatus,
             'currentUserStartTime' => $startTime,
             'examAllowed' => $examAllowed,
             'userQuizStatus' => $quizStatus,
