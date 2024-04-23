@@ -33,7 +33,7 @@ class ChapterController extends Controller
 
     public function getChapterLessonList($local, $id)
     {
-        $chapter = Chapter::with([
+        return Chapter::with([
             'lessons' => fn ($query) => $query->orderBy('order', 'asc')
         ])->where('course_id', $id)->paginate(10);
     }
