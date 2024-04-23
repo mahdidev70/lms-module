@@ -33,8 +33,9 @@ class ChapterController extends Controller
 
     public function getChapterLessonList($local, $id)
     {
-        $chapter = Chapter::with('lessons')->where('course_id', $id)->paginate(10);
-        return ChapterPageResource::collection($chapter);
+        $chapter = Chapter::with([
+            'lessons' => fn ($query) => $query->orderBy('order', 'asc')
+        ])->where('course_id', $id)->paginate(10);
     }
 
     public function deleteChapter($local, $slug)
