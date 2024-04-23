@@ -32,7 +32,7 @@ class CourseSidebarResource extends JsonResource
                     'minutesToRead' => ($lesson->dominant_type == 'text') ? $this->getTextTime($lesson) : null,
                     'duration' => ($lesson->dominant_type == 'video') ? $this->getVideoTime($lesson) : null,
                     'numberOfQuestions' => ($lesson->dominant_type == 'exam') ? $this->getQuestionCount($lesson) : null,
-                    'isCompleted' => ($this->isCompleted($lesson) == true) ? number_format(1*100) : 0,
+                    'isCompleted' => ($this->isCompleted($lesson) == true) ? 1 : 0,
                 ]),
             ]),
         ];
