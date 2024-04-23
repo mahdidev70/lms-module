@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use TechStudio\Lms\app\Models\Lesson;
 use Illuminate\Support\Facades\Artisan;
 use TechStudio\Blog\app\Models\Article;
+use TechStudio\Lms\app\Models\UserLessonProgress;
 use TechStudio\Lms\app\Http\Resources\LessonResource;
 use TechStudio\Lms\app\Http\Resources\LessonPageResource;
 use TechStudio\Lms\app\Http\Requests\LessonOrderUpdateRequest;
@@ -31,6 +32,12 @@ class LessonController extends Controller
     public function show($local, $lessonSlug)
     {
         $lesson = $this->repository->getBySlug($lessonSlug);
+        $lesson = $this->repository->getBySlug($lessonSlug);
+        $userProgress = UserLessonProgress::updateOrInsert(
+            ['lesson_id' => $lesson->id, 'user_id' => auth()->id()],
+            ['progress'=>1]
+        );
+        return response()->json(new LessonPageResource($lesson));
         return response()->json(new LessonPageResource($lesson));
     }
 
