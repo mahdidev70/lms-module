@@ -58,7 +58,7 @@ class CourseResource extends JsonResource
             $passedIds = UserLessonProgress::where('user_id', Auth('sanctum')->id())
                 ->whereIn('lesson_id', $lessonsId)->pluck('lesson_id');
             $unPassedIds = $lessonsId->diff($passedIds);
-            $tuchPointLesson = Lesson::with('chapter')->whereIn('id', $unPassedIds->values())
+            $touchPointLesson = Lesson::with('chapter')->whereIn('id', $unPassedIds->values())
                 ->orderBy('order', 'asc')->first();
 
             $passedCount = count($passedIds);
@@ -88,9 +88,9 @@ class CourseResource extends JsonResource
             'supportItems' => json_decode($this->support_items),
             'ratingsCount' => $rateCount,
             'averageRating' => number_format((float)$average, 1, '.', ''),
-            'tuchPoint' => [
-                'lessonSlug' => $tuchPointLesson->slug,
-                'chapterSlug' => $tuchPointLesson->chapter->slug
+            'touchPoint' => [
+                'lessonSlug' => $touchPointLesson->slug,
+                'chapterSlug' => $touchPointLesson->chapter->slug
             ],
             'level' => $this->level,
             'certificateEnabled' => $this->certificate_enabled,
