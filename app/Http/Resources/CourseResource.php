@@ -23,38 +23,47 @@ class CourseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        
+
         $student = null;
         if (Auth('sanctum')->user()) {
             $student = Student::where('course_id', $this->id)
                 ->where('user_id', Auth('sanctum')->user()->id)->first();
         }
         $studentCount = $this->students()->count();
-        
+
         $rateCount = $rateSum = $average = 0;
-        
+
         $rateCountResult = $this->students()->where('rate', '>', 0)->count();
         $rateSumResult = $this->students()->where('rate', '>', 0)->sum('rate');
-        if($rateCountResult){
+        if ($rateCountResult) {
             $rateCount = $rateCountResult;
             $average = (int)$rateSumResult / (int)$rateCountResult;
         }
-        
+
         $chaptersId = Chapter::where('course_id', $this->id)->pluck('id');
         $lessonsId = Lesson::whereIn('chapter_id', $chaptersId)->pluck('id');
 
         $passedCount = null;
         $passedPercentage = 0;
         $id = null;
-        try{
+        try {
             $id = Auth('sanctum')->user()->id;
-        }catch(Exception $e){}
-        if($id && count($lessonsId) > 0 )
-        {
-            $passedCount = UserLessonProgress::where('user_id', $id)->whereIn('lesson_id',$lessonsId)->count();
-            if($passedCount > 0 && count($lessonsId) > 0)
-            {
-                $passedPercentage =  floor( $passedCount / count($lessonsId) * 100 );
+        } catch (Exception $e) {
+        }
+        if ($id && count($lessonsId) > 0) {
+            $passedIds = UserLessonProgress::where('user_id', $id)->whereIn('lesson_id', $lessonsId)->pluck('id');
+
+            $chaptersId = Chapter::where('course_id', $this->id)->pluck('id');
+            $lessonsId = Lesson::whereIn('chapter_id', $chaptersId)->pluck('id');
+            $passedIds = UserLessonProgress::where('user_id', Auth('sanctum')->id())
+                ->whereIn('lesson_id', $lessonsId)->pluck('lesson_id');
+            $unPassedIds = $lessonsId->diff($passedIds);
+            $tuchPointLesson = Lesson::with('chapter')->whereIn('id', $unPassedIds->values())
+                ->orderBy('order', 'asc')->first();
+
+            $passedCount = count($passedIds);
+            if ($passedCount > 0 && count($lessonsId) > 0) {
+                $passedPercentage =  floor($passedCount / count($lessonsId) * 100);
             }
         }
         return [
@@ -79,6 +88,10 @@ class CourseResource extends JsonResource
             'supportItems' => json_decode($this->support_items),
             'ratingsCount' => $rateCount,
             'averageRating' => number_format((float)$average, 1, '.', ''),
+            'tuchPoint' => [
+                'lessonSlug' => $tuchPointLesson->slug,
+                'chapterSlug' => $tuchPointLesson->chapter->slug
+            ],
             'level' => $this->level,
             'certificateEnabled' => $this->certificate_enabled,
             'instructorSupport' => $this->instructor_support,
@@ -93,7 +106,7 @@ class CourseResource extends JsonResource
             'features' => json_decode($this->features),
             'passedCount' => $passedCount,
             'lessonsCount' => count($lessonsId),
-            'HasDonePrerequisites' =>(boolean) rand(0,1),
+            'HasDonePrerequisites' => (bool) rand(0, 1),
             'prerequisites' => CoursePreviewResource::collection($this->prerequisite())
         ];
     }

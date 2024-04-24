@@ -45,8 +45,8 @@ class CourseController extends Controller
     {
         $course = $this->repository->getBySlug($courseSlug);
         $this->repository->incrementField($course->id,'view_count');
-        if(Auth::check()){
-            $this->repository->storeView($course->id,Auth::user()->id);
+        if(Auth('sanctum')->check()){
+            $this->repository->storeView($course->id,Auth('sanctum')->id());
         }
         return response()->json(new CourseResource($course));
     }
