@@ -12,7 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use TechStudio\Lms\app\Models\UserLessonProgress;
 use TechStudio\Lms\app\Http\Resources\SkillResource;
 use TechStudio\Lms\app\Http\Resources\CoursePreviewResource;
-
+use TechStudio\Lms\app\Services\Calculator;
 
 class CourseResource extends JsonResource
 {
@@ -40,33 +40,10 @@ class CourseResource extends JsonResource
             $average = (int)$rateSumResult / (int)$rateCountResult;
         }
 
-        $chaptersId = Chapter::where('course_id', $this->id)->pluck('id');
-        $lessonsId = Lesson::whereIn('chapter_id', $chaptersId)->pluck('id');
-
-        $passedCount = null;
-        $passedPercentage = 0;
+        $calculatorResult = Calculator::courseProgress($this->id);
+ 
         $touchPointLesson = null;
-        $id = null;
-        try {
-            $id = Auth('sanctum')->user()->id;
-        } catch (Exception $e) {
-        }
-        if ($id && count($lessonsId) > 0) {
-            $passedIds = UserLessonProgress::where('user_id', $id)->whereIn('lesson_id', $lessonsId)->pluck('id');
 
-            $chaptersId = Chapter::where('course_id', $this->id)->pluck('id');
-            $lessonsId = Lesson::whereIn('chapter_id', $chaptersId)->pluck('id');
-            $passedIds = UserLessonProgress::where('user_id', Auth('sanctum')->id())
-                ->whereIn('lesson_id', $lessonsId)->pluck('lesson_id');
-            $unPassedIds = $lessonsId->diff($passedIds);
-            $touchPointLesson = Lesson::with('chapter')->whereIn('id', $unPassedIds->values())
-                ->orderBy('order', 'asc')->first();
-
-            $passedCount = count($passedIds);
-            if ($passedCount > 0 && count($lessonsId) > 0) {
-                $passedPercentage =  floor($passedCount / count($lessonsId) * 100);
-            }
-        }
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -105,8 +82,9 @@ class CourseResource extends JsonResource
                 : SkillResource::collection($this->skills),
             'faq' => json_decode($this->faq),
             'features' => json_decode($this->features),
-            'passedCount' => $passedCount,
-            'lessonsCount' => count($lessonsId),
+            'passedCount' => $calculatorResult->passedCount ?? null,
+            'lessonsCount' => $calculatorResult->lessonsCount ?? null,
+            'passedPercentage' => $calculatorResult->passedPercentage ?? null,
             'HasDonePrerequisites' => (bool) rand(0, 1),
             'prerequisites' => CoursePreviewResource::collection($this->prerequisite())
         ];
