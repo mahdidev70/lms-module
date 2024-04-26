@@ -82,9 +82,9 @@ class CourseResource extends JsonResource
                 : SkillResource::collection($this->skills),
             'faq' => json_decode($this->faq),
             'features' => json_decode($this->features),
-            'passedCount' => $calculatorResult->passedCount ?? null,
-            'lessonsCount' => $calculatorResult->lessonsCount ?? null,
-            'passedPercentage' => $calculatorResult->passedPercentage ?? null,
+            'lessonsCount' => $calculatorResult['lessonsCount'] ?? null,
+            'passedCount' => $calculatorResult['passedCount'] ?? null,
+            'passedPercentage' => $calculatorResult['passedPercentage'] ?? null,
             'HasDonePrerequisites' => (bool) rand(0, 1),
             'prerequisites' => CoursePreviewResource::collection($this->prerequisite())
         ];

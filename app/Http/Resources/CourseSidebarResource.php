@@ -3,10 +3,11 @@
 namespace TechStudio\Lms\app\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
-use TechStudio\Core\app\Helper\PageContent;
 use TechStudio\Lms\app\Models\Course;
+use TechStudio\Core\app\Helper\PageContent;
+use TechStudio\Lms\app\Services\Calculator;
+use Illuminate\Http\Resources\Json\JsonResource;
 use TechStudio\Lms\app\Models\UserLessonProgress;
 
 class CourseSidebarResource extends JsonResource
@@ -21,7 +22,7 @@ class CourseSidebarResource extends JsonResource
         return [
             'courseTitle' => $this->title,
             'slug' => $this->slug,
-            'courseProgress' => $this->getTotalProgress($this->id),
+            'courseProgress' => Calculator::courseProgress($this->id)['passedPercentage'] ?? null,
             'chapters' => $this->chapters->map(fn ($chapter) => [
                 'title' => $chapter->title,
                 'slug' => $chapter->slug,
