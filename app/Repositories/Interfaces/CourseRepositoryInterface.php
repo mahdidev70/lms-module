@@ -18,4 +18,5 @@ interface CourseRepositoryInterface
     public function getAllFeatures();
     public function featureUpdateCreate($request);
     public function featureDelete($request);
+    public function updateCourseEditeTime($request);
 }

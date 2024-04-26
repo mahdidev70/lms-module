@@ -2,20 +2,26 @@
 
 namespace TechStudio\Lms\app\Http\Controllers;
 
-use TechStudio\Lms\app\Models\Chapter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use TechStudio\Lms\app\Http\Requests\ChapterCreateUpdateRequest;
+use TechStudio\Lms\app\Models\Chapter;
 use TechStudio\Lms\app\Http\Resources\ChapterPageResource;
+use TechStudio\Lms\app\Http\Requests\ChapterCreateUpdateRequest;
+use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\ChapterRepositoryInterface;
 
 class ChapterController extends Controller
 {
     private ChapterRepositoryInterface $repository;
-    public function __construct(ChapterRepositoryInterface $repository)
+    private CourseRepositoryInterface $courseRepository;
+    public function __construct(
+        ChapterRepositoryInterface $repository,
+        CourseRepositoryInterface $courseRepository
+        )
     {
         $this->repository = $repository;
+        $this->courseRepository = $courseRepository;
     }
 
     public function show($local, $chapterSlug)
@@ -28,6 +34,9 @@ class ChapterController extends Controller
     public function editCreateCahpter(ChapterCreateUpdateRequest $chapterCreateUpdateRequest)
     {
         $chapter = $this->repository->createUpdate($chapterCreateUpdateRequest);
+        if ($chapter->wasRecentlyCreated) {
+            $this->courseRepository->updateCourseEditeTime($chapter->course_id);
+        }
         return new ChapterPageResource($chapter);
     }
 

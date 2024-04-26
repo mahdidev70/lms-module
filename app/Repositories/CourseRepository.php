@@ -218,4 +218,9 @@ class CourseRepository implements CourseRepositoryInterface
     {
         return CourseFeature::where('id', $request->id)->delete();
     }
+    
+    public function updateCourseEditeTime($request)
+    {
+        return  Course::where('id', $request)->update(['updated_an'=> Carbon::now()]);
+    }
 }
