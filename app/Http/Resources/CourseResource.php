@@ -90,8 +90,8 @@ class CourseResource extends JsonResource
             'ratingsCount' => $rateCount,
             'averageRating' => number_format((float)$average, 1, '.', ''),
             'touchPoint' => [
-                'lessonSlug' => $touchPointLesson->slug,
-                'chapterSlug' => $touchPointLesson->chapter->slug
+                'lessonSlug' => $touchPointLesson->slug ?? null,
+                'chapterSlug' => $touchPointLesson->chapter->slug ?? null
             ],
             'level' => $this->level,
             'certificateEnabled' => $this->certificate_enabled,
