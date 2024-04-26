@@ -32,12 +32,9 @@ class LessonController extends Controller
     public function show($local, $lessonSlug)
     {
         $lesson = $this->repository->getBySlug($lessonSlug);
-        $lesson = $this->repository->getBySlug($lessonSlug);
-        $userProgress = UserLessonProgress::updateOrInsert(
-            ['lesson_id' => $lesson->id, 'user_id' => auth()->id()],
-            ['progress'=>1]
-        );
-        return response()->json(new LessonPageResource($lesson));
+        if($lesson->dominant_type == 'exam'){
+            $this->repository->updateTouchPoint($lesson->id);
+        }
         return response()->json(new LessonPageResource($lesson));
     }
 

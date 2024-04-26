@@ -3,13 +3,14 @@
 namespace TechStudio\Lms\app\Repositories;
 
 use Exception;
-use App\Jobs\ProcessVideo;
 use App\Jobs\ConvertVideo;
+use App\Jobs\ProcessVideo;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Log;
-use TechStudio\Core\app\Helper\SlugGenerator;
 use TechStudio\Lms\app\Models\Lesson;
+use TechStudio\Core\app\Helper\SlugGenerator;
 use TechStudio\Lms\app\Models\QuizParticipant;
+use TechStudio\Lms\app\Models\UserLessonProgress;
 use TechStudio\Lms\app\Repositories\Interfaces\LessonRepositoryInterface;
 
 class LessonRepository implements LessonRepositoryInterface
@@ -96,5 +97,13 @@ class LessonRepository implements LessonRepositoryInterface
             Lesson::where('id', $lesson['id'])->update(['order' => $lesson['order']]);
         }
         return true;
+    }
+
+    public function updateTouchPoint($request)
+    {
+        return UserLessonProgress::updateOrInsert(
+            ['lesson_id' => $request, 'user_id' => Auth('sanctum')->id()],
+            ['progress'=>1]
+        );
     }
 }

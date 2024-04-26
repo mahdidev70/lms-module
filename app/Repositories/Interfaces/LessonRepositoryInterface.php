@@ -12,4 +12,5 @@ interface LessonRepositoryInterface
     public function incrementOrders($chaptersId, $order);
     public function decrementOrders($chaptersId, $order);
     public function updateOrders($request);
+    public function updateTouchPoint($request);
 }
