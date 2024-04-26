@@ -45,6 +45,7 @@ class CourseResource extends JsonResource
 
         $passedCount = null;
         $passedPercentage = 0;
+        $touchPointLesson = null;
         $id = null;
         try {
             $id = Auth('sanctum')->user()->id;
