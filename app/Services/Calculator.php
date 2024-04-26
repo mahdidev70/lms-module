@@ -24,7 +24,7 @@ class Calculator
         if ($id && count($lessonsId) > 0) {
             $passedIds = UserLessonProgress::where('user_id', $id)->whereIn('lesson_id', $lessonsId)->pluck('id');
 
-            $chaptersId = Chapter::where('course_id', $this->id)->pluck('id');
+            $chaptersId = Chapter::where('course_id', $courseId)->pluck('id');
             $lessonsId = Lesson::whereIn('chapter_id', $chaptersId)->pluck('id');
             $passedIds = UserLessonProgress::where('user_id', Auth('sanctum')->id())
                 ->whereIn('lesson_id', $lessonsId)->pluck('lesson_id');
