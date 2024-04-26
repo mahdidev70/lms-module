@@ -44,25 +44,25 @@ class QuizController extends Controller
         $quiz = $this->lessonRepository->getQuizById($quizId);
         $tureAnswers = collect(json_decode($quiz->information));
         $flatTrueAnswers = new stdClass();
-        foreach($tureAnswers as $answers){
-            foreach($answers as $key => $value)
-            $flatTrueAnswers->$key = $value;
+        foreach ($tureAnswers as $answers) {
+            foreach ($answers as $key => $value)
+                $flatTrueAnswers->$key = $value;
         }
 
         $tureAnswers = collect($flatTrueAnswers);
         $userAnswers = new stdClass();
         $request->trueAnswers;
 
-        foreach($request->trueAnswers as $answers){
-            foreach($answers as $key => $value)
-            $userAnswers->$key = $value;
+        foreach ($request->trueAnswers as $answers) {
+            foreach ($answers as $key => $value)
+                $userAnswers->$key = $value;
         }
 
         $diff = $tureAnswers->diffAssoc(collect($userAnswers));
         $falseAnswers = $diff->all();
         $answerNumber = count((array)json_decode($quiz->information));
         $score = 0;
-        if( $answerNumber > 0 && count((array) $falseAnswers) >= 0){
+        if ($answerNumber > 0 && count((array) $falseAnswers) >= 0) {
             $score = ($answerNumber - count((array) $falseAnswers)) * 100 / $answerNumber;
         }
 
@@ -81,10 +81,9 @@ class QuizController extends Controller
             'score' => intval($score),
             'status' => $status
         ]);
-        $userProgress = UserLessonProgress::updateOrInsert(
-            ['lesson_id' => $quizId, 'user_id' => auth()->id()],
-            ['progress'=>1]
-        );
+        if ($status == 'success') {
+            $this->lessonRepository->updateTouchPoint($quizId);
+        }
         return response()->json(new QuizResultResource($quizResult));
     }
 

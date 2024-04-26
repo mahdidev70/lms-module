@@ -103,7 +103,7 @@ class LessonRepository implements LessonRepositoryInterface
     {
         return UserLessonProgress::updateOrInsert(
             ['lesson_id' => $request, 'user_id' => Auth('sanctum')->id()],
-            ['progress'=>1]
+            ['progress' => 1]
         );
     }
 }

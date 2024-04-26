@@ -32,7 +32,7 @@ class LessonController extends Controller
     public function show($local, $lessonSlug)
     {
         $lesson = $this->repository->getBySlug($lessonSlug);
-        if($lesson->dominant_type == 'exam'){
+        if ($lesson->dominant_type == 'exam') {
             $this->repository->updateTouchPoint($lesson->id);
         }
         return response()->json(new LessonPageResource($lesson));
@@ -85,11 +85,10 @@ class LessonController extends Controller
     public function updateOrders(LessonOrderUpdateRequest $request)
     {
         $result = $this->repository->updateOrders($request['lessons']);
-        if($result)
-        {
+        if ($result) {
             return response()->json([
                 'message' => 'تغییرات با موفقیت ثبت شد.'
-            ], 200); 
+            ], 200);
         }
     }
 }
