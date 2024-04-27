@@ -93,7 +93,7 @@ class CourseResource extends JsonResource
             'lessonsCount' => $calculatorResult['lessonsCount'] ?? null,
             'passedCount' => $calculatorResult['passedCount'] ?? null,
             'passedPercentage' => $calculatorResult['passedPercentage'] ?? null,
-            'HasDonePrerequisites' => (bool) $HasDonePrerequisites,
+            'HasDonePrerequisites' => (bool) rand(0, 1),
             'prerequisites' => CoursePreviewResource::collection($this->prerequisite())
         ];
     }
