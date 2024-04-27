@@ -42,7 +42,7 @@ class Calculator
             'lessonsCount' => count($lessonsId),
             'passedCount' => $passedCount,
             'passedPercentage' => $passedPercentage,
-            'touchPointLesson' => $$touchPointLesson
+            'touchPointLesson' => $touchPointLesson
         ];
     }
 }
