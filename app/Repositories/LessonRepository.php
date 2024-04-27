@@ -8,6 +8,8 @@ use App\Jobs\ProcessVideo;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Log;
 use TechStudio\Lms\app\Models\Lesson;
+use TechStudio\Lms\app\Models\Chapter;
+use TechStudio\Lms\app\Models\Student;
 use TechStudio\Core\app\Helper\SlugGenerator;
 use TechStudio\Lms\app\Models\QuizParticipant;
 use TechStudio\Lms\app\Models\UserLessonProgress;
@@ -105,5 +107,22 @@ class LessonRepository implements LessonRepositoryInterface
             ['lesson_id' => $request, 'user_id' => Auth('sanctum')->id()],
             ['progress' => 1]
         );
+        $lesson = Lesson::with('chapter')->where('id', $request)->first();
+        $chapters = Chapter::where('course_id', $lesson->chapter->course_id)->pluck('id');
+        $lastLesson = Lesson::whereIn('chapter_id', $chapters)->orderBy('order', 'DESC')->first();
+        if ($lastLesson->id == $request) {
+            Student::updateOrCreate(
+                [
+                    'user_id' => Auth('sanctum')->id(),
+                    'course_id' => $lesson->chapter->course_id,
+                ],
+                [
+                    'user_id' =>  Auth('sanctum')->id(),
+                    'course_id' => $lesson->chapter->course_id,
+                    'in_roll' => 'done',
+                    'comment' => ''
+                ]
+            );
+        }
     }
 }
