@@ -42,8 +42,6 @@ class CourseResource extends JsonResource
 
         $calculatorResult = Calculator::courseProgress($this->id);
  
-        $touchPointLesson = null;
-
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -67,8 +65,8 @@ class CourseResource extends JsonResource
             'ratingsCount' => $rateCount,
             'averageRating' => number_format((float)$average, 1, '.', ''),
             'touchPoint' => [
-                'lessonSlug' => $touchPointLesson->slug ?? null,
-                'chapterSlug' => $touchPointLesson->chapter->slug ?? null
+                'lessonSlug' => $calculatorResult['touchPointLesson']->slug ?? null,
+                'chapterSlug' => $calculatorResult['touchPointLesson']->chapter->slug ?? null
             ],
             'level' => $this->level,
             'certificateEnabled' => $this->certificate_enabled,

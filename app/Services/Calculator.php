@@ -16,6 +16,7 @@ class Calculator
 
         $passedCount = null;
         $passedPercentage = 0;
+        $touchPointLesson = null;
         $id = null;
         try {
             $id = Auth('sanctum')->user()->id;
@@ -40,7 +41,8 @@ class Calculator
         return [
             'lessonsCount' => count($lessonsId),
             'passedCount' => $passedCount,
-            'passedPercentage' => $passedPercentage
+            'passedPercentage' => $passedPercentage,
+            'touchPointLesson' => $$touchPointLesson
         ];
     }
 }
