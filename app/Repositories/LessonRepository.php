@@ -103,10 +103,11 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function updateTouchPoint($request)
     {
-        return UserLessonProgress::updateOrInsert(
+        UserLessonProgress::updateOrInsert(
             ['lesson_id' => $request, 'user_id' => Auth('sanctum')->id()],
             ['progress' => 1]
         );
+        
         $lesson = Lesson::with('chapter')->where('id', $request)->first();
         $chapters = Chapter::where('course_id', $lesson->chapter->course_id)->pluck('id');
         $lastLesson = Lesson::whereIn('chapter_id', $chapters)->orderBy('order', 'DESC')->first();
