@@ -21,7 +21,7 @@ class ChapterRepository implements ChapterRepositoryInterface
 
         if (
             Auth('sanctum')->id() > 0 &&
-            ! Student::where('user_id', $user->id)->where('course_id', $chapter->course_id)->whereNotNull('in_roll')->first()
+            ! Student::where('user_id', Auth('sanctum')->id())->where('course_id', $chapter->course_id)->whereNotNull('in_roll')->first()
         ){
             Student::updateOrCreate(
                 [
