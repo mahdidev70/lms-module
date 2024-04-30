@@ -5,7 +5,7 @@ namespace TechStudio\Lms\app\Repositories;
 use Exception;
 use App\Jobs\ConvertVideo;
 use App\Jobs\ProcessVideo;
-use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use TechStudio\Lms\app\Models\Lesson;
 use TechStudio\Lms\app\Models\Chapter;
