@@ -14,26 +14,27 @@ class ChapterRepository implements ChapterRepositoryInterface
 {
     public function getBySlug($slug)
     {
-        return $chapter = Chapter::where('slug', $slug)->with('course')->firstOrFail();
+        $chapter = Chapter::where('slug', $slug)->with('course')->firstOrFail();
         if ($chapter->course == null || $chapter->course->status != 'published') {
             return abort(404, 'Chapter Not Found!');
         }
-        $user = Auth('sanctum')->id();
 
-        $student = Student::updateOrCreate(
-            [
-                'user_id' => $user->id,
-                'course_id' => $chapter->course_id,
-            ],
-            [
-                'user_id' => $user->id,
-                'course_id' => $chapter->course_id,
-                'in_roll' => 'progress',
-                'comment' => ''
-            ]
-        );
-
-        $student->save();
+        if (
+            Auth('sanctum')->id() > 0 &&
+            ! Student::where('user_id', $user->id)->where('course_id', $chapter->course_id)->whereNotNull('in_roll')->first()
+        ){
+            Student::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $chapter->course_id,
+                ],
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $chapter->course_id,
+                    'in_roll' => 'progress',
+                ]
+            );
+        }
         return $chapter;
     }
 
