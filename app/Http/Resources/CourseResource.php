@@ -41,16 +41,16 @@ class CourseResource extends JsonResource
         }
 
         $calculatorResult = Calculator::courseProgress($this->id);
-        // $HasDonePrerequisites = 1;
-        // foreach ($$this->prerequisite() as $preRequisit) {
-        //     $student = Student::where('course_id', $preRequisit->id)
-        //         ->where('user_id', Auth('sanctum')->user()->id)
-        //         ->where('in_roll', 'done')->first();
+        $HasDonePrerequisites = 1;
+        foreach ($this->prerequisite() as $preRequisit) {
+            $student = Student::where('course_id', $preRequisit->id)
+                ->where('user_id', Auth('sanctum')->user()->id)
+                ->where('in_roll', 'done')->first();
                 
-        //         if(!$student){
-        //             $HasDonePrerequisites = 0;
-        //         }
-        // }
+                if(!$student){
+                    $HasDonePrerequisites = 0;
+                }
+        }
 
         return [
             'id' => $this->id,
@@ -93,7 +93,7 @@ class CourseResource extends JsonResource
             'lessonsCount' => $calculatorResult['lessonsCount'] ?? null,
             'passedCount' => $calculatorResult['passedCount'] ?? null,
             'passedPercentage' => $calculatorResult['passedPercentage'] ?? null,
-            'HasDonePrerequisites' => (bool) rand(0, 1),
+            'HasDonePrerequisites' => (bool) $HasDonePrerequisites,
             'prerequisites' => CoursePreviewResource::collection($this->prerequisite())
         ];
     }
