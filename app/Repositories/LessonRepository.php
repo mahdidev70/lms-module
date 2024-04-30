@@ -57,7 +57,7 @@ class LessonRepository implements LessonRepositoryInterface
                 'order' => $data['order'],
             ]
         );
-        Log::info("befor dispach job");
+
         $videoId = null;
         if (
             isset($data->content[0]) &&
@@ -67,7 +67,7 @@ class LessonRepository implements LessonRepositoryInterface
             $videoId = $data->content[0]['content']['url'];
         }
 
-        Log::info($videoId);
+
         if (
             $data->dominantType == 'video' &&
             $videoId != null &&

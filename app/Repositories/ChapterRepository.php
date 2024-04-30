@@ -18,7 +18,7 @@ class ChapterRepository implements ChapterRepositoryInterface
         if ($chapter->course == null || $chapter->course->status != 'published') {
             return abort(404, 'Chapter Not Found!');
         }
-        $user = Auth::user();
+        $user = Auth('sanctum')->id();
 
         $student = Student::updateOrCreate(
             [
