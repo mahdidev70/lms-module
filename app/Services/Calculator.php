@@ -48,7 +48,7 @@ class Calculator
             'passedCount' => $passedCount,
             'passedPercentage' => $passedPercentage,
             'touchPointLesson' => $touchPointLesson,
-            'completedDate' => $lastProgress->created_at
+            'completedDate' => $lastProgress->created_at ?? null
         ];
     }
 }
