@@ -38,11 +38,17 @@ class Calculator
                 $passedPercentage =  floor($passedCount / count($lessonsId) * 100);
             }
         }
+        if($passedPercentage == 100)
+        {
+            $lastProgress = UserLessonProgress::where('user_id', Auth('sanctum')->id())
+            ->whereIn('lesson_id', $lessonsId)->latest()->first();
+        }
         return [
             'lessonsCount' => count($lessonsId),
             'passedCount' => $passedCount,
             'passedPercentage' => $passedPercentage,
-            'touchPointLesson' => $touchPointLesson
+            'touchPointLesson' => $touchPointLesson,
+            'completedDate' => $lastProgress->created_at
         ];
     }
 }

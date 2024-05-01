@@ -3,6 +3,7 @@
 namespace TechStudio\Lms\app\Repositories;
 
 use Exception;
+use Carbon\Carbon;
 use App\Jobs\ConvertVideo;
 use App\Jobs\ProcessVideo;
 use Illuminate\Support\Facades\DB;
@@ -105,7 +106,10 @@ class LessonRepository implements LessonRepositoryInterface
     {
         UserLessonProgress::updateOrInsert(
             ['lesson_id' => $request, 'user_id' => Auth('sanctum')->id()],
-            ['progress' => 1]
+            [
+                'progress' => 1,
+                'created_at' => Carbon::now()
+            ]
         );
         
         $lesson = Lesson::with('chapter')->where('id', $request)->first();

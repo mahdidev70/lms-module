@@ -53,6 +53,7 @@ class CoursePreviewResource extends JsonResource
             'lessonsCount' => $calculatorResult['lessonsCount'] ?? null,
             'passedCount' => $calculatorResult['passedCount'] ?? null,
             'passedPercentage' => $calculatorResult['passedPercentage'] ?? null,
+            'completedDate' => $calculatorResult['completedDate'],
             'certificateEnabled' => $this->certificate_enabled,
             'instructorSupport' => $this->instructor_support,
             'moneyReturnGuarantee' => $this->money_return_guarantee,
