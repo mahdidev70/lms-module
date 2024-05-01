@@ -23,6 +23,7 @@ class CourseSidebarResource extends JsonResource
             'courseTitle' => $this->title,
             'slug' => $this->slug,
             'courseProgress' => Calculator::courseProgress($this->id)['passedPercentage'] ?? null,
+            'completedDate' => $calculatorResult['completedDate'],
             'chapters' => $this->chapters->map(fn ($chapter) => [
                 'title' => $chapter->title,
                 'slug' => $chapter->slug,
