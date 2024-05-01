@@ -19,11 +19,13 @@ class CourseSidebarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $calculatorResult = Calculator::courseProgress($this->id);
+
         return [
             'courseTitle' => $this->title,
             'slug' => $this->slug,
-            'courseProgress' => Calculator::courseProgress($this->id)['passedPercentage'] ?? null,
-            'completedDate' => $calculatorResult['completedDate'],
+            'courseProgress' => $calculatorResult['passedPercentage'] ?? null,
+            'completedDate' => $calculatorResult['completedDate'] ?? null,
             'chapters' => $this->chapters->map(fn ($chapter) => [
                 'title' => $chapter->title,
                 'slug' => $chapter->slug,
