@@ -56,6 +56,7 @@ class LessonRepository implements LessonRepositoryInterface
                 'content' => $data['content'],
                 'information' => $information,
                 'order' => $data['order'],
+                'duration' => $data['duration']
             ]
         );
 

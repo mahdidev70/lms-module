@@ -33,6 +33,7 @@ class LessonCreateUpdateRequest extends FormRequest
             // Optional fields to createUpdate a lesson:
             'answers' => 'array',// if dominantType = exam
             'order' => 'integer',
+            'duration' => 'nullable|integer'
         ];
     }
 }
