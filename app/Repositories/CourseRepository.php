@@ -221,6 +221,6 @@ class CourseRepository implements CourseRepositoryInterface
     
     public function updateCourseEditeTime($request)
     {
-        return  Course::where('id', $request)->update(['updated_at'=> Carbon::now()]);
+        return  Course::withoutGlobalScopes()->where('id', $request)->update(['updated_at'=> Carbon::now()]);
     }
 }
