@@ -3,6 +3,7 @@
 namespace TechStudio\Lms\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,7 +15,7 @@ use TechStudio\Community\app\Models\ChatRoom;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $table = 'lms_courses';
 
@@ -92,5 +93,14 @@ class Course extends Model
         }else{
             return (int)$this->total_duration / 43800 .' هفته';
         }
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

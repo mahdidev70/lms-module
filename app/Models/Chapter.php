@@ -3,11 +3,13 @@
 namespace TechStudio\Lms\app\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+
 
 class Chapter extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $table = 'lms_chapters';
 
@@ -21,5 +23,14 @@ class Chapter extends Model
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

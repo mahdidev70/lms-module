@@ -3,13 +3,14 @@
 namespace TechStudio\Lms\app\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\LessonService;
 use Illuminate\Support\Facades\Auth;
 
 class Lesson extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $table = 'lms_lessons';
 
@@ -45,5 +46,14 @@ class Lesson extends Model
 
     public function userQuizResult(){
         return $this->hasMany(QuizParticipant::class,'lesson_id');
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
