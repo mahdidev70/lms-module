@@ -166,7 +166,6 @@ class CourseRepository implements CourseRepositoryInterface
 
         $courseData = [
             'title' => $data['title'],
-            'slug' => $data['slug'] ? $data['slug'] : SlugGenerator::transform($data['title']),
             'description' => $data['description'],
             'category_id' => $data['categoryId'],
             'banner_url' => $data['bannerUrl'],

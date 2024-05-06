@@ -23,7 +23,7 @@ class ChapterCreateUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['string', 'required', Rule::unique('lms_lessons')->ignore($this->id)],
+            'title' => ['string', 'required'],
             'courseId' => 'required|integer',
             'description' => 'string',
             'order' => 'integer',

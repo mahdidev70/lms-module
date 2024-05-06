@@ -46,7 +46,6 @@ class ChapterRepository implements ChapterRepositoryInterface
             ['id' => $data['id']],
             [
                 'title' => $data['title'],
-                'slug' => $data['slug'] ? $data['slug'] : SlugGenerator::transform($data['title']),
                 'description' => $data['description'],
                 'course_id' => $data['courseId'],
                 'order' => $data['order'],
