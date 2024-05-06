@@ -13,19 +13,23 @@ use TechStudio\Lms\app\Http\Resources\LessonResource;
 use TechStudio\Lms\app\Http\Resources\LessonPageResource;
 use TechStudio\Lms\app\Http\Requests\LessonOrderUpdateRequest;
 use TechStudio\Lms\app\Http\Requests\LessonCreateUpdateRequest;
+use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\LessonRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\ChapterRepositoryInterface;
 
 class LessonController extends Controller
 {
     private LessonRepositoryInterface $repository;
+    private CourseRepositoryInterface $courseRepository;
     private ChapterRepositoryInterface $chapterRepository;
 
     public function __construct(
         LessonRepositoryInterface $repository,
+        CourseRepositoryInterface $courseRepository,
         ChapterRepositoryInterface $chapterRepository
     ) {
         $this->repository = $repository;
+        $this->courseRepository = $courseRepository;
         $this->chapterRepository = $chapterRepository;
     }
 
@@ -44,6 +48,7 @@ class LessonController extends Controller
         if ($lesson->wasRecentlyCreated) {
             $chaptersId = $this->chapterRepository->getCourseChaptersId($lesson->chapter->course_id);
             $this->repository->incrementOrders($chaptersId, $lesson->order);
+            $this->courseRepository->updateCourseEditeTime($lesson->chapter->course_id);
         }
         Artisan::call('lesson-duration:update', ['lessonId' => $lesson->id]);
         return $lesson->id;
