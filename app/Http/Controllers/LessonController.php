@@ -63,9 +63,9 @@ class LessonController extends Controller
     public function deleteLesson($local, $slug)
     {
         $lesson = Lesson::where('slug', $slug)->firstOrFail();
-        $lesson = $lesson->delete();
         $chaptersId = $this->chapterRepository->getCourseChaptersId($lesson->chapter->course_id);
         $this->repository->decrementOrders($chaptersId, $lesson->order);
+        $lesson = $lesson->delete();
         return response("OK", 200);
     }
 
