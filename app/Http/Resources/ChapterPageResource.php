@@ -44,7 +44,7 @@ class ChapterPageResource extends JsonResource
         $lessons = $result->lessons;
         $lessonsIds = $result->lessons->pluck('id')->flatten()->toArray();
         $userLessonProgress = UserLessonProgress::where([
-            ['user_id', Auth::user()->id], ['progress', 1]
+            ['user_id', Auth('sanctum')->id()], ['progress', 1]
         ])->whereIn(
             'lesson_id',
             $lessonsIds

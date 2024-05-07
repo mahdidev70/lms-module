@@ -19,7 +19,7 @@ class ChapterResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $userId = Auth::user()->id ?? 1;
+        $userId = Auth('sanctum')->user() ?? 1;
         $remaining = $this->remainingOfCourse($this->id,$userId);
         return [
             'id' => $this->id,
