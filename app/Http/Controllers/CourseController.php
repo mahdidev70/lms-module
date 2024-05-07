@@ -294,7 +294,7 @@ class CourseController extends Controller
     public function getUserCourse(Request $request)
     {
         $courseModel = new Course();
-        $user = Auth::user();
+        $user = Auth('sanctum')->user();
         $studnetId = Student::where('user_id', $user->id)->get();
 
         if ($request['data'] == 'necessary') {

@@ -64,7 +64,7 @@ class CourseSidebarResource extends JsonResource
     function isCompleted($lesson)
     {
         $isCompleted = UserLessonProgress::where([
-            ['lesson_id', $lesson->id], ['user_id', Auth::user()->id], ['progress', 1]
+            ['lesson_id', $lesson->id], ['user_id', Auth('sanctum')->user()->id], ['progress', 1]
         ])->first();
         return (bool) $isCompleted;
     }
@@ -76,7 +76,7 @@ class CourseSidebarResource extends JsonResource
         $lessonsIds = $result->pluck('chapters.*.lessons.*.id')->flatten()->toArray();
 
         $userLessonProgress = UserLessonProgress::where([
-            ['user_id', Auth::user()->id], ['progress', '>', 0]
+            ['user_id', Auth('sanctum')->user()->id], ['progress', '>', 0]
         ])->whereIn(
             'lesson_id',
             $lessonsIds

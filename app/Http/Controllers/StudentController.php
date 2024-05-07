@@ -31,7 +31,7 @@ class StudentController extends Controller
 
     public function storeCertificate(StudentRequest $studentRequest)
     {
-        $userId = Auth::user()->id;
+        $userId = Auth('sanctum')->user()->id;
 
         $cer = Student::where('user_id', $userId)->first();
 
@@ -55,7 +55,7 @@ class StudentController extends Controller
     public function storeBookmark(BookmarkRequest $request)
     {
         Student::updateOrInsert(
-            ['user_id' => Auth::user()->id, 'course_id' => $request->courseId],
+            ['user_id' => Auth('sanctum')->user()->id, 'course_id' => $request->courseId],
             ['bookmark' => $request->bookmark]
         );
         $course = $this->courseRepository->getById($request->courseId);

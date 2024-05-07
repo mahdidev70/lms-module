@@ -40,12 +40,12 @@ class UserController extends Controller
 
     public function index()
     {
-        $id = Auth::user()->id;
+        $id = Auth('sanctum')->user()->id;
         $data = new stdClass();
         $minute = config('cache.mid_time')?? 720;
-        //  $data->user = $this->userRepository->getById(Auth::user());
+        //  $data->user = $this->userRepository->getById(Auth('sanctum')->user());
         $data->user = Cache::remember('user_' . $id, $minute, function () use ($id) {
-            return $this->userRepository->getById(Auth::user());
+            return $this->userRepository->getById(Auth('sanctum')->user());
         });
 
         $data->progress = Cache::remember('user_progress_courses_' . $id, $minute, function () use ($id) {

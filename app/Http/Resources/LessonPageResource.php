@@ -30,14 +30,14 @@ class LessonPageResource extends JsonResource
         $score = null;
         if ($this->dominant_type == 'exam') {
             $result = QuizParticipant::where('lesson_id', $this->id)
-                ->where('user_id', Auth::user()->id)->latest()->first();
+                ->where('user_id', Auth('sanctum')->user()->id)->latest()->first();
             if ($result) {
                 $startTime = $result->created_at;
                 $quizStatus = $result->status;
                 $score = $result->score;
             }
         }
-        $userProgress = UserLessonProgress::where('user_id', Auth::user()->id)
+        $userProgress = UserLessonProgress::where('user_id', Auth('sanctum')->user()->id)
             ->where('lesson_id', $this->id)->latest()->first();
         $userStatus = (isset($userProgress)) ? $userProgress->progress : 0;
 

@@ -25,7 +25,7 @@ class QuizPageResource extends JsonResource
         $quizIds = $quiz->pluck('id')->toArray();
      //   $quizIds = Lesson::whereIn('chapter_id', $chaptersIds)->where('dominant_type', 'exam')->pluck('id');
         $participants = QuizParticipant::whereIn('lesson_id', $quizIds)
-        ->where('user_id', Auth::user()->id)->sum('score');
+        ->where('user_id', Auth('sanctum')->user()->id)->sum('score');
 
         $average = 0;
         $pass = false;
@@ -37,7 +37,7 @@ class QuizPageResource extends JsonResource
         }
         if($average > 80){
             $pass = true;
-            $student = Student::where('course_id',$this->id)->where('user_id', Auth::user()->id)->first();
+            $student = Student::where('course_id',$this->id)->where('user_id', Auth('sanctum')->user()->id)->first();
             if($student){
                 $certificate = $student->certificate_file;
                 $rate = $student->rate;
