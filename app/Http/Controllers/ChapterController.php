@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use TechStudio\Lms\app\Models\Chapter;
-use TechStudio\Lms\app\Http\Resources\ChapterResource;
 use TechStudio\Lms\app\Http\Resources\ChapterPageResource;
 use TechStudio\Lms\app\Http\Requests\ChapterCreateUpdateRequest;
 use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
@@ -46,7 +45,7 @@ class ChapterController extends Controller
         $chapters = Chapter::with([
             'lessons' => fn ($query) => $query->orderBy('order', 'asc')
         ])->where('course_id', $id)->paginate(10);
-        return ChapterResource::collection($chapters);
+        return ChapterPageResource::collection($chapters);
     }
 
     public function deleteChapter($local, $slug)
