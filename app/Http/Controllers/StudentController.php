@@ -6,6 +6,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use TechStudio\Core\app\Export\StudentsExport;
 use TechStudio\Lms\app\Models\Student;
 use Illuminate\Http\Request;
+use TechStudio\Core\app\Models\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use TechStudio\Lms\app\Http\Requests\BookmarkRequest;
@@ -13,6 +14,7 @@ use TechStudio\Lms\app\Http\Requests\StudentRequest;
 use TechStudio\Lms\app\Http\Resources\CertificatesResource;
 use TechStudio\Lms\app\Http\Resources\CourseResource;
 use TechStudio\Lms\app\Http\Resources\StudentsResource;
+use TechStudio\Lms\app\Models\Course;
 use TechStudio\Lms\app\Repositories\Interfaces\CourseRepositoryInterface;
 use TechStudio\Lms\app\Repositories\Interfaces\StudentRepositoryInterface;
 
@@ -48,6 +50,18 @@ class StudentController extends Controller
             $cer->comment = $studentRequest->comment;
             $cer->save();
         }
+        if ($studentRequest->get('comment')) {
+            Comment::updateOrInsert(
+                [
+                    'user_id' => Auth('sanctum')->user()->id,
+                    'commentable_type' => get_class(new Course()),
+                    'commentable_id' => $studentRequest->courseId
+                ],
+                [
+                    'text' => $studentRequest->comment
+                ]
+            );
+        }
 
         return ['success' => true];
     }
@@ -70,7 +84,7 @@ class StudentController extends Controller
 
     public function StudentListExport(Request $request)
     {
-        $students = $this->studentRepository->getStudentListExcel($request)->map(fn($student)=>[
+        $students = $this->studentRepository->getStudentListExcel($request)->map(fn ($student) => [
             /*  'id' => $student->user_id,*/
             'displayName' => $student->getDisplayName(),
             'role' => 'کاربر عادی',
