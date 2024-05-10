@@ -51,7 +51,7 @@ class StudentController extends Controller
             $cer->save();
         }
         if ($studentRequest->get('comment')) {
-            Comment::updateOrInsert(
+            Comment::updateOrCreate(
                 [
                     'user_id' => Auth('sanctum')->user()->id,
                     'commentable_type' => get_class(new Course()),
