@@ -6,6 +6,9 @@ use stdClass;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Product\ProductsResource;
+use App\Models\Product;
+use App\Models\ProductRegister;
 use Illuminate\Support\Facades\Auth;
 use TechStudio\Lms\app\Models\Skill;
 use Illuminate\Support\Facades\Cache;
@@ -297,6 +300,31 @@ class CourseController extends Controller
         $user = Auth('sanctum')->user();
         $studnetId = Student::where('user_id', $user->id)->get();
 
+        if (class_exists(ProductRegister::class)) {
+
+            $student = ProductRegister::where('user_id', $user->id)->get();
+
+            if ($request['data'] == 'waitingForApprovale') {
+                
+                $productId = $student->where('register_status', 'pre-register')->orWehre('payment_status', 'waiting_for_approval')->get();
+                $products = Product::whereIn('id', $productId)->orderBy('id', 'DESC')->paginate(10);
+                return new ProductsResource($products);
+
+            }elseif ($request['data'] == 'payingInstallment') {
+
+                $productId = $student->where('payment_status', 'paying_installment')->pluck('product_id');
+                $products = Product::whereIn('id', $productId)->orderBy('id', 'DESC')->paginate(10);
+                return new ProductsResource($products);
+
+            }elseif ($request['data'] == 'done') {
+                
+                $productId = $student->where('payment_status', 'done')->pluck('product_id');
+                $products = Product::whereIn('id', $productId)->orderBy('id', 'DESC')->paginate(10);
+                return new ProductsResource($products);
+
+            }
+        }
+
         if ($request['data'] == 'necessary') {
 
             $necessaryCourse = $courseModel->where('necessary', 1)->paginate(10);
@@ -319,7 +347,6 @@ class CourseController extends Controller
             $courseProgressId = $studnetId->where('in_roll', 'progress')->pluck('course_id');
             $courseProgress = Course::whereIn('id', $courseProgressId)->paginate(10);
             return new CoursesResource($courseProgress);
-
         }
     }
 
