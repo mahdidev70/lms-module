@@ -302,11 +302,11 @@ class CourseController extends Controller
 
         if (class_exists(ProductRegister::class)) {
 
-            $student = ProductRegister::where('user_id', $user->id)->get();
+            $student = ProductRegister::where('user_id', $user->id);
 
             if ($request['data'] == 'waitingForApprovale') {
                 
-                $productId = $student->where('register_status', 'pre-register')->orWehre('payment_status', 'waiting_for_approval')->get();
+                $productId = $student->where('register_status', 'pre-register')->where('payment_status', 'waiting_for_approval')->pluck('product_id');
                 $products = Product::whereIn('id', $productId)->orderBy('id', 'DESC')->paginate(10);
                 return new ProductsResource($products);
 
