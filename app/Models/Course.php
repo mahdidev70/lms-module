@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use TechStudio\Core\app\Models\Category;
 use TechStudio\Core\app\Models\UserProfile;
 use TechStudio\Core\app\Models\Comment;
+use TechStudio\Core\app\Models\TroubleshootingReport;
 use Illuminate\Database\Eloquent\Builder;
 use TechStudio\Community\app\Models\ChatRoom;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, SoftDeletes;
 
     protected $table = 'lms_courses';
 
@@ -102,5 +104,10 @@ class Course extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function troubleshootingReports(): MorphMany
+    {
+        return $this->morphMany(TroubleshootingReport::class, 'reportable');
     }
 }

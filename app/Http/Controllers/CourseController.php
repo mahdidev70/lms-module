@@ -231,10 +231,10 @@ class CourseController extends Controller
 
             $date = Carbon::now()->toDateTimeString();
             Course::whereIn('id', $ids)
-                ->update([
-                    'status'=>$request['status'],
-                    'publication_date' => $date,
-                ]);
+                    ->update([
+                            'status'           => $request['status'],
+                            'publication_date' => $date,
+                    ]);
             /*$courses = Course::whereIn('id', $ids)->get();
 
             foreach ($courses as $course) {
@@ -260,7 +260,9 @@ class CourseController extends Controller
                 ]);
             }*/
 
-        }else {
+        } elseif ($request['status'] == 'deleted') {
+            Course::query()->whereIn('id', $ids)->delete();
+        } else {
             Course::whereIn('id', $ids)
                 ->update(['status'=>$request['status']]);
           //  $course->whereIn('id', $ids)->update(['status' => $request['status']]);
